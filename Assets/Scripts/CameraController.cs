@@ -16,6 +16,9 @@ public class CameraController : MonoBehaviour
     public float zoomSpeedMult = 1f;
     public float minZoom = 5;
     public float maxZoom = 7;
+
+    public Collider cameraBounds;
+
     private void Awake()
     {
         m_Camera = Camera.main;
@@ -25,7 +28,6 @@ public class CameraController : MonoBehaviour
     void Update()
     {
         CameraMovement();
-
         CameraZoom();
     }
 
@@ -140,9 +142,16 @@ public class CameraController : MonoBehaviour
             return;
 
         var t = Mathf.Clamp01(GetFollowSpeed() * Time.deltaTime);
+
+        targetPos = Vector3.Lerp(cameraPos, targetPos, t);
+
+        var bounds = cameraBounds.bounds;
+        targetPos.x = Mathf.Clamp(targetPos.x, bounds.min.x, bounds.max.x);
+        targetPos.z = Mathf.Clamp(targetPos.z, bounds.min.z, bounds.max.z);
+
         m_Camera.transform.position = Vector3.Lerp(cameraPos, targetPos, t);
         m_MoveDelta /= decelerationSpeed;
-        Debug.Log($"Move Delta: {m_MoveDelta}");
+        //Debug.Log($"Move Delta: {m_MoveDelta}");
     }
 
     private float GetFollowSpeed()
