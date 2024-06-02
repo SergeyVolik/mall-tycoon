@@ -15,7 +15,8 @@ namespace Prototype
 
             if (t > spawnInterval)
             {
-                
+                t = 0;
+                GameObject.Instantiate(customerPrefab, customerSpawnPoint.position, Quaternion.identity);
             }
         }
     }
