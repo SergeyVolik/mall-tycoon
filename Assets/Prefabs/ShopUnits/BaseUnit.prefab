@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 7195715407445609913}
   - component: {fileID: 4193047577277132748}
   - component: {fileID: 9123573140287699514}
-  - component: {fileID: 2948243429182086640}
   m_Layer: 0
   m_Name: BaseUnit
   m_TagString: Untagged
@@ -50,14 +49,14 @@ NavMeshAgent:
   m_Speed: 1.5
   m_Acceleration: 8
   avoidancePriority: 50
-  m_AngularSpeed: 10000
+  m_AngularSpeed: 1e+16
   m_StoppingDistance: 0.2
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 1.11
   m_BaseOffset: 0
-  m_WalkableMask: 4294967295
+  m_WalkableMask: 7
   m_ObstacleAvoidanceType: 0
 --- !u!54 &7195715407445609913
 Rigidbody:
@@ -121,23 +120,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0b10978e2e11a24890b92b93bb5e239, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &2948243429182086640
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1739820021771358029}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8e68ed437174fc347b4da7b7147ba9c1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  patrolPoints:
-  - {fileID: 0}
-  - {fileID: 0}
-  m_CurrentIndex: 0
-  distanceToNextPoint: 0.5
 --- !u!1001 &6792304258313563340
 PrefabInstance:
   m_ObjectHideFlags: 0

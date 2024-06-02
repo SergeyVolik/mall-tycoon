@@ -11,7 +11,7 @@ PrefabInstance:
     - target: {fileID: 3610463763993843038, guid: 3235eb70c9fc0d24e88169b16f90e72a,
         type: 3}
       propertyPath: m_Name
-      value: TraficCar3
+      value: TraficCar 3
       objectReference: {fileID: 0}
     - target: {fileID: 8015613900651807082, guid: 3235eb70c9fc0d24e88169b16f90e72a,
         type: 3}
@@ -66,15 +66,15 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 8015613900651807082, guid: 3235eb70c9fc0d24e88169b16f90e72a,
+    - targetCorrespondingSourceObject: {fileID: 7248358021483985610, guid: 3235eb70c9fc0d24e88169b16f90e72a,
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 6237718981830576285}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3235eb70c9fc0d24e88169b16f90e72a, type: 3}
---- !u!4 &6477430018509852906 stripped
+--- !u!4 &5930692191337081674 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 8015613900651807082, guid: 3235eb70c9fc0d24e88169b16f90e72a,
+  m_CorrespondingSourceObject: {fileID: 7248358021483985610, guid: 3235eb70c9fc0d24e88169b16f90e72a,
     type: 3}
   m_PrefabInstance: {fileID: 3952289205705740672}
   m_PrefabAsset: {fileID: 0}
@@ -84,7 +84,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 6477430018509852906}
+    m_TransformParent: {fileID: 5930692191337081674}
     m_Modifications:
     - target: {fileID: 100000, guid: c98da428142c39c42bb62c454958cd1f, type: 3}
       propertyPath: m_Name
@@ -112,7 +112,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: c98da428142c39c42bb62c454958cd1f, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: c98da428142c39c42bb62c454958cd1f, type: 3}
       propertyPath: m_LocalRotation.z
