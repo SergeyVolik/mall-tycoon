@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4725366938002638}
   - component: {fileID: 95034978647309652}
+  - component: {fileID: 6906468493735576367}
   m_Layer: 0
   m_Name: Ch_0CP01M01Bald
   m_TagString: Untagged
@@ -57,6 +58,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &6906468493735576367
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1009930933714678}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fea65ae35c529649a1348d7871bfbd4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1020107234998078
 GameObject:
   m_ObjectHideFlags: 0

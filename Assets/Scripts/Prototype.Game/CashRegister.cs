@@ -1,21 +1,45 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Prototype
 {
     public class CashRegister : MonoBehaviour
     {
-        // Start is called before the first frame update
-        void Start()
+        public int producCost = 10;
+        public QueueBehaviour queue;
+        private Transform m_CurrentCustomer;
+        private Camera m_Camera;
+        public Cooldown cooldown;
+        public CircularCooldownView cooldownView;
+
+        private void Awake()
         {
-        
+            m_Camera = Camera.main;
+            cooldownView.Bind(cooldown);
         }
 
-        // Update is called once per frame
-        void Update()
+        public void Update()
         {
-        
+            if (m_CurrentCustomer == null)
+            {
+                if (queue.TryPeek(out var peek))
+                {
+                    m_CurrentCustomer = peek;
+                    cooldown.Restart();
+                }   
+            }
+            else if (cooldown.IsFinished)
+            {
+                var customerAI = m_CurrentCustomer.GetComponent<CustomerAI>();
+                PlayerData.GetInstance().Resources.resources.AddResource(customerAI.holdedResource, customerAI.buyedProducCost);
+                customerAI.buyedProducCost = 0;
+                customerAI.holdedResource = null;
+                m_CurrentCustomer = null;
+                queue.Dequeue();
+            }
+
+            cooldownView.cooldownRoot.transform.forward = m_Camera.transform.forward;
+            cooldown.Tick(Time.deltaTime);
+            cooldownView.Tick();
         }
     }
 }

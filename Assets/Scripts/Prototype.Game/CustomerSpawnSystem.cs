@@ -8,7 +8,7 @@ namespace Prototype
 
         public float spawnInterval;
         public float t;
-        public Transform customerSpawnPoint;
+        public Transform[] customerSpawnPoints;
         private void Update()
         {
             t += Time.deltaTime;
@@ -16,7 +16,8 @@ namespace Prototype
             if (t > spawnInterval)
             {
                 t = 0;
-                GameObject.Instantiate(customerPrefab, customerSpawnPoint.position, Quaternion.identity);
+                var spawnPoint = customerSpawnPoints[Random.Range(0, customerSpawnPoints.Length)];
+                GameObject.Instantiate(customerPrefab, spawnPoint.position, Quaternion.identity);
             }
         }
     }

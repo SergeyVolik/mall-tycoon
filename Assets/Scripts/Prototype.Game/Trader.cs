@@ -5,18 +5,20 @@ namespace Prototype
 {
     public class Trader : MonoBehaviour
     {
-        public float buyProductTime = 2f;
         public int producCost = 10;
-        float buyProducT;
+        public ResourceTypeSO resourceCost;
+
         public QueueBehaviour queue;
         private Transform m_CurrentCustomer;
-        public Image timerImage;
-        public Canvas timerCanvas;
         private Camera m_Camera;
+        public Cooldown cooldown;
+        public CircularCooldownView cooldownView;
 
         private void Awake()
         {
             m_Camera = Camera.main;
+
+            cooldownView.Bind(cooldown);
         }
 
         public void Update()
@@ -26,24 +28,21 @@ namespace Prototype
                 if (queue.TryPeek(out var peek))
                 {
                     m_CurrentCustomer = peek;
+                    cooldown.Restart();
                 }
+            }
+            else if (cooldown.IsFinished)
+            {
+                var customerAI = m_CurrentCustomer.GetComponent<CustomerAI>();
+                customerAI.buyedProducCost = producCost;
+                customerAI.holdedResource = resourceCost;
+                m_CurrentCustomer = null;
+                queue.Dequeue();
+            }
 
-                timerCanvas.gameObject.SetActive(false);
-            }
-            else {
-                buyProducT += Time.deltaTime;
-                timerImage.fillAmount = buyProducT / buyProductTime;
-                timerCanvas.gameObject.SetActive(true);
-                timerCanvas.transform.forward = m_Camera.transform.forward;
-                if (buyProducT > buyProductTime)
-                {                  
-                    buyProducT = 0;
-                    var customerAI = m_CurrentCustomer.GetComponent<CustomerAI>();
-                    customerAI.buyedProducCost = producCost;
-                    m_CurrentCustomer = null;
-                    queue.Dequeue();
-                }
-            }
+            cooldownView.cooldownRoot.transform.forward = m_Camera.transform.forward;
+            cooldown.Tick(Time.deltaTime);
+            cooldownView.Tick();
         }
     }
 }

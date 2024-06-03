@@ -1244,6 +1244,9 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1691011192}
+  - {fileID: 449648184}
+  - {fileID: 1766125742}
+  - {fileID: 820917595}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &315297591
@@ -1260,9 +1263,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customerPrefab: {fileID: 1739820021771358029, guid: 5d0307ac9e0b403448c0af08c27dbac1,
     type: 3}
-  spawnInterval: 2
+  spawnInterval: 5
   t: 2
-  customerSpawnPoint: {fileID: 1691011192}
+  customerSpawnPoints:
+  - {fileID: 1691011192}
+  - {fileID: 449648184}
+  - {fileID: 1766125742}
+  - {fileID: 820917595}
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -2074,6 +2081,37 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 432243666}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &449648183
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 449648184}
+  m_Layer: 0
+  m_Name: CustomerSpawnPoint (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &449648184
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 449648183}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -5.24, y: 0, z: 1.52}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 315297590}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &469406200
 GameObject:
   m_ObjectHideFlags: 0
@@ -3319,6 +3357,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 469406201}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &820917594
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 820917595}
+  m_Layer: 0
+  m_Name: CustomerSpawnPoint (3)
+  m_TagString: Untagged
+  m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &820917595
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 820917594}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -6.16, y: 0, z: 2.82}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 315297590}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &824377888
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4239,8 +4308,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35e95dc5ff2b64380880dd7ac5922847, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Size: {x: 4, y: 3, z: 45.495445}
-  m_Center: {x: 0, y: 1, z: -20.747723}
+  m_Size: {x: 4, y: 3, z: 45.689957}
+  m_Center: {x: 0, y: 1, z: -20.844978}
   m_Area: 3
   m_AffectedAgents: ffffffff
 --- !u!4 &1097884799
@@ -7025,7 +7094,7 @@ GameObject:
   m_Layer: 0
   m_Name: CustomerSpawnPoint
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -7038,7 +7107,7 @@ Transform:
   m_GameObject: {fileID: 1691011191}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.2, y: 0, z: 3.24}
+  m_LocalPosition: {x: -7.78, y: 0, z: 4.15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -7212,6 +7281,37 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1719807110}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1766125741
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1766125742}
+  m_Layer: 0
+  m_Name: CustomerSpawnPoint (2)
+  m_TagString: Untagged
+  m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1766125742
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1766125741}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -9.99, y: 0, z: 6.52}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 315297590}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1810725102
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7335,6 +7435,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2300000, guid: b74c48c2e73e17c418c9394124b75daf, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: d9871fee47c362140a42c113f9a488e7, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -7512,8 +7616,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35e95dc5ff2b64380880dd7ac5922847, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Size: {x: 4, y: 3, z: 45.495445}
-  m_Center: {x: 0, y: 1, z: -20.747723}
+  m_Size: {x: 4, y: 3, z: 45.764687}
+  m_Center: {x: 0, y: 1, z: -20.613102}
   m_Area: 3
   m_AffectedAgents: ffffffff
 --- !u!4 &1862595728
@@ -8702,15 +8806,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1664623282}
     m_Modifications:
-    - target: {fileID: 4230122717094654007, guid: de18d80c77cf4a647ab24ad31fabf63f,
+    - target: {fileID: 4596374589357158323, guid: de18d80c77cf4a647ab24ad31fabf63f,
         type: 3}
-      propertyPath: offsetBetweenCustomers
-      value: 0.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 4961510302380108601, guid: de18d80c77cf4a647ab24ad31fabf63f,
-        type: 3}
-      propertyPath: buyProductTime
-      value: 5
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6548908423373214335, guid: de18d80c77cf4a647ab24ad31fabf63f,
         type: 3}

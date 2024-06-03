@@ -19,6 +19,9 @@ namespace Prototype
 
         private void Update()
         {
+            if (!m_Agent)
+                return;
+
             m_Animator.SetFloat(s_WalkAnimParam, m_Agent.velocity.magnitude);
         }
     }
