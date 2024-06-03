@@ -12,6 +12,7 @@ namespace Prototype
         public Cooldown cooldown;
         public CircularCooldownView cooldownView;
 
+        public FloatingText floatingText;
         public UnityEvent onBuyUE;
         private void Awake()
         {
@@ -33,6 +34,8 @@ namespace Prototype
             {
                 var customerAI = m_CurrentCustomer.GetComponent<CustomerAI>();
                 PlayerData.GetInstance().Resources.resources.AddResource(customerAI.holdedResource, customerAI.buyedProducCost);
+
+                floatingText.Show(customerAI.buyedProducCost.ToString("0"));
                 customerAI.buyedProducCost = 0;
                 customerAI.holdedResource = null;
                 m_CurrentCustomer = null;

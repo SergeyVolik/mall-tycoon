@@ -5,7 +5,7 @@ namespace Prototype
 {
     public class CustomerAI : MonoBehaviour
     {
-        public int buyedProducCost;
+        public float buyedProducCost;
         public ResourceTypeSO holdedResource;
         public CustomerAIStates currentState = CustomerAIStates.MoveToTrader;
         private Vector3 m_StartPos;

@@ -21,7 +21,7 @@ namespace Prototype
             m_Resources.onResourceChanged-= UpdateResourceUI;
         }
 
-        private void UpdateResourceUI(ResourceTypeSO arg1, int arg2)
+        private void UpdateResourceUI(ResourceTypeSO arg1, float arg2)
         {
             bool activate = arg2 > 0;
             if (uiItems.TryGetValue(arg1, out var item))
@@ -43,7 +43,7 @@ namespace Prototype
             }
         }
 
-        private ResourceUIItem SetupUIItem(ResourceTypeSO type, int count)
+        private ResourceUIItem SetupUIItem(ResourceTypeSO type, float count)
         {
             bool activate = count > 0;
 

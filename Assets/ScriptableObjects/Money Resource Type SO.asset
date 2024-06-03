@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Money Resource Type SO
   m_EditorClassIdentifier: 
   resourceIcon: {fileID: 21300000, guid: 93a63d428b5afa1448d2e42bc50741c1, type: 3}
-  resourceColor: {r: 0.4952253, g: 1, b: 0, a: 1}
+  resourceColor: {r: 1, g: 1, b: 1, a: 1}
   ResourceUIItem: {fileID: 5197773500834160301, guid: 47e729e0cdd28e446beb98d98b67094f,
     type: 3}

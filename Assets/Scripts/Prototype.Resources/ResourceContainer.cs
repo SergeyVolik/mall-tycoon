@@ -24,12 +24,12 @@ namespace Prototype
         private ResourceItem[] m_InitResources;
         bool m_Inited = false;
 
-        private Dictionary<ResourceTypeSO, int> m_ResourceDic = new Dictionary<ResourceTypeSO, int>();
-        public IEnumerable<KeyValuePair<ResourceTypeSO, int>> ResourceIterator() => ResourceDic;
+        private Dictionary<ResourceTypeSO, float> m_ResourceDic = new Dictionary<ResourceTypeSO, float>();
+        public IEnumerable<KeyValuePair<ResourceTypeSO, float>> ResourceIterator() => ResourceDic;
 
-        public event Action<ResourceTypeSO, int> onResourceChanged = delegate { };
+        public event Action<ResourceTypeSO, float> onResourceChanged = delegate { };
 
-        private Dictionary<ResourceTypeSO, int> ResourceDic
+        private Dictionary<ResourceTypeSO, float> ResourceDic
         {
             get
             {
@@ -60,20 +60,20 @@ namespace Prototype
             Init(m_InitResources);
         }
 
-        public void SetResource(ResourceTypeSO resourceType, int count)
+        public void SetResource(ResourceTypeSO resourceType, float count)
         {
             ResourceDic[resourceType] = count;
             onResourceChanged.Invoke(resourceType, count);
         }
 
-        public void AddResource(ResourceTypeSO resourceType, int count)
+        public void AddResource(ResourceTypeSO resourceType, float count)
         {
             ResourceDic.TryGetValue(resourceType, out var current);
             current += count;
             SetResource(resourceType, current);
         }
 
-        public void RemoveResource(ResourceTypeSO resourceType, int count)
+        public void RemoveResource(ResourceTypeSO resourceType, float count)
         {
             ResourceDic.TryGetValue(resourceType, out var current);
 
@@ -99,9 +99,9 @@ namespace Prototype
             ResourceDic.Clear();
         }
 
-        public int GetResource(ResourceTypeSO resourceType)
+        public float GetResource(ResourceTypeSO resourceType)
         {
-            ResourceDic.TryGetValue(resourceType, out int result);
+            ResourceDic.TryGetValue(resourceType, out float result);
             return result;
         }
 

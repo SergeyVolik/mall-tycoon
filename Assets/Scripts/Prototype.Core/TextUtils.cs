@@ -4,7 +4,7 @@ namespace Prototype
 {
     public static class TextUtils
     {
-        public static string IntToText(int numberOfIntems)
+        public static string IntToText(float numberOfIntems)
         {
             var Thousand = numberOfIntems / 1000f;
 

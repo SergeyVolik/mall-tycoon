@@ -60,7 +60,7 @@ namespace Prototype
             m_CurrentResources.onResourceChanged -= UpdateResourceUI;
             m_RequiredResources.onResourceChanged -= UpdateResourceUI;
         }
-        private void UpdateResourceUI(ResourceTypeSO arg1, int arg2)
+        private void UpdateResourceUI(ResourceTypeSO arg1, float arg2)
         {
             uiItems.TryGetValue(arg1, out var item);
 
@@ -80,7 +80,7 @@ namespace Prototype
             }
         }
 
-        private string GetStringValue(int numberOfIntems)
+        private string GetStringValue(float numberOfIntems)
         {
             return TextUtils.IntToText(numberOfIntems);
         }
@@ -93,7 +93,7 @@ namespace Prototype
             }
         }
 
-        private void SetupUIItem(ResourceTypeSO type, int count)
+        private void SetupUIItem(ResourceTypeSO type, float count)
         {
             var uiItem = GameObject
                 .Instantiate(m_ResourceUIItemPrefab, itemParent)
