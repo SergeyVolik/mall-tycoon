@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Prototype
 {
@@ -11,6 +12,7 @@ namespace Prototype
         public Cooldown cooldown;
         public CircularCooldownView cooldownView;
 
+        public UnityEvent onBuyUE;
         private void Awake()
         {
             m_Camera = Camera.main;
@@ -35,6 +37,7 @@ namespace Prototype
                 customerAI.holdedResource = null;
                 m_CurrentCustomer = null;
                 queue.Dequeue();
+                onBuyUE.Invoke();
             }
 
             cooldownView.cooldownRoot.transform.forward = m_Camera.transform.forward;

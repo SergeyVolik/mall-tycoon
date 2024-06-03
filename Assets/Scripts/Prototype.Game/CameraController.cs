@@ -7,7 +7,8 @@ namespace Prototype
         private Camera m_Camera;
         private Vector3 m_TouchStart;
         private Vector3 m_MoveDelta;
-
+        public Transform cameraTarget;
+        public Vector3 cameraOffset;
         [Header("Movement")]
         public float decelerationSpeed;
         public float foolowSpeed;
@@ -23,6 +24,7 @@ namespace Prototype
         {
             m_Camera = Camera.main;
             m_Camera.orthographicSize = maxZoom;
+            m_Camera.transform.position = cameraTarget.position + cameraOffset;
         }
 
         void Update()
@@ -135,21 +137,22 @@ namespace Prototype
 
         private void UpdateCameraPosition()
         {
-            var cameraPos = m_Camera.transform.position;
-            var targetPos = cameraPos + m_MoveDelta;
+            var taregetPos = cameraTarget.position;
+            var targetPos = taregetPos + m_MoveDelta;
 
-            if (cameraPos == targetPos)
+            if (taregetPos == targetPos)
                 return;
 
             var t = Mathf.Clamp01(GetFollowSpeed() * Time.deltaTime);
 
-            targetPos = Vector3.Lerp(cameraPos, targetPos, t);
+            targetPos = Vector3.Lerp(taregetPos, targetPos, t);
 
             var bounds = cameraBounds.bounds;
             targetPos.x = Mathf.Clamp(targetPos.x, bounds.min.x, bounds.max.x);
             targetPos.z = Mathf.Clamp(targetPos.z, bounds.min.z, bounds.max.z);
 
-            m_Camera.transform.position = Vector3.Lerp(cameraPos, targetPos, t);
+            cameraTarget.position = Vector3.Lerp(taregetPos, targetPos, t);
+            m_Camera.transform.position = taregetPos + cameraOffset;
             m_MoveDelta /= decelerationSpeed;
             //Debug.Log($"Move Delta: {m_MoveDelta}");
         }
