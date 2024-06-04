@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Prototype
 {
-    public class CameraController : MonoBehaviour
+    public class CameraController : Singleton<CameraController>
     {
         private Camera m_Camera;
         private Vector3 m_TouchStart;

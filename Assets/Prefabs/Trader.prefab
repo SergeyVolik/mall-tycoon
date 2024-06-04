@@ -42,6 +42,7 @@ GameObject:
   - component: {fileID: 6548908423373214335}
   - component: {fileID: 4961510302380108601}
   - component: {fileID: 4230122717094654007}
+  - component: {fileID: 3267242273727669575}
   m_Layer: 0
   m_Name: Trader
   m_TagString: Untagged
@@ -81,6 +82,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   producCost: 10
+  currentLevel: 1
+  traderName: 
   resourceCost: {fileID: 11400000, guid: f844a05be14715d45a3a83d419fa6598, type: 2}
   queue: {fileID: 4230122717094654007}
   cooldown:
@@ -88,6 +91,9 @@ MonoBehaviour:
   cooldownView:
     progressImage: {fileID: 1695254854610237199}
     cooldownRoot: {fileID: 5064245938262560044}
+  upgrades: []
+  currentUpgradeIndex: 0
+  traderUI: {fileID: 0}
 --- !u!114 &4230122717094654007
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -102,6 +108,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   queueStartPoint: {fileID: 7820196334197719950}
   offsetBetweenCustomers: 0.6
+--- !u!65 &3267242273727669575
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6682058448789112148}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.1188817, y: 1, z: 1.8351092}
+  m_Center: {x: 0.38923606, y: 0, z: -0.037620585}
 --- !u!1 &8539697842083127760
 GameObject:
   m_ObjectHideFlags: 0

@@ -65,10 +65,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Button
+  m_text: Buy
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: c338639f69f84b74ca2acf0696c82260, type: 2}
-  m_sharedMaterial: {fileID: 7159369417392969216, guid: c338639f69f84b74ca2acf0696c82260,
+  m_fontAsset: {fileID: 11400000, guid: a972753ababc562428a12a1b34e40dea, type: 2}
+  m_sharedMaterial: {fileID: 8014252567165675198, guid: a972753ababc562428a12a1b34e40dea,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
