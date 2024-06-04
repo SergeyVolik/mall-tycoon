@@ -71,20 +71,18 @@ namespace Prototype
             {
                 if ((startDragCamPos - m_Camera.transform.position).magnitude > 0.5f)
                 {
-                    Debug.Log("magnitude is to low");
+                    //Debug.Log("magnitude is to low");
                     return;
                 }
 
                 var ray = m_Camera.ScreenPointToRay(Input.mousePosition);
 
-                Debug.DrawRay(ray.origin, ray.direction, Color.red, 0.5f);
+                //Debug.DrawRay(ray.origin, ray.direction, Color.red, 0.5f);
                 int len = Physics.RaycastNonAlloc(ray, m_Hits);
-
 
                 if (len == 0)
                 {
-                    Debug.Log("no raycast target");
-
+                    //Debug.Log("no raycast target");
                     return;
                 }
 

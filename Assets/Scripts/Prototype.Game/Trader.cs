@@ -7,17 +7,86 @@ namespace Prototype
     [System.Serializable]
     public class CostUpgradeData
     {
+        public CostUpgradeItem[] upgrades;
+        public int currentUpgradeIndex;
+        public float producCost = 10;
+        public int currentLevel = 1;
+        public float currentBuyCost = 10;
+
+        public event Action onUpgraded = delegate { };
+
+        public void LevelUpCost()
+        {
+            currentLevel++;
+            var currentUpgrade = upgrades[currentUpgradeIndex];
+            PlayerData.GetInstance().DecreaseMoney(currentBuyCost);
+            producCost += currentUpgrade.producCostIncrease;
+            currentBuyCost += currentUpgrade.buyUpgradeIncreaseValue;
+         
+            if (currentLevel >= currentUpgrade.maxLevel && upgrades.Length - 1 > currentUpgradeIndex)
+            {
+                foreach (var item in currentUpgrade.itemsToActivate)
+                {
+                    item.gameObject.SetActive(true);
+                }
+
+                producCost *= currentUpgrade.maxLevelMult;
+                currentUpgradeIndex++;             
+            }
+
+            onUpgraded.Invoke();
+        }
+        public CostUpgradeItem GetCurrentUpgrade() => upgrades[currentUpgradeIndex];
+        public int GetMaxLevel()
+        {
+            return upgrades[currentUpgradeIndex].maxLevel;
+        }
+
+        public float GetProducCost()
+        {
+            return producCost;
+        }
+
+        public bool IsCostUpgradesFinished() => upgrades.Length - 1 == currentUpgradeIndex &&
+            upgrades[currentUpgradeIndex].maxLevel == currentLevel;
+
+        public int GetPrevMax()
+        {
+            if (currentUpgradeIndex == 0)
+                return 1;
+
+            return upgrades[currentUpgradeIndex - 1].maxLevel;
+        }
+
+        public int GetNextMax()
+        {
+            return upgrades[currentUpgradeIndex].maxLevel;
+        }
+
+        public string GetNextUpgradeMult()
+        {
+            return upgrades[currentUpgradeIndex].maxLevelMult.ToString();
+        }
+
+        internal string GetUpgradeName()
+        {
+            return upgrades[currentUpgradeIndex].name;
+        }
+    }
+
+    [System.Serializable]
+    public class CostUpgradeItem
+    {
         public GameObject[] itemsToActivate;
-        public int levelsToFinish;
-        public float levelUpCostIncrease;
-        public string title;
-        public int finishCostMult;
+        public int maxLevel;
+        public float producCostIncrease;
+        public string name;
+        public float maxLevelMult;
+        public float buyUpgradeIncreaseValue;
     }
 
     public class Trader : MonoBehaviour, IActivateableFromRaycast
     {
-        public float producCost = 10;
-        public int currentLevel = 1;
         public string traderName;
         public ResourceTypeSO resourceCost;
         public QueueBehaviour queue;
@@ -25,40 +94,8 @@ namespace Prototype
         private Camera m_Camera;
         public Cooldown cooldown;
         public CircularCooldownView cooldownView;
-        public CostUpgradeData[] upgrades;
-        public int currentUpgradeIndex;
-        public TraderUpgradeUI traderUI;
-        public event Action onUpgraded = delegate { }; 
-
-        public void LevelUpCost()
-        {
-            currentLevel++;
-            var currentUpgrade = upgrades[currentUpgradeIndex];
-            producCost += currentUpgrade.levelUpCostIncrease;
-
-            if (currentLevel > currentUpgrade.levelsToFinish && upgrades.Length -1 > currentUpgradeIndex)
-            {
-                foreach (var item in currentUpgrade.itemsToActivate)
-                {
-                    item.gameObject.SetActive(true);
-                }
-                producCost *= currentUpgrade.finishCostMult;
-                currentUpgradeIndex++;               
-            }
-
-            onUpgraded.Invoke();
-        }
-
-        public bool IsCostUpgradesFinished() => upgrades.Length - 1 == currentUpgradeIndex && upgrades[currentUpgradeIndex].levelsToFinish == currentLevel;
-        public int GetMaxLevel()
-        {
-            return upgrades[currentUpgradeIndex].levelsToFinish;
-        }
-
-        public float GetProducCost()
-        {
-            return producCost;
-        }
+        public CostUpgradeData costUpgrade;
+        public TraderUpgradeUI traderUI;   
 
         private void Awake()
         {
@@ -80,7 +117,7 @@ namespace Prototype
             else if (cooldown.IsFinished)
             {
                 var customerAI = m_CurrentCustomer.GetComponent<CustomerAI>();
-                customerAI.buyedProducCost = producCost;
+                customerAI.buyedProducCost = costUpgrade.producCost;
                 customerAI.holdedResource = resourceCost;
                 m_CurrentCustomer = null;
                 queue.Dequeue();
@@ -89,25 +126,7 @@ namespace Prototype
             cooldownView.cooldownRoot.transform.forward = m_Camera.transform.forward;
             cooldown.Tick(Time.deltaTime);
             cooldownView.Tick();
-        }
-
-        internal int GetPrevMax()
-        {
-            if(currentUpgradeIndex == 0)
-                return 1;
-
-            return upgrades[currentUpgradeIndex - 1].levelsToFinish;
-        }
-
-        internal int GetNextMax()
-        {
-            return upgrades[currentUpgradeIndex].levelsToFinish;
-        }
-
-        internal string GetNextUpgradeMult()
-        {
-            return upgrades[currentUpgradeIndex].finishCostMult.ToString();
-        }
+        } 
 
         public void ActivateFromRaycast()
         {
