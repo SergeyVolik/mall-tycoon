@@ -18,7 +18,9 @@ namespace Prototype
         public LevelUpUIItem costLevelUp;
         public LevelUpUIItem workerLevelUp;
         private CostUpgradeData m_CostUpgrade;
+        private WorkerSpeedUpgrade m_WorkerUpgrade;
         private Trader m_Tarder;
+        private PlayerData m_Playerdata;
 
         protected override void Awake()
         {
@@ -26,23 +28,38 @@ namespace Prototype
 
             costLevelUp.buyButton.onClick.AddListener(() =>
             {
-                m_CostUpgrade.LevelUpCost();
+                PlayerData.GetInstance().DecreaseMoney(m_CostUpgrade.currentBuyCost);
+                m_CostUpgrade.LevelUp();
             });
 
             workerLevelUp.buyButton.onClick.AddListener(() =>
             {
-
+                PlayerData.GetInstance().DecreaseMoney(m_WorkerUpgrade.currentBuyCost);
+                m_WorkerUpgrade.LevelUp();
             });
 
-            PlayerData.GetInstance().onMoneyChanged += TraderUpgradeUI_onMoneyChanged;
+            m_Playerdata = PlayerData.GetInstance();
+            m_Playerdata.onMoneyChanged += TraderUpgradeUI_onMoneyChanged;
         }
-
 
         protected override void OnDestroy()
         {
             base.OnDestroy();
-            PlayerData.GetInstance().onMoneyChanged -= TraderUpgradeUI_onMoneyChanged;
+            if(m_Playerdata)
+                m_Playerdata.onMoneyChanged -= TraderUpgradeUI_onMoneyChanged;
         }
+        public override void Show()
+        {
+            base.Show();
+            RaycastInput.GetInstance().blockRaycast = true;
+        }
+
+        public override void Hide(bool onlyDisableRaycast = false)
+        {
+            base.Hide(onlyDisableRaycast);
+            RaycastInput.GetInstance().blockRaycast = false;
+        }
+
         private void TraderUpgradeUI_onMoneyChanged(float obj)
         {
             UpdateUI();
@@ -51,6 +68,7 @@ namespace Prototype
         public void Bind(Trader tarder)
         {
             m_CostUpgrade = tarder.costUpgrade;
+            m_WorkerUpgrade = tarder.workerSpeedUpgrade;
             m_Tarder = tarder;
             UpdateUI();
 
@@ -80,8 +98,12 @@ namespace Prototype
           
             costText.text = m_CostUpgrade.GetProducCost().ToString("0.0");
             timeText.text = m_Tarder.cooldown.Duration.ToString("0.0");
+
             costLevelUp.cost.text = m_CostUpgrade.currentBuyCost.ToString("0.0");
-            costLevelUp.buyButton.interactable = PlayerData.GetInstance().GetMoney() >= m_CostUpgrade.currentBuyCost;
+            costLevelUp.buyButton.interactable = PlayerData.GetInstance().GetMoney() >= m_CostUpgrade.currentBuyCost && !m_CostUpgrade.IsFinished();
+
+            workerLevelUp.cost.text = m_WorkerUpgrade.currentBuyCost.ToString("0.0");
+            workerLevelUp.buyButton.interactable = PlayerData.GetInstance().GetMoney() >= m_WorkerUpgrade.currentBuyCost && !m_WorkerUpgrade.IsFinished();
         }
     }
 }

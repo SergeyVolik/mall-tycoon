@@ -3,7 +3,7 @@ using UnityEngine.Events;
 
 namespace Prototype
 {
-    public class CashRegister : MonoBehaviour
+    public class CashRegister : MonoBehaviour, IActivateableFromRaycast
     {
         public int producCost = 10;
         public QueueBehaviour queue;
@@ -46,6 +46,11 @@ namespace Prototype
             cooldownView.cooldownRoot.transform.forward = m_Camera.transform.forward;
             cooldown.Tick(Time.deltaTime);
             cooldownView.Tick();
+        }
+
+        public void ActivateFromRaycast()
+        {
+            
         }
     }
 }

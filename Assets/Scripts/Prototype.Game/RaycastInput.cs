@@ -8,8 +8,9 @@ namespace Prototype
         public void ActivateFromRaycast();
     }
 
-    public class RaycastInput : MonoBehaviour
+    public class RaycastInput : Singleton<RaycastInput>
     {
+        public bool blockRaycast = false;
         private void Awake()
         {
             m_Camera = Camera.main;
@@ -18,6 +19,11 @@ namespace Prototype
 
         private void Update()
         {
+            if (blockRaycast)
+            {
+                return;
+            }
+
 #if UNITY_EDITOR
             PCInput();
 #else

@@ -1,10 +1,40 @@
 using System;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Prototype
 {
     [System.Serializable]
+    public class WorkerSpeedUpgrade
+    {
+        public int maxLevel = 10;
+        public float workerTime = 2;
+        public float workerDecreaseValue = 0.1f;
+        public int currentLevel = 1;
+        public float currentBuyCost = 10;
+        public float buyUpgradeIncreaseValue = 10;
+
+        public event Action onUpgraded = delegate { };
+
+        public bool IsFinished() => maxLevel == currentLevel;
+
+        public void LevelUp()
+        {
+            if (currentLevel == maxLevel)
+            {
+                return;   
+            }
+
+            currentLevel++;          
+            currentBuyCost += buyUpgradeIncreaseValue;
+            workerTime -= workerDecreaseValue;
+
+            onUpgraded.Invoke();
+        }
+        public bool IsMaxLevel() => currentLevel == maxLevel;
+        public float GetWorkerTime() => workerTime;
+    }
+
+        [System.Serializable]
     public class CostUpgradeData
     {
         public CostUpgradeItem[] upgrades;
@@ -15,11 +45,10 @@ namespace Prototype
 
         public event Action onUpgraded = delegate { };
 
-        public void LevelUpCost()
+        public void LevelUp()
         {
             currentLevel++;
             var currentUpgrade = upgrades[currentUpgradeIndex];
-            PlayerData.GetInstance().DecreaseMoney(currentBuyCost);
             producCost += currentUpgrade.producCostIncrease;
             currentBuyCost += currentUpgrade.buyUpgradeIncreaseValue;
          
@@ -47,7 +76,7 @@ namespace Prototype
             return producCost;
         }
 
-        public bool IsCostUpgradesFinished() => upgrades.Length - 1 == currentUpgradeIndex &&
+        public bool IsFinished() => upgrades.Length - 1 == currentUpgradeIndex &&
             upgrades[currentUpgradeIndex].maxLevel == currentLevel;
 
         public int GetPrevMax()
@@ -95,6 +124,7 @@ namespace Prototype
         public Cooldown cooldown;
         public CircularCooldownView cooldownView;
         public CostUpgradeData costUpgrade;
+        public WorkerSpeedUpgrade workerSpeedUpgrade;
         public TraderUpgradeUI traderUI;   
 
         private void Awake()
@@ -102,6 +132,13 @@ namespace Prototype
             m_Camera = Camera.main;
             cooldownView.Bind(cooldown);
             traderUI.Bind(this);
+            workerSpeedUpgrade.onUpgraded += UpdateCooldownSpeed;
+            UpdateCooldownSpeed();
+        }
+
+        private void UpdateCooldownSpeed()
+        {
+            cooldown.Duration = workerSpeedUpgrade.workerTime;
         }
 
         public void Update()

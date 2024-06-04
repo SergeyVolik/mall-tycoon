@@ -36,6 +36,9 @@ namespace Prototype
 
         public static string SplitBy3Number(float value)
         {
+            if (value < 1000)
+                return value.ToString("0");
+
             strBuilder.Clear();
             var result = SplitNumber((int)value);
 
