@@ -1,5 +1,4 @@
 using System;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Prototype
@@ -115,7 +114,7 @@ namespace Prototype
         public float buyUpgradeIncreaseValue;
     }
 
-    public class Trader : MonoBehaviour, IActivateableFromRaycast
+    public class TradingSpot : MonoBehaviour, IActivateableFromRaycast
     {
         public string traderName;
         public ResourceTypeSO resourceCost;

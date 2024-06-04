@@ -9862,11 +9862,6 @@ PrefabInstance:
       propertyPath: traderUI
       value: 
       objectReference: {fileID: 937036764}
-    - target: {fileID: 4961510302380108601, guid: de18d80c77cf4a647ab24ad31fabf63f,
-        type: 3}
-      propertyPath: workerSpeedUpgrade.workerTime
-      value: 5
-      objectReference: {fileID: 0}
     - target: {fileID: 6548908423373214335, guid: de18d80c77cf4a647ab24ad31fabf63f,
         type: 3}
       propertyPath: m_LocalPosition.x

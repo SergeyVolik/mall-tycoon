@@ -6,7 +6,7 @@ namespace Prototype
     public class QueueBehaviour : MonoBehaviour
     {
         private Queue<CustomerAI> m_Customers = new Queue<CustomerAI>();
-        public Transform queueStartPoint;
+        public Transform[] queuePoints;
         public float offsetBetweenCustomers;
 
         public void TakeQueue(CustomerAI customer)
@@ -14,6 +14,7 @@ namespace Prototype
             m_Customers.Enqueue(customer);
         }
 
+        public bool HasFreePlace() => m_Customers.Count < queuePoints.Length;
         public CustomerAI Dequeue()
         { 
             return m_Customers.Dequeue();
@@ -53,15 +54,14 @@ namespace Prototype
                 positionInQueue++;              
             }
 
-            Vector3 customerPos = queueStartPoint.position + (queueStartPoint.forward * offsetBetweenCustomers * positionInQueue);
+            Vector3 customerPos = queuePoints[positionInQueue].position;
 
             return customerPos;
         }
 
         public Vector3 GetNextPosition()
         {
-            int positionInQueue = m_Customers.Count;
-            return queueStartPoint.position + (queueStartPoint.forward * offsetBetweenCustomers * positionInQueue);
+            return queuePoints[m_Customers.Count].position;
         }
     }
 }

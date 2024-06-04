@@ -68,6 +68,13 @@ namespace Prototype
                     break;
 
                 case CustomerAIStates.MoveToTrader:
+
+                    if (!trader.queue.HasFreePlace())
+                    {
+                        currentState = CustomerAIStates.MoveToHome;
+                        return;
+                    }
+
                     m_Agent.destination = trader.queue.GetNextPosition();
 
                     if (IsDestinationReached())
@@ -88,6 +95,13 @@ namespace Prototype
                     }
                     break;
                 case CustomerAIStates.MoveToCashRegister:
+
+                    if (!cashRegister.queue.HasFreePlace())
+                    {
+                        currentState = CustomerAIStates.MoveToHome;
+                        return;
+                    }
+
                     m_Agent.destination = cashRegister.queue.GetNextPosition();
 
                     if (IsDestinationReached())

@@ -19,7 +19,7 @@ namespace Prototype
         public LevelUpUIItem workerLevelUp;
         private CostUpgradeData m_CostUpgrade;
         private WorkerSpeedUpgrade m_WorkerUpgrade;
-        private Trader m_Tarder;
+        private TradingSpot m_Tarder;
         private PlayerData m_Playerdata;
 
         protected override void Awake()
@@ -65,7 +65,7 @@ namespace Prototype
             UpdateUI();
         }
 
-        public void Bind(Trader tarder)
+        public void Bind(TradingSpot tarder)
         {
             m_CostUpgrade = tarder.costUpgrade;
             m_WorkerUpgrade = tarder.workerSpeedUpgrade;

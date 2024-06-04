@@ -5,7 +5,7 @@ namespace Prototype
 {
     public class Market : Singleton<Market>
     {
-        public Trader Trader;
+        public TradingSpot Trader;
         public CashRegister CashRegister;
         [SerializeField] private AudioSource source;
         [SerializeField] private PhysicsCallbacks roomTrigger;
