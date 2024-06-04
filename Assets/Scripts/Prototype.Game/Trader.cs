@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Prototype
@@ -34,7 +35,7 @@ namespace Prototype
         public float GetWorkerTime() => workerTime;
     }
 
-        [System.Serializable]
+    [System.Serializable]
     public class CostUpgradeData
     {
         public CostUpgradeItem[] upgrades;
@@ -119,18 +120,13 @@ namespace Prototype
         public string traderName;
         public ResourceTypeSO resourceCost;
         public QueueBehaviour queue;
-        private Transform m_CurrentCustomer;
-        private Camera m_Camera;
-        public Cooldown cooldown;
-        public CircularCooldownView cooldownView;
         public CostUpgradeData costUpgrade;
         public WorkerSpeedUpgrade workerSpeedUpgrade;
-        public TraderUpgradeUI traderUI;   
+        public TraderUpgradeUI traderUI;
+        public TraderAI[] traders;
 
         private void Awake()
         {
-            m_Camera = Camera.main;
-            cooldownView.Bind(cooldown);
             traderUI.Bind(this);
             workerSpeedUpgrade.onUpgraded += UpdateCooldownSpeed;
             UpdateCooldownSpeed();
@@ -138,32 +134,43 @@ namespace Prototype
 
         private void UpdateCooldownSpeed()
         {
-            cooldown.Duration = workerSpeedUpgrade.workerTime;
+            foreach (var item in traders)
+            {
+                item.cooldown.Duration = workerSpeedUpgrade.workerTime;
+            }          
         }
 
         public void Update()
         {
-            if (m_CurrentCustomer == null)
+            foreach (var traderAi in traders)
             {
-                if (queue.TryPeek(out var peek))
+                traderAi.Tick();
+
+                if (traderAi.IsWorkFinished() && !traderAi.IsHasCustomer() && queue.Count != 0)
                 {
-                    m_CurrentCustomer = peek;
-                    cooldown.Restart();
+                    var customer = queue.Dequeue();
+                    traderAi.StartWorking(customer);
                 }
-            }
-            else if (cooldown.IsFinished)
+                else if (traderAi.IsWorkFinished() && traderAi.IsHasCustomer())
+                {
+                    var customerAI = traderAi.CurrentCustomer;
+                    customerAI.buyedProducCost = costUpgrade.producCost;
+                    customerAI.holdedResource = resourceCost;
+                    traderAi.Clear();
+                }
+            }        
+        }
+
+        private TraderAI GetFreeTrader()
+        {
+            foreach (var item in traders)
             {
-                var customerAI = m_CurrentCustomer.GetComponent<CustomerAI>();
-                customerAI.buyedProducCost = costUpgrade.producCost;
-                customerAI.holdedResource = resourceCost;
-                m_CurrentCustomer = null;
-                queue.Dequeue();
+                if (item.IsWorkFinished())
+                    return item;
             }
 
-            cooldownView.cooldownRoot.transform.forward = m_Camera.transform.forward;
-            cooldown.Tick(Time.deltaTime);
-            cooldownView.Tick();
-        } 
+            return null;
+        }
 
         public void ActivateFromRaycast()
         {

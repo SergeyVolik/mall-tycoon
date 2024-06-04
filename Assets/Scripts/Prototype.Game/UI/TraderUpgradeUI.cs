@@ -97,7 +97,7 @@ namespace Prototype
             levelupMult.text = m_CostUpgrade.GetNextUpgradeMult();
           
             costText.text = m_CostUpgrade.GetProducCost().ToString("0.0");
-            timeText.text = m_Tarder.cooldown.Duration.ToString("0.0");
+            timeText.text = m_WorkerUpgrade.workerTime.ToString("0.0");
 
             costLevelUp.cost.text = m_CostUpgrade.currentBuyCost.ToString("0.0");
             costLevelUp.buyButton.interactable = PlayerData.GetInstance().GetMoney() >= m_CostUpgrade.currentBuyCost && !m_CostUpgrade.IsFinished();

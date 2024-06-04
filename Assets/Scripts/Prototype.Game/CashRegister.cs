@@ -7,7 +7,7 @@ namespace Prototype
     {
         public int producCost = 10;
         public QueueBehaviour queue;
-        private Transform m_CurrentCustomer;
+        private CustomerAI m_CurrentCustomer;
         private Camera m_Camera;
         public Cooldown cooldown;
         public CircularCooldownView cooldownView;

@@ -7,7 +7,7 @@ namespace Prototype
     {
         public float buyedProducCost;
         public ResourceTypeSO holdedResource;
-        public CustomerAIStates currentState = CustomerAIStates.MoveToTrader;
+        public CustomerAIStates currentState = CustomerAIStates.SelectMarketPosition;
         private Vector3 m_StartPos;
         private Market m_Market;
         private NavMeshAgent m_Agent;
@@ -24,11 +24,20 @@ namespace Prototype
         }
         public enum CustomerAIStates
         {
+            SelectMarketPosition,
+            MoveToMarket,
             MoveToTrader,
             IdleInTraderQueue,
+            WaitTraderWork,
             MoveToCashRegister,
             IdleInCashRegisterQueue,
             MoveToHome
+        }
+
+        public void MoveToTrader(Vector3 traderPosition)
+        {
+            currentState = CustomerAIStates.WaitTraderWork;
+            m_Agent.destination = traderPosition;
         }
 
         private void Update()
@@ -45,29 +54,38 @@ namespace Prototype
 
             switch (currentState)
             {
-                case CustomerAIStates.MoveToTrader:
+                case CustomerAIStates.SelectMarketPosition:
+                    currentState = CustomerAIStates.MoveToMarket;
+                    m_Agent.destination = Market.GetInstance().GetRadnomInMarketPosition();
 
+                    break;
+
+                case CustomerAIStates.MoveToMarket:                  
+                    if (IsDestinationReached())
+                    {
+                        currentState = CustomerAIStates.MoveToTrader;
+                    }
+                    break;
+
+                case CustomerAIStates.MoveToTrader:
                     m_Agent.destination = trader.queue.GetNextPosition();
 
                     if (IsDestinationReached())
                     {
                         currentState = CustomerAIStates.IdleInTraderQueue;
-                        trader.queue.TakeQueue(m_Transform);
+                        trader.queue.TakeQueue(this);
                     }
-
                     break;
                 case CustomerAIStates.IdleInTraderQueue:
 
-                    if (!trader.queue.IsInQueue(m_Transform))
+                    m_Agent.destination = trader.queue.GetPositionInQueue(this);
+                    break;
+                case CustomerAIStates.WaitTraderWork:
+                    if (buyedProducCost != 0)
                     {
                         currentState = CustomerAIStates.MoveToCashRegister;
                         m_Agent.destination = cashRegister.queue.GetNextPosition();
                     }
-                    else
-                    {
-                        m_Agent.destination = trader.queue.GetPositionInQueue(m_Transform);
-                    }
-
                     break;
                 case CustomerAIStates.MoveToCashRegister:
                     m_Agent.destination = cashRegister.queue.GetNextPosition();
@@ -75,23 +93,22 @@ namespace Prototype
                     if (IsDestinationReached())
                     {
                         currentState = CustomerAIStates.IdleInCashRegisterQueue;
-                        cashRegister.queue.TakeQueue(m_Transform);
+                        cashRegister.queue.TakeQueue(this);
                     }
                     break;
                 case CustomerAIStates.IdleInCashRegisterQueue:
 
-                    if (!cashRegister.queue.IsInQueue(m_Transform))
+                    if (!cashRegister.queue.IsInQueue(this))
                     {
                         currentState = CustomerAIStates.MoveToHome;
                         m_Agent.destination = m_StartPos;
                     }
                     else
                     {
-                        m_Agent.destination = cashRegister.queue.GetPositionInQueue(m_Transform);
+                        m_Agent.destination = cashRegister.queue.GetPositionInQueue(this);
                     }
                     break;
                 case CustomerAIStates.MoveToHome:
-
                     if (IsDestinationReached())
                     {
                         GameObject.Destroy(gameObject);

@@ -12,6 +12,14 @@ namespace Prototype
         private int m_UnitsInside;
         public int maxUnitsInMarket;
 
+        [SerializeField]
+        private Transform[] m_CustomerEnterPositions;
+
+        public Vector3 GetRadnomInMarketPosition()
+        {
+            return m_CustomerEnterPositions[UnityEngine.Random.Range(0, m_CustomerEnterPositions.Length)].position;
+        }
+
         private void Awake()
         {
             roomTrigger.onTriggerEnter += RoomTrigger_onTriggerEnter;

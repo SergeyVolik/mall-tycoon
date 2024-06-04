@@ -5,31 +5,33 @@ namespace Prototype
 {
     public class QueueBehaviour : MonoBehaviour
     {
-        private Queue<Transform> m_Customers = new Queue<Transform>();
+        private Queue<CustomerAI> m_Customers = new Queue<CustomerAI>();
         public Transform queueStartPoint;
         public float offsetBetweenCustomers;
 
-        public void TakeQueue(Transform customer)
+        public void TakeQueue(CustomerAI customer)
         {
             m_Customers.Enqueue(customer);
         }
 
-        public void Dequeue()
+        public CustomerAI Dequeue()
         { 
-            m_Customers.Dequeue();
+            return m_Customers.Dequeue();
         }
 
-        public Transform Peek()
+        public CustomerAI Peek()
         {
             return m_Customers.Peek();
         }
 
-        public bool TryPeek(out Transform peek)
+        public int Count => m_Customers.Count;
+
+        public bool TryPeek(out CustomerAI peek)
         {
             return m_Customers.TryPeek(out peek);
         }
 
-        public bool IsInQueue(Transform customer)
+        public bool IsInQueue(CustomerAI customer)
         {
             foreach (var item in m_Customers)
             {
@@ -40,7 +42,7 @@ namespace Prototype
             return false;
         }
 
-        public Vector3 GetPositionInQueue(Transform customer)
+        public Vector3 GetPositionInQueue(CustomerAI customer)
         {
             int positionInQueue = 0;
 
