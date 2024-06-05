@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -15,6 +16,18 @@ namespace Prototype
         private const float tickRate = 0.5f;
         private float tickT;
         private CashRegister m_SelectedCashRegister = null;
+        private NavAgentAnimationController m_AnimatorController;
+        private NavAgentAnimationController AnimatorController
+        {
+            get
+            {
+                if (m_AnimatorController == null)
+                {
+                    m_AnimatorController = GetComponentInChildren<NavAgentAnimationController>();
+                }
+                return m_AnimatorController;
+            }
+        }
         private void Awake()
         {
             m_StartPos = transform.position;
@@ -22,6 +35,7 @@ namespace Prototype
             m_Agent = GetComponent<NavMeshAgent>();
             m_Transform = transform;
         }
+
         public enum CustomerAIStates
         {
             Idle,
@@ -52,7 +66,7 @@ namespace Prototype
             currentState = CustomerAIStates.MoveToHome;
             m_Agent.destination = m_StartPos;
         }
-      
+
         private void Update()
         {
             tickT += Time.deltaTime;
@@ -61,8 +75,8 @@ namespace Prototype
                 return;
 
             tickT = 0;
-            
-            var trader = m_Market.Trader;           
+
+            var trader = m_Market.Trader;
 
             switch (currentState)
             {
@@ -72,7 +86,7 @@ namespace Prototype
 
                     break;
 
-                case CustomerAIStates.MoveToMarket:                  
+                case CustomerAIStates.MoveToMarket:
                     if (IsDestinationReached())
                     {
                         currentState = CustomerAIStates.MoveToTraderQueue;
@@ -153,6 +167,12 @@ namespace Prototype
         private bool IsDestinationReached()
         {
             return Vector3.Distance(m_Transform.position, m_Agent.destination) < 0.5f;
+        }
+
+        internal void SetMoveSpeed(float speed)
+        {
+            m_Agent.speed = speed;
+            AnimatorController.SetMoveSpeed(speed);
         }
     }
 }

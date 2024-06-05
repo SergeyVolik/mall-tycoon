@@ -135,6 +135,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ea6d02b342195644981e9c6829f69a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spawnOnAwake: 0
   skins:
   - {fileID: 1012469922647074, guid: 90564702aa7d8cc4faf30d76e536193e, type: 3}
   - {fileID: 1733007251051734, guid: 36dfea047b0b3f943bf972dcbaeaaa3c, type: 3}

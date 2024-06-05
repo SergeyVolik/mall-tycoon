@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,8 +9,14 @@ namespace Prototype
     public class NavAgentAnimationController : MonoBehaviour
     {
         private static int s_WalkAnimParam = Animator.StringToHash("Walk");
+        private static int s_MoveSpeedParam = Animator.StringToHash("MoveSpeed");
         private NavMeshAgent m_Agent;
         private Animator m_Animator;
+
+        internal void SetMoveSpeed(float speed)
+        {
+            m_Animator.SetFloat(s_MoveSpeedParam, speed);
+        }
 
         private void Awake()
         {

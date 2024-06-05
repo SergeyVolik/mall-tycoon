@@ -51,13 +51,13 @@ namespace Prototype
         public override void Show()
         {
             base.Show();
-            RaycastInput.GetInstance().blockRaycast = true;
+            RaycastInput.GetInstance().BlockRaycast = true;
         }
 
         public override void Hide(bool onlyDisableRaycast = false)
         {
             base.Hide(onlyDisableRaycast);
-            RaycastInput.GetInstance().blockRaycast = false;
+            RaycastInput.GetInstance().BlockRaycast = false;
         }
 
         private void TraderUpgradeUI_onMoneyChanged(float obj)

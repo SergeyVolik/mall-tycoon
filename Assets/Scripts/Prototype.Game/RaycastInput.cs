@@ -10,7 +10,19 @@ namespace Prototype
 
     public class RaycastInput : Singleton<RaycastInput>
     {
-        public bool blockRaycast = false;
+        private bool m_BlockRaycast;
+        private Camera m_Camera;
+        private Vector3 startDragCamPos;
+        private RaycastHit[] m_Hits;
+
+        public bool BlockRaycast { get 
+            {
+                return m_BlockRaycast;
+            } set {
+                frameSkiped = false;
+                m_BlockRaycast = value;
+            } }
+        public bool frameSkiped = false;
         private void Awake()
         {
             m_Camera = Camera.main;
@@ -19,7 +31,13 @@ namespace Prototype
 
         private void Update()
         {
-            if (blockRaycast)
+            if (!frameSkiped)
+            {
+                frameSkiped = true;
+                return;
+            }
+
+            if (BlockRaycast)
             {
                 return;
             }
@@ -31,9 +49,7 @@ namespace Prototype
 #endif
         }
 
-        private Camera m_Camera;
-        private Vector3 startDragCamPos;
-        private RaycastHit[] m_Hits;
+
         private void MobileInput()
         {
             if (Input.touchCount == 0)

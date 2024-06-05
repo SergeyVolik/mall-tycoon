@@ -4,13 +4,21 @@ namespace Prototype
 {
     public class SpawnRandomSkin : MonoBehaviour
     {
+        public bool spawnOnAwake = true;
         public GameObject[] skins;
-
+       
         private void Awake()
         {
-            var skinPrefab = skins[Random.Range(0, skins.Length)];
+            if (spawnOnAwake)
+            {
+                SpawnSkin();
+            }
+        }
 
-            GameObject.Instantiate(skinPrefab, transform);
+        public GameObject SpawnSkin()
+        {
+            var skinPrefab = skins[Random.Range(0, skins.Length)];
+            return GameObject.Instantiate(skinPrefab, transform);
         }
     }
 }
