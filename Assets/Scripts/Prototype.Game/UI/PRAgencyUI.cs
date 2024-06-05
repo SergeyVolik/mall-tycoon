@@ -17,19 +17,21 @@ namespace Prototype
 
             customersMoveSpeedLevelUpUI.buyButton.onClick.AddListener(() =>
             {
-                m_PRAgency.m_Spanwer.LevelUpMoveSpeed();
+                m_PRAgency.m_Spanwer.customerMoveSpeed.LevelUp();
             });
 
             customerSpawnSpeedLevelUpUI.buyButton.onClick.AddListener(() =>
             {
-                m_PRAgency.m_Spanwer.LevelUpSpawnSpeed();
+                m_PRAgency.m_Spanwer.customerSpawnSpeed.LevelUp();
             });
         }
 
         public void Bind(PRAgency prAgency)
         {
             m_PRAgency = prAgency;
-            m_PRAgency.m_Spanwer.OnChanged += UpdateUI;
+            m_PRAgency.m_Spanwer.customerMoveSpeed.onChanged += UpdateUI;
+            m_PRAgency.m_Spanwer.customerSpawnSpeed.onChanged += UpdateUI;
+
             UpdateUI();
         }
 
@@ -47,13 +49,23 @@ namespace Prototype
 
         void UpdateUI()
         {
-            moveSpeedText.text = $"customers move speed: {m_PRAgency.m_Spanwer.GetCurrentMoveSpeed()}";
-            spawnSpeedText.text = $"customers spawn speed: {m_PRAgency.m_Spanwer.SpawnsPerMinute()} p/m";
+            var customerMoveSpeed = m_PRAgency.m_Spanwer.customerMoveSpeed;
+            var customerSpawnSpeed = m_PRAgency.m_Spanwer.customerSpawnSpeed;
 
-            customersMoveSpeedLevelUpUI.buyButton.interactable = true;
-            customersMoveSpeedLevelUpUI.cost.text = m_PRAgency.m_Spanwer.LevelUpMoveSpeedCost().ToString("0");
-            customerSpawnSpeedLevelUpUI.buyButton.interactable = true;
-            customerSpawnSpeedLevelUpUI.cost.text = m_PRAgency.m_Spanwer.LevelUpSpawnSpeedCost().ToString("0");
+            moveSpeedText.text = $"customers move speed: {customerMoveSpeed.GetValue().ToString("0.0")}";
+            spawnSpeedText.text = $"customers spawn speed: {m_PRAgency.m_Spanwer.SpawnsPerMinute().ToString("0.0")} p/m";
+
+            var playerdata = PlayerData.GetInstance().GetMoney();
+
+            customersMoveSpeedLevelUpUI.buyButton.interactable = customerMoveSpeed.GetCostValue() <= playerdata 
+                && !customerMoveSpeed.IsMaxLevel();
+
+            customersMoveSpeedLevelUpUI.cost.text = customerMoveSpeed.IsMaxLevel() ? "Max" : customerMoveSpeed.GetCostValue().ToString("0");
+
+            customerSpawnSpeedLevelUpUI.buyButton.interactable = customerSpawnSpeed.GetCostValue() <= playerdata 
+                && !customerSpawnSpeed.IsMaxLevel();
+
+            customerSpawnSpeedLevelUpUI.cost.text = customerSpawnSpeed.IsMaxLevel() ? "Max" : customerSpawnSpeed.GetCostValue().ToString("0");
         }
     }
 }

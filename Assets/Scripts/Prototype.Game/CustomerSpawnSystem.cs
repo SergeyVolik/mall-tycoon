@@ -3,78 +3,97 @@ using UnityEngine;
 
 namespace Prototype
 {
+    public enum UpgradeOp
+    {
+        Increase,
+        Decrease,
+        Mult,
+        Divide
+    }
+
+    [System.Serializable]
+    public class UpgradeData
+    {
+        public UpgradeOp upgradeOp;
+        public float defaultValue;
+        public float changeValue;
+        public int maxLevel;
+        public int currentLevel;
+        public float upgradeDefaultCost;
+        public UpgradeOp upgradeCostOp;
+        public float upgradeCostChangeValue;
+
+        public event Action onChanged = delegate { };
+
+        public void LevelUp()
+        {
+            PlayerData.GetInstance().DecreaseMoney(GetCostValue());
+            currentLevel++;          
+            onChanged.Invoke();
+        }
+
+        public bool IsMaxLevel() => currentLevel == maxLevel;
+
+        public float GetValue(UpgradeOp upgradeOp, float defaultValue, float changeValue, float currentLevel)
+        {
+            switch (upgradeOp)
+            {
+                case UpgradeOp.Increase:
+                    return defaultValue + changeValue * currentLevel;
+
+                case UpgradeOp.Decrease:
+                    return defaultValue - changeValue * currentLevel;
+
+                case UpgradeOp.Mult:
+                    return defaultValue * changeValue * currentLevel;
+
+                case UpgradeOp.Divide:
+                    return defaultValue / changeValue * currentLevel;
+                default:
+                    break;
+            }
+
+            return 0;
+        }
+        public float GetValue()
+        {
+            return GetValue(upgradeOp, defaultValue, changeValue, currentLevel);
+        }
+        public float GetCostValue()
+        {
+            return GetValue(upgradeCostOp, upgradeDefaultCost, upgradeCostChangeValue, currentLevel);
+        }
+    }
     public class CustomerSpawnSystem : MonoBehaviour
     {
         public GameObject customerPrefab;
 
-        public float spawnInterval;
-        public float decreaseSpawnInterval;
-        public int maxLevel;
-        public int currentLevel;
-
-        public float defaultCustomerMoveSpeed;
-        public float customerMoveSpeedLevel;
-        public float customerMoveSpeedIncreasePerLevel;
-
-        public float customerMoveMaxSpeedLevel;
-        public event Action OnChanged = delegate { };
-
-        public void LevelUpSpawnSpeed()
-        {
-            currentLevel++;
-            OnChanged.Invoke();
-        }
-
-        public void LevelUpMoveSpeed()
-        {
-            customerMoveSpeedLevel++;
-            OnChanged.Invoke();
-        }
-
-        public float LevelUpSpawnSpeedCost() => 100;
-        public float LevelUpMoveSpeedCost() => 100;
-
-        public float GetCurrentMoveSpeed()
-        {
-            return defaultCustomerMoveSpeed + customerMoveSpeedLevel * customerMoveSpeedIncreasePerLevel;
-        }
-
-        public bool IsMaxSpawnLevel() => currentLevel == maxLevel;
+        public UpgradeData customerSpawnSpeed;
+        public UpgradeData customerMoveSpeed;
 
         public float SpawnsPerMinute()
         {
-            return GetNextSpawnInterval() / 60f;
+            return 60f / customerSpawnSpeed.GetValue();
         }
 
-        private void Awake()
-        {
-            spawnInterval = GetNextSpawnInterval();
-        }
-
-        private float GetNextSpawnInterval()
-        {
-            return spawnInterval - currentLevel * decreaseSpawnInterval;
-        }
-
-        public float t;
+        private float m_SpawnT;
         public Transform[] customerSpawnPoints;
         private void Update()
         {
-            t += Time.deltaTime;
+            m_SpawnT += Time.deltaTime;
 
-            if (t < spawnInterval)
+            if (m_SpawnT < customerSpawnSpeed.GetValue())
             {
                 return;
             }
 
-            spawnInterval = GetNextSpawnInterval();
-            t = 0;
+            m_SpawnT = 0;
             var spawnPoint = customerSpawnPoints[UnityEngine.Random.Range(0, customerSpawnPoints.Length)];
             var customer = GameObject.Instantiate(customerPrefab, spawnPoint.position, Quaternion.identity);
             var customerSkin = customer.GetComponent<SpawnRandomSkin>();
             customerSkin.SpawnSkin();
             var customerAI = customer.GetComponent<CustomerAI>();
-            customerAI.SetMoveSpeed(GetCurrentMoveSpeed());
+            customerAI.SetMoveSpeed(customerMoveSpeed.GetValue());
         }
     }
 }

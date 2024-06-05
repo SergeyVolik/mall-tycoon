@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 
@@ -36,17 +38,23 @@ namespace Prototype
 
         public static string SplitBy3Number(float value)
         {
-            if (value < 1000)
-                return value.ToString("0");
+            return value.ToString("N0", new NumberFormatInfo()
+            {
+                NumberGroupSizes = new[] { 3 },
+                NumberGroupSeparator = " "
+            });
+        }
 
-            strBuilder.Clear();
-            var result = SplitNumber((int)value);
-
-            foreach ( var item in result ) {
-                strBuilder.Append(item);
-                strBuilder.Append(" ");
+        static int[] GetIntArray(int num)
+        {
+            List<int> listOfInts = new List<int>();
+            while (num > 0)
+            {
+                listOfInts.Add(num % 10);
+                num = num / 10;
             }
-            return strBuilder.ToString();
+            listOfInts.Reverse();
+            return listOfInts.ToArray();
         }
 
         static int[] SplitNumber(int value)

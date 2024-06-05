@@ -1,4 +1,3 @@
-using Unity.Burst.CompilerServices;
 using UnityEngine;
 
 namespace Prototype
@@ -14,15 +13,20 @@ namespace Prototype
         private Camera m_Camera;
         private Vector3 startDragCamPos;
         private RaycastHit[] m_Hits;
-
-        public bool BlockRaycast { get 
+        private bool m_FrameSkiped = false;
+        public bool BlockRaycast
+        {
+            get
             {
                 return m_BlockRaycast;
-            } set {
-                frameSkiped = false;
+            }
+            set
+            {
+                m_FrameSkiped = false;
                 m_BlockRaycast = value;
-            } }
-        public bool frameSkiped = false;
+            }
+        }
+
         private void Awake()
         {
             m_Camera = Camera.main;
@@ -31,9 +35,9 @@ namespace Prototype
 
         private void Update()
         {
-            if (!frameSkiped)
+            if (!m_FrameSkiped)
             {
-                frameSkiped = true;
+                m_FrameSkiped = true;
                 return;
             }
 
@@ -48,7 +52,6 @@ namespace Prototype
             MobileInput();
 #endif
         }
-
 
         private void MobileInput()
         {
