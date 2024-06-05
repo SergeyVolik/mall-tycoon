@@ -41,6 +41,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8463210844531176521}
   - component: {fileID: 1097725378601115576}
+  - component: {fileID: 6442377094235952616}
   m_Layer: 0
   m_Name: TraderUnit
   m_TagString: Untagged
@@ -84,6 +85,26 @@ MonoBehaviour:
     progressImage: {fileID: 2225259047119223916}
     cooldownRoot: {fileID: 5701738305630340687}
   customerMovePoint: {fileID: 7341323961422416109}
+--- !u!114 &6442377094235952616
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5530190277118381023}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ea6d02b342195644981e9c6829f69a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skins:
+  - {fileID: 1980210361356166, guid: 283849f16bfc77440b18d69ac0fc81d8, type: 3}
+  - {fileID: 1489707384901722, guid: 8aa0af7ccd087c046b3395779b8624bd, type: 3}
+  - {fileID: 1455042914267530, guid: 280b080f2a4bfa84ebfc864221e9e6b7, type: 3}
+  - {fileID: 1839013973769842, guid: 58dc7e50917fb9b4cb8aa0630b2fdf65, type: 3}
+  - {fileID: 1724319592866792, guid: 41f6b6d2dfe6ab24b8af76cc44b2961f, type: 3}
+  - {fileID: 1968422764037010, guid: e41904ecb444dd8489ab31299bfe1684, type: 3}
+  - {fileID: 1798286515319742, guid: ed30e279354781a4d8e771bd460e884d, type: 3}
 --- !u!1001 &5394094585040977809
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -95,6 +116,10 @@ PrefabInstance:
     - target: {fileID: 1012469922647074, guid: 90564702aa7d8cc4faf30d76e536193e, type: 3}
       propertyPath: m_Name
       value: Ch_0CP00F00
+      objectReference: {fileID: 0}
+    - target: {fileID: 1012469922647074, guid: 90564702aa7d8cc4faf30d76e536193e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4293905260507518, guid: 90564702aa7d8cc4faf30d76e536193e, type: 3}
       propertyPath: m_LocalPosition.x
