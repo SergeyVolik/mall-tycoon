@@ -7,50 +7,48 @@ namespace Prototype
     {
         public int producCost = 10;
         public QueueBehaviour queue;
-        private CustomerAI m_CurrentCustomer;
-        private Camera m_Camera;
-        public Cooldown cooldown;
-        public CircularCooldownView cooldownView;
+
+        public WorkerSpeedUpgrade workerSpeedUpgrade;
+        public TraderAI traderAi;
 
         public FloatingText floatingText;
         public UnityEvent onBuyUE;
+
         private void Awake()
         {
-            m_Camera = Camera.main;
-            cooldownView.Bind(cooldown);
+            workerSpeedUpgrade.onUpgraded += UpdateCooldownSpeed;
+            UpdateCooldownSpeed();
+        }
+
+        void UpdateCooldownSpeed()
+        {
+            traderAi.cooldown.Duration = workerSpeedUpgrade.workerTime;
         }
 
         public void Update()
         {
-            if (m_CurrentCustomer == null)
+            traderAi.Tick();
+
+            if (traderAi.IsWorkFinished() && !traderAi.IsHasCustomer() && queue.Count != 0)
             {
-                if (queue.TryPeek(out var peek))
-                {
-                    m_CurrentCustomer = peek;
-                    cooldown.Restart();
-                }   
+                var customer = queue.Dequeue();
+                traderAi.StartWorking(customer);
+                customer.MoveToCashRegister(traderAi.customerMovePoint.position);
             }
-            else if (cooldown.IsFinished)
+            else if (traderAi.IsWorkFinished() && traderAi.IsHasCustomer())
             {
-                var customerAI = m_CurrentCustomer.GetComponent<CustomerAI>();
+                var customerAI = traderAi.CurrentCustomer;
                 PlayerData.GetInstance().Resources.resources.AddResource(customerAI.holdedResource, customerAI.buyedProducCost);
 
                 floatingText.Show(customerAI.buyedProducCost.ToString("0"));
                 customerAI.buyedProducCost = 0;
                 customerAI.holdedResource = null;
-                m_CurrentCustomer = null;
-                queue.Dequeue();
+                traderAi.Clear();
                 onBuyUE.Invoke();
             }
-
-            cooldownView.cooldownRoot.transform.forward = m_Camera.transform.forward;
-            cooldown.Tick(Time.deltaTime);
-            cooldownView.Tick();
         }
 
         public void ActivateFromRaycast()
-        {
-            
-        }
+        { }
     }
 }

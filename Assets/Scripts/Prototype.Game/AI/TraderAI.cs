@@ -34,8 +34,7 @@ namespace Prototype
         public void StartWorking(CustomerAI customer)
         {
             CurrentCustomer = customer;
-            cooldown.Restart();
-            customer.MoveToTrader(customerMovePoint.position);
+            cooldown.Restart();          
         }
 
         public void Tick()

@@ -149,6 +149,7 @@ namespace Prototype
                 {
                     var customer = queue.Dequeue();
                     traderAi.StartWorking(customer);
+                    customer.MoveToTrader(traderAi.customerMovePoint.position);
                 }
                 else if (traderAi.IsWorkFinished() && traderAi.IsHasCustomer())
                 {
@@ -158,17 +159,6 @@ namespace Prototype
                     traderAi.Clear();
                 }
             }        
-        }
-
-        private TraderAI GetFreeTrader()
-        {
-            foreach (var item in traders)
-            {
-                if (item.IsWorkFinished())
-                    return item;
-            }
-
-            return null;
         }
 
         public void ActivateFromRaycast()

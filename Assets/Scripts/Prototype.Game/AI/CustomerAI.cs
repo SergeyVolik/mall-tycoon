@@ -12,9 +12,9 @@ namespace Prototype
         private Market m_Market;
         private NavMeshAgent m_Agent;
         private Transform m_Transform;
-        private const float tickRate = 0.2f;
+        private const float tickRate = 0.5f;
         private float tickT;
-
+        private CashRegister m_SelectedCashRegister = null;
         private void Awake()
         {
             m_StartPos = transform.position;
@@ -24,12 +24,14 @@ namespace Prototype
         }
         public enum CustomerAIStates
         {
+            Idle,
             SelectMarketPosition,
             MoveToMarket,
-            MoveToTrader,
-            IdleInTraderQueue,
+            MoveToTraderQueue,
+            WaitInTraderQueue,
             WaitTraderWork,
-            MoveToCashRegister,
+            WaitCashRegister,
+            MoveToCashRegisterQueue,
             IdleInCashRegisterQueue,
             MoveToHome
         }
@@ -39,7 +41,18 @@ namespace Prototype
             currentState = CustomerAIStates.WaitTraderWork;
             m_Agent.destination = traderPosition;
         }
+        public void MoveToCashRegister(Vector3 traderPosition)
+        {
+            currentState = CustomerAIStates.WaitCashRegister;
+            m_Agent.destination = traderPosition;
+        }
 
+        private void GoHome()
+        {
+            currentState = CustomerAIStates.MoveToHome;
+            m_Agent.destination = m_StartPos;
+        }
+      
         private void Update()
         {
             tickT += Time.deltaTime;
@@ -49,8 +62,7 @@ namespace Prototype
 
             tickT = 0;
             
-            var trader = m_Market.Trader;
-            var cashRegister = m_Market.CashRegister;
+            var trader = m_Market.Trader;           
 
             switch (currentState)
             {
@@ -63,15 +75,15 @@ namespace Prototype
                 case CustomerAIStates.MoveToMarket:                  
                     if (IsDestinationReached())
                     {
-                        currentState = CustomerAIStates.MoveToTrader;
+                        currentState = CustomerAIStates.MoveToTraderQueue;
                     }
                     break;
 
-                case CustomerAIStates.MoveToTrader:
+                case CustomerAIStates.MoveToTraderQueue:
 
                     if (!trader.queue.HasFreePlace())
                     {
-                        currentState = CustomerAIStates.MoveToHome;
+                        GoHome();
                         return;
                     }
 
@@ -79,48 +91,53 @@ namespace Prototype
 
                     if (IsDestinationReached())
                     {
-                        currentState = CustomerAIStates.IdleInTraderQueue;
+                        currentState = CustomerAIStates.WaitInTraderQueue;
                         trader.queue.TakeQueue(this);
                     }
                     break;
-                case CustomerAIStates.IdleInTraderQueue:
+                case CustomerAIStates.WaitInTraderQueue:
 
                     m_Agent.destination = trader.queue.GetPositionInQueue(this);
                     break;
                 case CustomerAIStates.WaitTraderWork:
                     if (buyedProducCost != 0)
                     {
-                        currentState = CustomerAIStates.MoveToCashRegister;
-                        m_Agent.destination = cashRegister.queue.GetNextPosition();
+                        currentState = CustomerAIStates.MoveToCashRegisterQueue;
+                        m_SelectedCashRegister = Market.GetInstance().GetOptimalCashRegister();
+
+                        if (m_SelectedCashRegister == null)
+                        {
+                            GoHome();
+                            return;
+                        }
+                        m_Agent.destination = m_SelectedCashRegister.queue.GetNextPosition();
                     }
                     break;
-                case CustomerAIStates.MoveToCashRegister:
-
-                    if (!cashRegister.queue.HasFreePlace())
+                case CustomerAIStates.WaitCashRegister:
+                    if (buyedProducCost == 0)
                     {
-                        currentState = CustomerAIStates.MoveToHome;
+                        GoHome();
+                    }
+                    break;
+                case CustomerAIStates.MoveToCashRegisterQueue:
+
+                    if (!m_SelectedCashRegister.queue.HasFreePlace())
+                    {
+                        GoHome();
                         return;
                     }
 
-                    m_Agent.destination = cashRegister.queue.GetNextPosition();
+                    m_Agent.destination = m_SelectedCashRegister.queue.GetNextPosition();
 
                     if (IsDestinationReached())
                     {
                         currentState = CustomerAIStates.IdleInCashRegisterQueue;
-                        cashRegister.queue.TakeQueue(this);
+                        m_SelectedCashRegister.queue.TakeQueue(this);
                     }
                     break;
                 case CustomerAIStates.IdleInCashRegisterQueue:
 
-                    if (!cashRegister.queue.IsInQueue(this))
-                    {
-                        currentState = CustomerAIStates.MoveToHome;
-                        m_Agent.destination = m_StartPos;
-                    }
-                    else
-                    {
-                        m_Agent.destination = cashRegister.queue.GetPositionInQueue(this);
-                    }
+                    m_Agent.destination = m_SelectedCashRegister.queue.GetPositionInQueue(this);
                     break;
                 case CustomerAIStates.MoveToHome:
                     if (IsDestinationReached())

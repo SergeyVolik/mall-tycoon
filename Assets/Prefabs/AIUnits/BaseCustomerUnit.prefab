@@ -122,7 +122,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buyedProducCost: 0
   holdedResource: {fileID: 0}
-  currentState: 0
+  currentState: 1
 --- !u!114 &221375115330508007
 MonoBehaviour:
   m_ObjectHideFlags: 0

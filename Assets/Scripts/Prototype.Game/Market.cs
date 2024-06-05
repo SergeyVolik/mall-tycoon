@@ -6,7 +6,7 @@ namespace Prototype
     public class Market : Singleton<Market>
     {
         public TradingSpot Trader;
-        public CashRegister CashRegister;
+        public CashRegister[] cashRegistes;
         [SerializeField] private AudioSource source;
         [SerializeField] private PhysicsCallbacks roomTrigger;
         private int m_UnitsInside;
@@ -33,6 +33,26 @@ namespace Prototype
             m_UnitsInside--;
 
             UpdateCrowdVolume();
+        }
+
+        public CashRegister GetOptimalCashRegister()
+        {
+            int minQueueLen = int.MaxValue;
+            CashRegister result = null;
+
+            foreach (var item in cashRegistes)
+            {
+                if (!item.queue.HasFreePlace())
+                {
+                    continue;
+                }
+                if (minQueueLen > item.queue.Count)
+                {
+                    minQueueLen = item.queue.Count;
+                    result = item;
+                }
+            }
+            return result;
         }
 
         private void UpdateCrowdVolume()

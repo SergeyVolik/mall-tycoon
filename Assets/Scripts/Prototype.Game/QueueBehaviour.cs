@@ -14,7 +14,7 @@ namespace Prototype
             m_Customers.Enqueue(customer);
         }
 
-        public bool HasFreePlace() => m_Customers.Count < queuePoints.Length;
+        public bool HasFreePlace() => m_Customers.Count < queuePoints.Length-1;
         public CustomerAI Dequeue()
         { 
             return m_Customers.Dequeue();
