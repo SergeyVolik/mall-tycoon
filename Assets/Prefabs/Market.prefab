@@ -166,6 +166,40 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &1000571070087615813
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4778591970029692169}
+  m_Layer: 0
+  m_Name: Cashiers
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4778591970029692169
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1000571070087615813}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 6686792569007828505}
+  - {fileID: 6942278060076654019}
+  - {fileID: 4511169735555849465}
+  m_Father: {fileID: 8903776658812812654}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2262878926109373177
 GameObject:
   m_ObjectHideFlags: 0
@@ -637,16 +671,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4424139369641333790}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -2.4599996, y: 0, z: -6.7000012}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3461013038533366539}
   - {fileID: 3363406329240095804}
-  - {fileID: 6686792569007828505}
-  - {fileID: 6942278060076654019}
-  - {fileID: 4511169735555849465}
+  - {fileID: 4778591970029692169}
   - {fileID: 3028611939077929600}
   - {fileID: 1041120804677991823}
   - {fileID: 5803593827841705540}
@@ -2399,12 +2431,12 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 8903776658812812654}
+    m_TransformParent: {fileID: 4778591970029692169}
     m_Modifications:
     - target: {fileID: 208038082899218437, guid: c48df1dc0f12e9b4babd1fe972f52b35,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.47
+      value: 2.4700003
       objectReference: {fileID: 0}
     - target: {fileID: 208038082899218437, guid: c48df1dc0f12e9b4babd1fe972f52b35,
         type: 3}
@@ -2429,7 +2461,7 @@ PrefabInstance:
     - target: {fileID: 208038082899218437, guid: c48df1dc0f12e9b4babd1fe972f52b35,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.7071068
+      value: 0.70710677
       objectReference: {fileID: 0}
     - target: {fileID: 208038082899218437, guid: c48df1dc0f12e9b4babd1fe972f52b35,
         type: 3}
@@ -2454,7 +2486,7 @@ PrefabInstance:
     - target: {fileID: 3101413943859050349, guid: c48df1dc0f12e9b4babd1fe972f52b35,
         type: 3}
       propertyPath: m_Name
-      value: CashRegister (2)
+      value: Cashier3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2663,12 +2695,12 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 8903776658812812654}
+    m_TransformParent: {fileID: 4778591970029692169}
     m_Modifications:
     - target: {fileID: 208038082899218437, guid: c48df1dc0f12e9b4babd1fe972f52b35,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.47
+      value: 2.4700005
       objectReference: {fileID: 0}
     - target: {fileID: 208038082899218437, guid: c48df1dc0f12e9b4babd1fe972f52b35,
         type: 3}
@@ -2693,7 +2725,7 @@ PrefabInstance:
     - target: {fileID: 208038082899218437, guid: c48df1dc0f12e9b4babd1fe972f52b35,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.7071068
+      value: 0.70710677
       objectReference: {fileID: 0}
     - target: {fileID: 208038082899218437, guid: c48df1dc0f12e9b4babd1fe972f52b35,
         type: 3}
@@ -2718,7 +2750,7 @@ PrefabInstance:
     - target: {fileID: 3101413943859050349, guid: c48df1dc0f12e9b4babd1fe972f52b35,
         type: 3}
       propertyPath: m_Name
-      value: CashRegister
+      value: Cashier1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2838,12 +2870,12 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 8903776658812812654}
+    m_TransformParent: {fileID: 4778591970029692169}
     m_Modifications:
     - target: {fileID: 208038082899218437, guid: c48df1dc0f12e9b4babd1fe972f52b35,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.47
+      value: 2.4700005
       objectReference: {fileID: 0}
     - target: {fileID: 208038082899218437, guid: c48df1dc0f12e9b4babd1fe972f52b35,
         type: 3}
@@ -2853,7 +2885,7 @@ PrefabInstance:
     - target: {fileID: 208038082899218437, guid: c48df1dc0f12e9b4babd1fe972f52b35,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.06
+      value: 0.06000042
       objectReference: {fileID: 0}
     - target: {fileID: 208038082899218437, guid: c48df1dc0f12e9b4babd1fe972f52b35,
         type: 3}
@@ -2868,7 +2900,7 @@ PrefabInstance:
     - target: {fileID: 208038082899218437, guid: c48df1dc0f12e9b4babd1fe972f52b35,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.7071068
+      value: 0.70710677
       objectReference: {fileID: 0}
     - target: {fileID: 208038082899218437, guid: c48df1dc0f12e9b4babd1fe972f52b35,
         type: 3}
@@ -2893,7 +2925,7 @@ PrefabInstance:
     - target: {fileID: 3101413943859050349, guid: c48df1dc0f12e9b4babd1fe972f52b35,
         type: 3}
       propertyPath: m_Name
-      value: CashRegister (1)
+      value: Cashier2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

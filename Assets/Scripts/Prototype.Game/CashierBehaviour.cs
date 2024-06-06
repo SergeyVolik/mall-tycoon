@@ -1,28 +1,35 @@
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 
 namespace Prototype
 {
-    public class CashRegister : MonoBehaviour, IActivateableFromRaycast
+    public class CashierBehaviour : MonoBehaviour, IActivateableFromRaycast
     {
-        public int producCost = 10;
         public QueueBehaviour queue;
+        public UpgradeData workerSpeedUpgrade;
+        public UpgradeData buyUpgrade;
 
-        public WorkerSpeedUpgrade workerSpeedUpgrade;
         public TraderAI traderAi;
-
-        public FloatingText floatingText;
         public UnityEvent onBuyUE;
+        public BuyFeedback buyFeedback;
 
         private void Awake()
         {
-            workerSpeedUpgrade.onUpgraded += UpdateCooldownSpeed;
+            workerSpeedUpgrade.onChanged += UpdateCooldownSpeed;
             UpdateCooldownSpeed();
+            buyUpgrade.onChanged += BuyUpgrade_onChanged;
+            BuyUpgrade_onChanged();
+        }
+
+        private void BuyUpgrade_onChanged()
+        {
+            gameObject.SetActive(buyUpgrade.IsMaxLevel());
         }
 
         void UpdateCooldownSpeed()
         {
-            traderAi.cooldown.Duration = workerSpeedUpgrade.workerTime;
+            traderAi.cooldown.Duration = workerSpeedUpgrade.GetValue();
         }
 
         public void Update()
@@ -40,7 +47,7 @@ namespace Prototype
                 var customerAI = traderAi.CurrentCustomer;
                 PlayerData.GetInstance().Resources.resources.AddResource(customerAI.holdedResource, customerAI.buyedProducCost);
 
-                floatingText.Show(customerAI.buyedProducCost.ToString("0"));
+                buyFeedback.Play(customerAI.buyedProducCost.ToString("0"));
                 customerAI.buyedProducCost = 0;
                 customerAI.holdedResource = null;
                 traderAi.Clear();
@@ -49,6 +56,13 @@ namespace Prototype
         }
 
         public void ActivateFromRaycast()
-        { }
+        {
+            CashiersUpgradeUI.Instance.Navigate();
+        }
+
+        internal bool IsWorking()
+        {
+            return gameObject.activeSelf;
+        }
     }
 }

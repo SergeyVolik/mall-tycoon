@@ -1,14 +1,11 @@
 using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
 
 namespace Prototype
 {
     public static class TextUtils
     {
-        public static string IntToText(float numberOfIntems)
+        public static string ValueToShortString(float numberOfIntems)
         {
             var thousand = numberOfIntems / 1000f;
 
@@ -34,7 +31,6 @@ namespace Prototype
             return numberOfIntems.ToString();
         }
 
-        private static StringBuilder strBuilder = new StringBuilder();
 
         public static string SplitBy3Number(float value)
         {
@@ -43,26 +39,6 @@ namespace Prototype
                 NumberGroupSizes = new[] { 3 },
                 NumberGroupSeparator = " "
             });
-        }
-
-        static int[] GetIntArray(int num)
-        {
-            List<int> listOfInts = new List<int>();
-            while (num > 0)
-            {
-                listOfInts.Add(num % 10);
-                num = num / 10;
-            }
-            listOfInts.Reverse();
-            return listOfInts.ToArray();
-        }
-
-        static int[] SplitNumber(int value)
-        {
-            int length = (int)(1 + Math.Log(value, 1000));
-            var result = from n in Enumerable.Range(1, length)
-                         select ((int)(value / Math.Pow(1000, length - n))) % 1000;
-            return result.ToArray();
         }
 
         public static string TimeFormat(TimeSpan time)

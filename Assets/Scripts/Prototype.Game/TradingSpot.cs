@@ -120,22 +120,26 @@ namespace Prototype
         public ResourceTypeSO resourceCost;
         public QueueBehaviour queue;
         public CostUpgradeData costUpgrade;
-        public WorkerSpeedUpgrade workerSpeedUpgrade;
-        public TraderUpgradeUI traderUI;
+        public UpgradeData workerSpeedUpgrade;
         public TraderAI[] traders;
 
         private void Awake()
         {
-            traderUI.Bind(this);
-            workerSpeedUpgrade.onUpgraded += UpdateCooldownSpeed;
+           
+            workerSpeedUpgrade.onChanged += UpdateCooldownSpeed;
             UpdateCooldownSpeed();
+        }
+
+        private void Start()
+        {
+            TraderUpgradeUI.Instance.Bind(this);
         }
 
         private void UpdateCooldownSpeed()
         {
             foreach (var item in traders)
             {
-                item.cooldown.Duration = workerSpeedUpgrade.workerTime;
+                item.cooldown.Duration = workerSpeedUpgrade.GetValue();
             }          
         }
 
@@ -163,7 +167,7 @@ namespace Prototype
 
         public void ActivateFromRaycast()
         {
-            traderUI.Navigate();
+            TraderUpgradeUI.Instance.Navigate();
         }
     }
 }

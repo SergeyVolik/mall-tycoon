@@ -15,7 +15,7 @@ namespace Prototype
         private Transform m_Transform;
         private const float tickRate = 0.5f;
         private float tickT;
-        private CashRegister m_SelectedCashRegister = null;
+        private CashierBehaviour m_SelectedCashier = null;
         private NavAgentAnimationController m_AnimatorController;
         private NavAgentAnimationController AnimatorController
         {
@@ -117,14 +117,15 @@ namespace Prototype
                     if (buyedProducCost != 0)
                     {
                         currentState = CustomerAIStates.MoveToCashRegisterQueue;
-                        m_SelectedCashRegister = Market.GetInstance().GetOptimalCashRegister();
+                        m_SelectedCashier = Market.GetInstance().GetOptimalCashRegister();
 
-                        if (m_SelectedCashRegister == null)
+                        if (m_SelectedCashier == null)
                         {
+                            Debug.LogWarning("cashier didn't found");
                             GoHome();
                             return;
                         }
-                        m_Agent.destination = m_SelectedCashRegister.queue.GetNextPosition();
+                        m_Agent.destination = m_SelectedCashier.queue.GetNextPosition();
                     }
                     break;
                 case CustomerAIStates.WaitCashRegister:
@@ -135,23 +136,23 @@ namespace Prototype
                     break;
                 case CustomerAIStates.MoveToCashRegisterQueue:
 
-                    if (!m_SelectedCashRegister.queue.HasFreePlace())
+                    if (!m_SelectedCashier.queue.HasFreePlace())
                     {
                         GoHome();
                         return;
                     }
 
-                    m_Agent.destination = m_SelectedCashRegister.queue.GetNextPosition();
+                    m_Agent.destination = m_SelectedCashier.queue.GetNextPosition();
 
                     if (IsDestinationReached())
                     {
                         currentState = CustomerAIStates.IdleInCashRegisterQueue;
-                        m_SelectedCashRegister.queue.TakeQueue(this);
+                        m_SelectedCashier.queue.TakeQueue(this);
                     }
                     break;
                 case CustomerAIStates.IdleInCashRegisterQueue:
 
-                    m_Agent.destination = m_SelectedCashRegister.queue.GetPositionInQueue(this);
+                    m_Agent.destination = m_SelectedCashier.queue.GetPositionInQueue(this);
                     break;
                 case CustomerAIStates.MoveToHome:
                     if (IsDestinationReached())

@@ -32,6 +32,11 @@ namespace Prototype
             onChanged.Invoke();
         }
 
+        public void ForceChangeEvent()
+        {
+            onChanged.Invoke();
+        }
+
         public bool IsMaxLevel() => currentLevel == maxLevel;
 
         public float GetValue(UpgradeOp upgradeOp, float defaultValue, float changeValue, float currentLevel)

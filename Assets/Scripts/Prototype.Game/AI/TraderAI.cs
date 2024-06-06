@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Prototype
@@ -34,11 +35,26 @@ namespace Prototype
         public void StartWorking(CustomerAI customer)
         {
             CurrentCustomer = customer;
-            cooldown.Restart();          
+            cooldown.Restart();
         }
 
         public void Tick()
         {
+            if (CurrentCustomer)
+            {
+                bool customerInBuySpot = Vector3.Distance(CurrentCustomer.transform.position, customerMovePoint.position) < 0.5f;
+
+                if (!customerInBuySpot)
+                {
+                    cooldownView.cooldownRoot.gameObject.SetActive(false);
+                    cooldown.Stop();
+                }
+                else
+                {
+                    cooldownView.cooldownRoot.gameObject.SetActive(true);
+                    cooldown.Play();
+                }
+            }
             cooldownView.cooldownRoot.transform.forward = m_Camera.transform.forward;
             cooldown.Tick(Time.deltaTime);
             cooldownView.Tick();

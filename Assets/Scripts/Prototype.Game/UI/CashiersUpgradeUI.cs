@@ -1,0 +1,72 @@
+using Prototype.UI;
+
+namespace Prototype
+{
+    public class CashiersUpgradeUI : UIPage
+    {
+        public LevelUpUIItem[] buyCashiers;
+        public LevelUpUIItem[] upgradeCashiers;
+
+        public static CashiersUpgradeUI Instance { get; private set; }
+
+        protected override void Awake()
+        {
+            base.Awake();
+            Instance = this;
+        }
+
+        protected override void Start()
+        {
+            base.Start();
+            Bind(Market.GetInstance());
+        }
+        public void Bind(Market market)
+        {
+            for (int i = 0; i < market.Cashiers.Length; i++)
+            {
+                var cashier = market.Cashiers[i];
+                var buyUI = buyCashiers[i];
+                var upgradeCashierUI = buyCashiers[i];
+
+                cashier.buyUpgrade.onChanged += () =>
+                {
+                    UpgradeBuyUI(cashier, buyUI, upgradeCashierUI);
+                };
+
+                UpgradeBuyUI(cashier, buyUI, upgradeCashierUI);
+
+                buyUI.buyButton.onClick.AddListener(() =>
+                {
+                    cashier.buyUpgrade.LevelUp();
+                });
+
+                buyUI.cost.text = TextUtils.ValueToShortString(cashier.buyUpgrade.GetCostValue());
+
+                cashier.workerSpeedUpgrade.onChanged += () =>
+                {
+                    UpgateCashierUpgradeUI(cashier, upgradeCashierUI);
+                };
+
+                UpgateCashierUpgradeUI(cashier, upgradeCashierUI);
+
+                upgradeCashierUI.buyButton.onClick.AddListener(() =>
+                {
+                    cashier.workerSpeedUpgrade.LevelUp();
+                });
+            }
+        }
+
+        void UpgateCashierUpgradeUI(CashierBehaviour cashier, LevelUpUIItem ui)
+        {
+            ui.UpgradeItem(cashier.workerSpeedUpgrade);          
+            ui.description.text = $"customers: {(60f / cashier.workerSpeedUpgrade.GetValue()).ToString("0.0")} p/m";
+        }
+
+        void UpgradeBuyUI(CashierBehaviour cashier, LevelUpUIItem buyUI, LevelUpUIItem upgradeCashier)
+        {
+            bool isMAx = cashier.buyUpgrade.IsMaxLevel();
+            buyUI.gameObject.SetActive(isMAx);
+            upgradeCashier.gameObject.SetActive(isMAx);
+        }
+    }
+}

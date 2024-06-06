@@ -18,9 +18,11 @@ namespace Prototype
         public LevelUpUIItem costLevelUp;
         public LevelUpUIItem workerLevelUp;
         private CostUpgradeData m_CostUpgrade;
-        private WorkerSpeedUpgrade m_WorkerUpgrade;
+        private UpgradeData m_WorkerUpgrade;
         private TradingSpot m_Tarder;
         private PlayerData m_Playerdata;
+
+        public static TraderUpgradeUI Instance { get; private set; }
 
         protected override void Awake()
         {
@@ -34,12 +36,13 @@ namespace Prototype
 
             workerLevelUp.buyButton.onClick.AddListener(() =>
             {
-                PlayerData.GetInstance().DecreaseMoney(m_WorkerUpgrade.currentBuyCost);
+                PlayerData.GetInstance().DecreaseMoney(m_WorkerUpgrade.GetCostValue());
                 m_WorkerUpgrade.LevelUp();
             });
 
             m_Playerdata = PlayerData.GetInstance();
             m_Playerdata.onMoneyChanged += TraderUpgradeUI_onMoneyChanged;
+            Instance = this;
         }
 
         protected override void OnDestroy()
@@ -91,19 +94,19 @@ namespace Prototype
             levelupProgress.maxValue = nextMax;
             int currentCostLevel = m_CostUpgrade.currentLevel;
             levelupProgress.value = currentCostLevel;
+            costText.text = m_CostUpgrade.GetProducCost().ToString("0.0");
             infoTitle.text = m_CostUpgrade.GetUpgradeName();
             currentLevel.text = nextMax == currentCostLevel ? "MAX" : currentCostLevel.ToString();
             maxLevel.text = nextMax == currentCostLevel ? "MAX" : nextMax.ToString();
             levelupMult.text = m_CostUpgrade.GetNextUpgradeMult();
           
-            costText.text = m_CostUpgrade.GetProducCost().ToString("0.0");
-            timeText.text = m_WorkerUpgrade.workerTime.ToString("0.0");
-
-            costLevelUp.cost.text = m_CostUpgrade.currentBuyCost.ToString("0.0");
+         
+            timeText.text = m_WorkerUpgrade.GetValue().ToString("0.0");
+            costLevelUp.cost.text = TextUtils.ValueToShortString(m_CostUpgrade.currentBuyCost);
             costLevelUp.buyButton.interactable = PlayerData.GetInstance().GetMoney() >= m_CostUpgrade.currentBuyCost && !m_CostUpgrade.IsFinished();
 
-            workerLevelUp.cost.text = m_WorkerUpgrade.currentBuyCost.ToString("0.0");
-            workerLevelUp.buyButton.interactable = PlayerData.GetInstance().GetMoney() >= m_WorkerUpgrade.currentBuyCost && !m_WorkerUpgrade.IsFinished();
+            workerLevelUp.cost.text = TextUtils.ValueToShortString(m_WorkerUpgrade.GetCostValue());
+            workerLevelUp.buyButton.interactable = PlayerData.GetInstance().GetMoney() >= m_WorkerUpgrade.GetCostValue() && !m_WorkerUpgrade.IsMaxLevel();
         }
     }
 }

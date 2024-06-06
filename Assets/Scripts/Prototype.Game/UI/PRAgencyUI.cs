@@ -11,6 +11,8 @@ namespace Prototype
         public TextMeshProUGUI spawnSpeedText;
         private PRAgency m_PRAgency;
 
+        public static PRAgencyUI Instance { get; private set; }
+
         protected override void Awake()
         {
             base.Awake();
@@ -24,6 +26,8 @@ namespace Prototype
             {
                 m_PRAgency.m_Spanwer.customerSpawnSpeed.LevelUp();
             });
+
+            Instance = this;
         }
 
         public void Bind(PRAgency prAgency)
@@ -55,17 +59,8 @@ namespace Prototype
             moveSpeedText.text = $"customers move speed: {customerMoveSpeed.GetValue().ToString("0.0")}";
             spawnSpeedText.text = $"customers spawn speed: {m_PRAgency.m_Spanwer.SpawnsPerMinute().ToString("0.0")} p/m";
 
-            var playerdata = PlayerData.GetInstance().GetMoney();
-
-            customersMoveSpeedLevelUpUI.buyButton.interactable = customerMoveSpeed.GetCostValue() <= playerdata 
-                && !customerMoveSpeed.IsMaxLevel();
-
-            customersMoveSpeedLevelUpUI.cost.text = customerMoveSpeed.IsMaxLevel() ? "Max" : customerMoveSpeed.GetCostValue().ToString("0");
-
-            customerSpawnSpeedLevelUpUI.buyButton.interactable = customerSpawnSpeed.GetCostValue() <= playerdata 
-                && !customerSpawnSpeed.IsMaxLevel();
-
-            customerSpawnSpeedLevelUpUI.cost.text = customerSpawnSpeed.IsMaxLevel() ? "Max" : customerSpawnSpeed.GetCostValue().ToString("0");
+            customersMoveSpeedLevelUpUI.UpgradeItem(customerMoveSpeed);
+            customerSpawnSpeedLevelUpUI.UpgradeItem(customerSpawnSpeed);        
         }
     }
 }

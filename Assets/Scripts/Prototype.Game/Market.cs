@@ -6,9 +6,11 @@ namespace Prototype
     public class Market : Singleton<Market>
     {
         public TradingSpot Trader;
-        public CashRegister[] cashRegistes;
+        private CashierBehaviour[] m_Cashiers;
+        public CashierBehaviour[] Cashiers => m_Cashiers;
         [SerializeField] private AudioSource source;
         [SerializeField] private PhysicsCallbacks roomTrigger;
+
         private int m_UnitsInside;
         public int maxUnitsInMarket;
 
@@ -26,26 +28,32 @@ namespace Prototype
             roomTrigger.onTriggerExit += RoomTrigger_onTriggerExit;
 
             UpdateCrowdVolume();
+            m_Cashiers = GetComponentsInChildren<CashierBehaviour>(true);
         }
 
         private void RoomTrigger_onTriggerExit(Collider obj)
         {
             m_UnitsInside--;
-
             UpdateCrowdVolume();
         }
 
-        public CashRegister GetOptimalCashRegister()
+        public CashierBehaviour GetOptimalCashRegister()
         {
             int minQueueLen = int.MaxValue;
-            CashRegister result = null;
+            CashierBehaviour result = null;
 
-            foreach (var item in cashRegistes)
+            foreach (var item in m_Cashiers)
             {
+                if (!item.IsWorking())
+                {
+                    continue;
+                }
+
                 if (!item.queue.HasFreePlace())
                 {
                     continue;
                 }
+
                 if (minQueueLen > item.queue.Count)
                 {
                     minQueueLen = item.queue.Count;

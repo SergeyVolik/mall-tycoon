@@ -72,13 +72,14 @@ MonoBehaviour:
     currentLevel: 1
     currentBuyCost: 10
   workerSpeedUpgrade:
-    maxLevel: 10
-    workerTime: 5
-    workerDecreaseValue: 0.1
+    upgradeOp: 1
+    defaultValue: 5
+    changeValue: 0.1
+    maxLevel: 20
     currentLevel: 1
-    currentBuyCost: 10
-    buyUpgradeIncreaseValue: 10
-  traderUI: {fileID: 0}
+    upgradeDefaultCost: 100
+    upgradeCostOp: 0
+    upgradeCostChangeValue: 100
   traders:
   - {fileID: 458403391672685787}
   - {fileID: 6814381874820270365}

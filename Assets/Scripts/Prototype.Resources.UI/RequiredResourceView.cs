@@ -82,7 +82,7 @@ namespace Prototype
 
         private string GetStringValue(float numberOfIntems)
         {
-            return TextUtils.IntToText(numberOfIntems);
+            return TextUtils.ValueToShortString(numberOfIntems);
         }
 
         private void Setup()

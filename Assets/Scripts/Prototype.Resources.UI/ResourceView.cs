@@ -26,7 +26,7 @@ namespace Prototype
             bool activate = arg2 > 0;
             if (uiItems.TryGetValue(arg1, out var item))
             {
-                item.SetText(TextUtils.IntToText(arg2));
+                item.SetText(TextUtils.ValueToShortString(arg2));
                 item.gameObject.SetActive(activate);            
             }
             else
@@ -51,7 +51,7 @@ namespace Prototype
                 .Instantiate(type.ResourceUIItem, transform)
                 .GetComponent<ResourceUIItem>();
 
-            uiItem.SetText(TextUtils.IntToText(count));
+            uiItem.SetText(TextUtils.ValueToShortString(count));
             uiItem.gameObject.SetActive(activate);
             uiItem.SetSprite(type.resourceIcon, type.resourceColor);
             uiItems.Add(type, uiItem);
