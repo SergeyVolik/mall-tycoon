@@ -21,12 +21,17 @@ namespace Prototype
         private UpgradeData m_WorkerUpgrade;
         private TradingSpot m_Tarder;
         private PlayerData m_Playerdata;
-
+        public Button closeButton;
         public static TraderUpgradeUI Instance { get; private set; }
 
         protected override void Awake()
         {
             base.Awake();
+
+            closeButton.onClick.AddListener(() =>
+            {
+                RaycastInput.GetInstance().BlockRaycast = false;
+            });
 
             costLevelUp.buyButton.onClick.AddListener(() =>
             {
@@ -60,7 +65,6 @@ namespace Prototype
         public override void Hide(bool onlyDisableRaycast = false)
         {
             base.Hide(onlyDisableRaycast);
-            RaycastInput.GetInstance().BlockRaycast = false;
         }
 
         private void TraderUpgradeUI_onMoneyChanged(float obj)

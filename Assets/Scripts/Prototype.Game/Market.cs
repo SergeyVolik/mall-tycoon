@@ -29,6 +29,8 @@ namespace Prototype
 
             UpdateCrowdVolume();
             m_Cashiers = GetComponentsInChildren<CashierBehaviour>(true);
+
+            CashiersUpgradeUI.Instance.Bind(this);
         }
 
         private void RoomTrigger_onTriggerExit(Collider obj)

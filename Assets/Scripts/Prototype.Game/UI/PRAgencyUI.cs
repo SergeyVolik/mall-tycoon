@@ -1,5 +1,6 @@
 using Prototype.UI;
 using TMPro;
+using UnityEngine.UI;
 
 namespace Prototype
 {
@@ -12,7 +13,7 @@ namespace Prototype
         private PRAgency m_PRAgency;
 
         public static PRAgencyUI Instance { get; private set; }
-
+        public Button closeButton;
         protected override void Awake()
         {
             base.Awake();
@@ -28,6 +29,10 @@ namespace Prototype
             });
 
             Instance = this;
+            closeButton.onClick.AddListener(() =>
+            {
+                RaycastInput.GetInstance().BlockRaycast = false;
+            });
         }
 
         public void Bind(PRAgency prAgency)
@@ -47,7 +52,6 @@ namespace Prototype
 
         public override void Hide(bool onlyDisableRaycast = false)
         {
-            RaycastInput.GetInstance().BlockRaycast = false;
             base.Hide(onlyDisableRaycast);
         }
 

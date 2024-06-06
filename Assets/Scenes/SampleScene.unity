@@ -2437,6 +2437,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 7774208894082261246}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &637836300 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6074391694959258569, guid: 673eb3973f893b54c8d51f4d482a3087,
+    type: 3}
+  m_PrefabInstance: {fileID: 4461986278777760058}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &640583095
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8640,6 +8652,30 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 2146027701}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &451029664117776070 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 186089769927651654, guid: 2bbd5a72ba0a44e43af213e13e0cac10,
+    type: 3}
+  m_PrefabInstance: {fileID: 7624633713516834530}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &451029665156894705 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1759206699477100108, guid: 2de948ffe1493ec44b978c4b291ecf05,
+    type: 3}
+  m_PrefabInstance: {fileID: 7611448567091784177}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &2392101162287784259 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7281031824567263343, guid: 2de948ffe1493ec44b978c4b291ecf05,
@@ -8680,6 +8716,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 709611564717040101, guid: 673eb3973f893b54c8d51f4d482a3087,
+        type: 3}
+      propertyPath: closeButton
+      value: 
+      objectReference: {fileID: 637836300}
     - target: {fileID: 2392101162535280816, guid: 673eb3973f893b54c8d51f4d482a3087,
         type: 3}
       propertyPath: m_Pivot.x
@@ -8853,6 +8894,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1422287927}
     m_Modifications:
+    - target: {fileID: 5366424498144725009, guid: 2de948ffe1493ec44b978c4b291ecf05,
+        type: 3}
+      propertyPath: closeButton
+      value: 
+      objectReference: {fileID: 451029665156894705}
     - target: {fileID: 6213423161672257354, guid: 2de948ffe1493ec44b978c4b291ecf05,
         type: 3}
       propertyPath: m_Name
@@ -9236,6 +9282,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8836274744620631314, guid: 2bbd5a72ba0a44e43af213e13e0cac10,
+        type: 3}
+      propertyPath: closeButton
+      value: 
+      objectReference: {fileID: 451029664117776070}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

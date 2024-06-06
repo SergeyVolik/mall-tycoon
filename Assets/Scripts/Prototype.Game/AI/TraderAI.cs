@@ -39,7 +39,11 @@ namespace Prototype
         }
 
         public void Tick()
-        {
+        {          
+            cooldownView.cooldownRoot.transform.forward = m_Camera.transform.forward;
+            cooldown.Tick(Time.deltaTime);
+            cooldownView.Tick();
+
             if (CurrentCustomer)
             {
                 bool customerInBuySpot = Vector3.Distance(CurrentCustomer.transform.position, customerMovePoint.position) < 0.5f;
@@ -55,9 +59,6 @@ namespace Prototype
                     cooldown.Play();
                 }
             }
-            cooldownView.cooldownRoot.transform.forward = m_Camera.transform.forward;
-            cooldown.Tick(Time.deltaTime);
-            cooldownView.Tick();
         }
     }
 }

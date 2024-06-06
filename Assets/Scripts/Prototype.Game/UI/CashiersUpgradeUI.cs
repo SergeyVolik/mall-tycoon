@@ -1,4 +1,5 @@
 using Prototype.UI;
+using UnityEngine.UI;
 
 namespace Prototype
 {
@@ -6,6 +7,7 @@ namespace Prototype
     {
         public LevelUpUIItem[] buyCashiers;
         public LevelUpUIItem[] upgradeCashiers;
+        public Button closeButton;
 
         public static CashiersUpgradeUI Instance { get; private set; }
 
@@ -13,20 +15,36 @@ namespace Prototype
         {
             base.Awake();
             Instance = this;
+
+            closeButton.onClick.AddListener(() =>
+            {
+                RaycastInput.GetInstance().BlockRaycast = false;
+            });
         }
 
         protected override void Start()
         {
             base.Start();
-            Bind(Market.GetInstance());
         }
+
+        public override void Show()
+        {
+            base.Show();
+            RaycastInput.GetInstance().BlockRaycast = true;
+        }
+
+        public override void Hide(bool onlyDisableRaycast = false)
+        {
+            base.Hide(onlyDisableRaycast);
+        }
+
         public void Bind(Market market)
         {
             for (int i = 0; i < market.Cashiers.Length; i++)
             {
                 var cashier = market.Cashiers[i];
                 var buyUI = buyCashiers[i];
-                var upgradeCashierUI = buyCashiers[i];
+                var upgradeCashierUI = upgradeCashiers[i];
 
                 cashier.buyUpgrade.onChanged += () =>
                 {
@@ -65,7 +83,7 @@ namespace Prototype
         void UpgradeBuyUI(CashierBehaviour cashier, LevelUpUIItem buyUI, LevelUpUIItem upgradeCashier)
         {
             bool isMAx = cashier.buyUpgrade.IsMaxLevel();
-            buyUI.gameObject.SetActive(isMAx);
+            buyUI.gameObject.SetActive(!isMAx);
             upgradeCashier.gameObject.SetActive(isMAx);
         }
     }
