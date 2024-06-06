@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Prototype
@@ -8,6 +7,7 @@ namespace Prototype
         public Cooldown cooldown;
         public CircularCooldownView cooldownView;
         private Camera m_Camera;
+        private Transform m_Transform;
         public Transform customerMovePoint;
         public CustomerAI CurrentCustomer { get; private set; }
 
@@ -15,6 +15,7 @@ namespace Prototype
         {
             cooldownView.Bind(cooldown);
             m_Camera = Camera.main;
+            m_Transform = transform;
         }
 
         public bool IsWorkFinished()
@@ -45,8 +46,8 @@ namespace Prototype
             cooldownView.Tick();
 
             if (CurrentCustomer)
-            {
-                bool customerInBuySpot = Vector3.Distance(CurrentCustomer.transform.position, customerMovePoint.position) < 0.5f;
+            {             
+                bool customerInBuySpot = Vector3.Distance(CurrentCustomer.transform.position, customerMovePoint.position) < 0.25f;
 
                 if (!customerInBuySpot)
                 {
@@ -56,6 +57,9 @@ namespace Prototype
                 else
                 {
                     cooldownView.cooldownRoot.gameObject.SetActive(true);
+                    var customerTrans = CurrentCustomer.transform;
+                    var vec = (m_Transform.position - customerTrans.position);
+                    customerTrans.rotation = Quaternion.Slerp(customerTrans.rotation, Quaternion.LookRotation(vec, Vector3.up), Time.deltaTime * 2);
                     cooldown.Play();
                 }
             }

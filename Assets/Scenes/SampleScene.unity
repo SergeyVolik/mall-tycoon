@@ -3759,18 +3759,6 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 4461986278777760058}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &937036764 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 709611564717040101, guid: 673eb3973f893b54c8d51f4d482a3087,
-    type: 3}
-  m_PrefabInstance: {fileID: 4461986278777760058}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64bce94daa014674289b51eeca1680fd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &950860927
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5642,7 +5630,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 65abb0f1b521f834bae80ea4c9d93734, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -20.75
+      value: -21.82
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 65abb0f1b521f834bae80ea4c9d93734, type: 3}
       propertyPath: m_LocalPosition.y
@@ -7874,7 +7862,7 @@ MonoBehaviour:
   decelerationSpeed: 1.1
   foolowSpeed: 20
   zoomSpeedMult: 2
-  minZoom: 6
+  minZoom: 4
   maxZoom: 8
   cameraBounds: {fileID: 419098041}
 --- !u!1001 &1930315853
@@ -9300,30 +9288,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 714888678}
     m_Modifications:
-    - target: {fileID: 1765647332801509425, guid: 289347544014f56438975c525641c700,
-        type: 3}
-      propertyPath: buyUpgrade.upgradeDefaultCost
-      value: 1000
-      objectReference: {fileID: 0}
-    - target: {fileID: 2601806869161462763, guid: 289347544014f56438975c525641c700,
-        type: 3}
-      propertyPath: buyUpgrade.currentLevel
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3500861424293377402, guid: 289347544014f56438975c525641c700,
-        type: 3}
-      propertyPath: traderUI
-      value: 
-      objectReference: {fileID: 937036764}
     - target: {fileID: 4424139369641333790, guid: 289347544014f56438975c525641c700,
         type: 3}
       propertyPath: m_Name
       value: Market
-      objectReference: {fileID: 0}
-    - target: {fileID: 5065950351143221515, guid: 289347544014f56438975c525641c700,
-        type: 3}
-      propertyPath: buyUpgrade.upgradeDefaultCost
-      value: 10000
       objectReference: {fileID: 0}
     - target: {fileID: 8903776658812812654, guid: 289347544014f56438975c525641c700,
         type: 3}

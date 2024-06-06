@@ -28,6 +28,7 @@ namespace Prototype
                 return m_AnimatorController;
             }
         }
+
         private void Awake()
         {
             m_StartPos = transform.position;
@@ -36,6 +37,7 @@ namespace Prototype
             m_Transform = transform;
         }
 
+        public bool IsMoveming => m_Agent.remainingDistance > 0.1f;
         public enum CustomerAIStates
         {
             Idle,

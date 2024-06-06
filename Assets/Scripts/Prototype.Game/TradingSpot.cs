@@ -51,8 +51,8 @@ namespace Prototype
             var currentUpgrade = upgrades[currentUpgradeIndex];
             producCost += currentUpgrade.producCostIncrease;
             currentBuyCost += currentUpgrade.buyUpgradeIncreaseValue;
-         
-            if (currentLevel >= currentUpgrade.maxLevel && upgrades.Length - 1 > currentUpgradeIndex)
+
+            if (currentLevel >= currentUpgrade.maxLevel)
             {
                 foreach (var item in currentUpgrade.itemsToActivate)
                 {
@@ -60,7 +60,11 @@ namespace Prototype
                 }
 
                 producCost *= currentUpgrade.maxLevelMult;
-                currentUpgradeIndex++;             
+
+                if (upgrades.Length - 1 > currentUpgradeIndex)
+                {                 
+                    currentUpgradeIndex++;
+                }
             }
 
             onUpgraded.Invoke();

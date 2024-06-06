@@ -28,7 +28,7 @@ namespace Prototype
                 return $"{bilions.ToString("0.0")}B";
             }
 
-            return numberOfIntems.ToString();
+            return numberOfIntems.ToString("0.0");
         }
 
 
