@@ -10,6 +10,7 @@ namespace Prototype
         public LevelUpUIItem customerSpawnSpeedLevelUpUI;
         public TextMeshProUGUI moveSpeedText;
         public TextMeshProUGUI spawnSpeedText;
+        private bool m_Binded;
         private PRAgency m_PRAgency;
 
         public static PRAgencyUI Instance { get; private set; }
@@ -36,7 +37,12 @@ namespace Prototype
         }
 
         public void Bind(PRAgency prAgency)
-        {
+        {         
+            if (m_Binded)
+                return;
+
+            m_Binded = true;
+
             m_PRAgency = prAgency;
             m_PRAgency.m_Spanwer.customerMoveSpeed.onChanged += UpdateUI;
             m_PRAgency.m_Spanwer.customerSpawnSpeed.onChanged += UpdateUI;

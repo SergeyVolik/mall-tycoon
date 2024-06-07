@@ -1,0 +1,17 @@
+{
+    "name": "Prototype.Save.Core",
+    "rootNamespace": "",
+    "references": [
+        "GUID:c85f41d4379abdb4eafe8f0f3fe7380b",
+        "GUID:d8b63aba1907145bea998dd612889d6b"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

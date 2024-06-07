@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using System;
 using UnityEngine;
 
@@ -29,13 +30,14 @@ namespace Prototype
                 producCost *= currentUpgrade.maxLevelMult;
 
                 if (upgrades.Length - 1 > currentUpgradeIndex)
-                {                 
+                {
                     currentUpgradeIndex++;
                 }
             }
 
             onUpgraded.Invoke();
         }
+
         public CostUpgradeItem GetCurrentUpgrade() => upgrades[currentUpgradeIndex];
         public int GetMaxLevel()
         {
@@ -77,6 +79,7 @@ namespace Prototype
     [System.Serializable]
     public class CostUpgradeItem
     {
+        [JsonIgnore]
         public GameObject[] itemsToActivate;
         public int maxLevel;
         public float producCostIncrease;
@@ -93,28 +96,54 @@ namespace Prototype
         }
     }
 
-    public class TradingSpot : MonoBehaviour, IActivateableFromRaycast
+    [System.Serializable]
+    public class TradingSpotSaveData : ISaveComponentData
     {
+        public SerializableGuid SaveId { get; set; }
+        public UpgradeData workerSpeedUpgrade;
+        public UpgradeData addWorkerUpgrade;
+        public UpgradeData buySpotUpgrade;
+        public CostUpgradeData costUpgrade;
+    }
+
+    public class TradingSpot : MonoBehaviour, IActivateableFromRaycast, ISceneSaveComponent<TradingSpotSaveData>
+    {
+        [field: SerializeField]
+        public SerializableGuid SaveId { get; set; }
+
         public string traderName;
         public ResourceTypeSO resourceCost;
         public QueueBehaviour queue;
         public CostUpgradeData costUpgrade;
         public UpgradeData workerSpeedUpgrade;
+        private bool m_Loaded;
         public UpgradeData addWorkerUpgrade;
         public UpgradeData buySpotUpgrade;
 
         public TraderAI[] traders;
 
         private void Awake()
-        {         
-            workerSpeedUpgrade.onChanged += UpdateCooldownSpeed;
-            addWorkerUpgrade.onChanged += UpdateNumberOfWorkers;
-            buySpotUpgrade.onChanged += BuyStateUpdate;
+        {
+            if (m_Loaded)
+                return;
 
+            Setup();
+        }
+
+        private void Setup()
+        {
+            BindCallbacks();
             BuyStateUpdate();
             UpdateNumberOfWorkers();
             UpdateCooldownSpeed();
             UpdateVisual();
+        }
+
+        private void BindCallbacks()
+        {
+            workerSpeedUpgrade.onChanged += UpdateCooldownSpeed;
+            addWorkerUpgrade.onChanged += UpdateNumberOfWorkers;
+            buySpotUpgrade.onChanged += BuyStateUpdate;
         }
 
         private void BuyStateUpdate()
@@ -135,11 +164,28 @@ namespace Prototype
             }
         }
 
+        private int GetActiveWorker()
+        {
+            int active = 0;
+            foreach (var item in traders)
+            {
+                if (item.IsActive())
+                    active++;
+            }
+            return active;
+        }
+
+        public float GetIncomePerMinute()
+        {
+            float customersPerMinute = 60f / workerSpeedUpgrade.GetValue() / GetActiveWorker();
+            return costUpgrade.GetProducCost() * customersPerMinute;
+        }
+
         private void UpdateVisual()
         {
             foreach (var item in costUpgrade.upgrades)
-            {              
-                 item.ActivateVisual(costUpgrade.currentLevel >= item.maxLevel);              
+            {
+                item.ActivateVisual(costUpgrade.currentLevel >= item.maxLevel);
             }
         }
 
@@ -148,7 +194,7 @@ namespace Prototype
             foreach (var item in traders)
             {
                 item.cooldown.Duration = workerSpeedUpgrade.GetValue();
-            }          
+            }
         }
 
         public void Update()
@@ -166,11 +212,11 @@ namespace Prototype
                 else if (traderAi.IsWorkFinished() && traderAi.IsHasCustomer())
                 {
                     var customerAI = traderAi.CurrentCustomer;
-                    customerAI.buyedProducCost = costUpgrade.producCost;
+                    customerAI.buyedProducCost = Market.GetInstance().GetTotalIncome();
                     customerAI.holdedResource = resourceCost;
                     traderAi.Clear();
                 }
-            }        
+            }
         }
 
         public void ActivateFromRaycast()
@@ -184,9 +230,34 @@ namespace Prototype
             return gameObject.activeSelf;
         }
 
-        internal void Activate(bool v)
+        public TradingSpotSaveData SaveComponent()
         {
-            gameObject.SetActive(false);
+            return new TradingSpotSaveData()
+            {
+                addWorkerUpgrade = addWorkerUpgrade,
+                buySpotUpgrade = buySpotUpgrade,
+                workerSpeedUpgrade = buySpotUpgrade,
+                SaveId = SaveId,
+                costUpgrade = costUpgrade,
+            };
+        }
+
+        public void LoadComponent(TradingSpotSaveData data)
+        {
+           
+            addWorkerUpgrade = data.addWorkerUpgrade;
+            buySpotUpgrade = data.buySpotUpgrade;
+            workerSpeedUpgrade = data.buySpotUpgrade;
+
+            for (int i = 0; i < costUpgrade.upgrades.Length; i++)
+            {
+                data.costUpgrade.upgrades[i].itemsToActivate = costUpgrade.upgrades[i].itemsToActivate;
+            }
+          
+            costUpgrade = data.costUpgrade;
+
+            Setup();
+            m_Loaded = true;
         }
     }
 }

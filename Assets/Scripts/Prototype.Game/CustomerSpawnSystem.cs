@@ -31,7 +31,7 @@ namespace Prototype
                 return;
 
             PlayerData.GetInstance().DecreaseMoney(GetCostValue());
-            currentLevel++;          
+            currentLevel++;
             onChanged.Invoke();
         }
 
@@ -72,8 +72,21 @@ namespace Prototype
             return GetValue(upgradeCostOp, upgradeDefaultCost, upgradeCostChangeValue, currentLevel);
         }
     }
-    public class CustomerSpawnSystem : MonoBehaviour
+
+    [System.Serializable]
+    public class CustomerSpawnerSave : ISaveComponentData
     {
+        public UpgradeData customerSpawnSpeed;
+        public UpgradeData customerMoveSpeed;
+
+        public SerializableGuid SaveId { get; set; }
+    }
+
+    public class CustomerSpawnSystem : MonoBehaviour, ISceneSaveComponent<CustomerSpawnerSave>
+    {
+        [field: SerializeField]
+        public SerializableGuid SaveId { get; set; }
+
         public GameObject customerPrefab;
 
         public UpgradeData customerSpawnSpeed;
@@ -86,6 +99,7 @@ namespace Prototype
 
         private float m_SpawnT;
         public Transform[] customerSpawnPoints;
+
         private void Update()
         {
             m_SpawnT += Time.deltaTime;
@@ -102,6 +116,21 @@ namespace Prototype
             customerSkin.SpawnSkin();
             var customerAI = customer.GetComponent<CustomerAI>();
             customerAI.SetMoveSpeed(customerMoveSpeed.GetValue() + UnityEngine.Random.Range(-0.1f, 0.1f));
+        }
+
+        public CustomerSpawnerSave SaveComponent()
+        {
+            return new CustomerSpawnerSave
+            {
+                customerMoveSpeed = customerMoveSpeed,
+                customerSpawnSpeed = customerSpawnSpeed
+            };
+        }
+
+        public void LoadComponent(CustomerSpawnerSave data)
+        {
+            customerMoveSpeed = data.customerMoveSpeed;
+            customerSpawnSpeed = data.customerSpawnSpeed;
         }
     }
 }

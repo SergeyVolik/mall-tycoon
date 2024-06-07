@@ -4,10 +4,23 @@ using UnityEngine.Events;
 
 namespace Prototype
 {
-    public class CashierBehaviour : MonoBehaviour, IActivateableFromRaycast
+    [System.Serializable]
+    public class CashierBehaviourSave : ISaveComponentData
     {
+        public UpgradeData workerSpeedUpgrade;
+        public UpgradeData buyUpgrade;
+
+        public SerializableGuid SaveId { get; set; }
+    }
+
+    public class CashierBehaviour : MonoBehaviour, IActivateableFromRaycast, ISceneSaveComponent<CashierBehaviourSave>
+    {
+        [field: SerializeField]
+        public SerializableGuid SaveId { get; set; }
+
         public QueueBehaviour queue;
         public UpgradeData workerSpeedUpgrade;
+        private bool m_Loaded;
         public UpgradeData buyUpgrade;
 
         public TraderAI traderAi;
@@ -16,9 +29,18 @@ namespace Prototype
 
         private void Awake()
         {
+            if (m_Loaded)
+                return;
+
+            Setup();
+        }
+
+        private void Setup()
+        {
             workerSpeedUpgrade.onChanged += UpdateCooldownSpeed;
-            UpdateCooldownSpeed();
             buyUpgrade.onChanged += BuyUpgrade_onChanged;
+
+            UpdateCooldownSpeed();
             BuyUpgrade_onChanged();
         }
 
@@ -63,6 +85,24 @@ namespace Prototype
         internal bool IsWorking()
         {
             return gameObject.activeSelf;
+        }
+
+        public CashierBehaviourSave SaveComponent()
+        {
+            return new CashierBehaviourSave
+            {
+                buyUpgrade = buyUpgrade,
+                workerSpeedUpgrade = workerSpeedUpgrade
+            };
+        }
+
+        public void LoadComponent(CashierBehaviourSave data)
+        {
+            buyUpgrade = data.buyUpgrade;
+            workerSpeedUpgrade = data.workerSpeedUpgrade;
+            m_Loaded = true;
+
+            Setup();
         }
     }
 }

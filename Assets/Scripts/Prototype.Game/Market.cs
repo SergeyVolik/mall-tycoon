@@ -11,6 +11,7 @@ namespace Prototype
         private CashierBehaviour[] m_Cashiers;
         public CashierBehaviour[] Cashiers => m_Cashiers;
         public TradingSpot[] TradingSpots => m_TradingSpots;
+
         [SerializeField] private AudioSource source;
         [SerializeField] private PhysicsCallbacks roomTrigger;
 
@@ -19,7 +20,6 @@ namespace Prototype
 
         [SerializeField]
         private Transform[] m_CustomerEnterPositions;
-
 
         public Vector3 GetRadnomInMarketPosition()
         {
@@ -33,10 +33,7 @@ namespace Prototype
 
             UpdateCrowdVolume();
             m_Cashiers = GetComponentsInChildren<CashierBehaviour>(true);
-            m_TradingSpots = GetComponentsInChildren<TradingSpot>(true);
-
-            CashiersUpgradeUI.Instance.Bind(this);
-            MarketGrowUIPage.Instance.Bind(this);
+            m_TradingSpots = GetComponentsInChildren<TradingSpot>(true);       
         }
 
 
@@ -70,7 +67,7 @@ namespace Prototype
 
             foreach (var item in tratingSpots)
             {
-                if(i == rndIndex)
+                if (i == rndIndex)
                     return item;
                 i++;
             }
@@ -113,6 +110,20 @@ namespace Prototype
         {
             m_UnitsInside++;
             UpdateCrowdVolume();
+        }
+
+        internal float GetTotalIncome()
+        {
+            float cost = 0;
+
+            foreach (var item in m_TradingSpots)
+            {
+                if (!item.IsWorking())
+                    continue;
+                cost += item.costUpgrade.GetProducCost();
+            }
+
+            return cost;
         }
     }
 }

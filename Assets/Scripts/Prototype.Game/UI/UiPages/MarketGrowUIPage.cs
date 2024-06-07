@@ -12,12 +12,22 @@ namespace Prototype
             Instance = this;
         }
 
+        private bool m_Binded;
         public LevelUpUIItem[] buyVegetablesSpot;
         public LevelUpUIItem buyTradingSpotUIItemPrefab;
         public Transform spawnParent;
 
-        public void Bind(Market market)
+        public override void Show()
         {
+            base.Show();
+            Bind(Market.GetInstance());
+        }
+        public void Bind(Market market)
+        { 
+            if (m_Binded)
+                return;
+
+            m_Binded = true;
             buyVegetablesSpot = new LevelUpUIItem[market.TradingSpots.Length];
 
             for (int i = 0; i < market.TradingSpots.Length; i++)

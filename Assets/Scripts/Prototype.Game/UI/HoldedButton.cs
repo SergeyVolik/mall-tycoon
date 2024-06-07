@@ -38,7 +38,7 @@ namespace Prototype
     public class HoldedButton : MonoBehaviour, IHoldButton
     {
         private float currentSpeed = 1f;
-        private const float speedAcceleration = 1.3f;
+        private const float speedAcceleration = 1.5f;
         private const float duration = 1f;
         private const float maxSpeed = 20f;
         private float t;

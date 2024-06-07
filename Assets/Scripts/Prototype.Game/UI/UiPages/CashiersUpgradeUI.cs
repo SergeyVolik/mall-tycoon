@@ -8,6 +8,7 @@ namespace Prototype
         public LevelUpUIItem[] buyCashiers;
         public LevelUpUIItem[] upgradeCashiers;
         public Button closeButton;
+        private bool m_Binded;
 
         public static CashiersUpgradeUI Instance { get; private set; }
 
@@ -30,6 +31,7 @@ namespace Prototype
         public override void Show()
         {
             base.Show();
+            Bind(Market.GetInstance());
             RaycastInput.GetInstance().BlockRaycast = true;
         }
 
@@ -40,6 +42,10 @@ namespace Prototype
 
         public void Bind(Market market)
         {
+            if (m_Binded)
+                return;
+
+            m_Binded = true;
             for (int i = 0; i < market.Cashiers.Length; i++)
             {
                 var cashier = market.Cashiers[i];

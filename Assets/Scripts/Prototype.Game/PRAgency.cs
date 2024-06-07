@@ -11,11 +11,12 @@ namespace Prototype
         private void Awake()
         {
             m_Spanwer = FindObjectOfType<CustomerSpawnSystem>();
-            UI.Bind(this);
+           
         }
 
         public void ActivateFromRaycast()
         {
+            UI.Bind(this);
             UI.Navigate();
         }
     }

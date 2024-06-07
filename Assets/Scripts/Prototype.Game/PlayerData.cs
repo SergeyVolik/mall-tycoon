@@ -6,7 +6,7 @@ namespace Prototype
     {
         public PlayerResources Resources;
         public ResourceTypeSO moneyResource;
-
+        public ResourcesTypesSO ResourceYypes;
         private void Awake()
         {
             Resources.resources.onResourceChanged += Resources_onResourceChanged;
