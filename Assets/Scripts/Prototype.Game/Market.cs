@@ -5,7 +5,7 @@ namespace Prototype
 {
     public class Market : Singleton<Market>
     {
-        public TradingSpot Trader;
+        private TradingSpot[] Traders;
         private CashierBehaviour[] m_Cashiers;
         public CashierBehaviour[] Cashiers => m_Cashiers;
         [SerializeField] private AudioSource source;
@@ -28,6 +28,7 @@ namespace Prototype
             roomTrigger.onTriggerExit += RoomTrigger_onTriggerExit;
 
             UpdateCrowdVolume();
+            Traders = GetComponentsInChildren<TradingSpot>(true);
             m_Cashiers = GetComponentsInChildren<CashierBehaviour>(true);
 
             CashiersUpgradeUI.Instance.Bind(this);
@@ -37,6 +38,11 @@ namespace Prototype
         {
             m_UnitsInside--;
             UpdateCrowdVolume();
+        }
+
+        public TradingSpot GetRandomTraider()
+        {
+            return Traders[UnityEngine.Random.Range(0, Traders.Length)];
         }
 
         public CashierBehaviour GetOptimalCashRegister()

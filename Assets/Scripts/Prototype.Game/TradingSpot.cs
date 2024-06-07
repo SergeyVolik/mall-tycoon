@@ -37,6 +37,7 @@ namespace Prototype
     [System.Serializable]
     public class CostUpgradeData
     {
+        public string upgradeUiTitleName;
         public CostUpgradeItem[] upgrades;
         public int currentUpgradeIndex;
         public float producCost = 10;
@@ -134,11 +135,6 @@ namespace Prototype
             UpdateCooldownSpeed();
         }
 
-        private void Start()
-        {
-            TraderUpgradeUI.Instance.Bind(this);
-        }
-
         private void UpdateCooldownSpeed()
         {
             foreach (var item in traders)
@@ -171,6 +167,7 @@ namespace Prototype
 
         public void ActivateFromRaycast()
         {
+            TraderUpgradeUI.Instance.Bind(this);
             TraderUpgradeUI.Instance.Navigate();
         }
     }

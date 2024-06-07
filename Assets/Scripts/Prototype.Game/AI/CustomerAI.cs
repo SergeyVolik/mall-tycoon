@@ -15,6 +15,7 @@ namespace Prototype
         private Transform m_Transform;
         private const float tickRate = 0.5f;
         private float tickT;
+        private TradingSpot m_SelectedTraider;
         private CashierBehaviour m_SelectedCashier = null;
         private NavAgentAnimationController m_AnimatorController;
         private NavAgentAnimationController AnimatorController
@@ -76,9 +77,7 @@ namespace Prototype
             if (tickRate > tickT)
                 return;
 
-            tickT = 0;
-
-            var trader = m_Market.Trader;
+            tickT = 0; 
 
             switch (currentState)
             {
@@ -92,28 +91,29 @@ namespace Prototype
                     if (IsDestinationReached())
                     {
                         currentState = CustomerAIStates.MoveToTraderQueue;
+                        m_SelectedTraider = m_Market.GetRandomTraider();
                     }
                     break;
 
                 case CustomerAIStates.MoveToTraderQueue:
 
-                    if (!trader.queue.HasFreePlace())
+                    if (!m_SelectedTraider.queue.HasFreePlace())
                     {
                         GoHome();
                         return;
                     }
 
-                    m_Agent.destination = trader.queue.GetNextPosition();
+                    m_Agent.destination = m_SelectedTraider.queue.GetNextPosition();
 
                     if (IsDestinationReached())
                     {
                         currentState = CustomerAIStates.WaitInTraderQueue;
-                        trader.queue.TakeQueue(this);
+                        m_SelectedTraider.queue.TakeQueue(this);
                     }
                     break;
                 case CustomerAIStates.WaitInTraderQueue:
 
-                    m_Agent.destination = trader.queue.GetPositionInQueue(this);
+                    m_Agent.destination = m_SelectedTraider.queue.GetPositionInQueue(this);
                     break;
                 case CustomerAIStates.WaitTraderWork:
                     if (buyedProducCost != 0)

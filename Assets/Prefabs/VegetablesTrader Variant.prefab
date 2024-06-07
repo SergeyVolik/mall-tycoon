@@ -822,7 +822,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1988007701355729092
 Transform:
   m_ObjectHideFlags: 0
@@ -4929,6 +4929,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4961510302380108601, guid: de18d80c77cf4a647ab24ad31fabf63f,
         type: 3}
+      propertyPath: traderName
+      value: VEGETABLES
+      objectReference: {fileID: 0}
+    - target: {fileID: 4961510302380108601, guid: de18d80c77cf4a647ab24ad31fabf63f,
+        type: 3}
       propertyPath: traders.Array.data[0]
       value: 
       objectReference: {fileID: 2225204937407684818}
@@ -4937,6 +4942,11 @@ PrefabInstance:
       propertyPath: traders.Array.data[1]
       value: 
       objectReference: {fileID: 5056587298625862932}
+    - target: {fileID: 4961510302380108601, guid: de18d80c77cf4a647ab24ad31fabf63f,
+        type: 3}
+      propertyPath: costUpgrade.upgradeUiTitleName
+      value: VEGETABLES PROFIT
+      objectReference: {fileID: 0}
     - target: {fileID: 4961510302380108601, guid: de18d80c77cf4a647ab24ad31fabf63f,
         type: 3}
       propertyPath: costUpgrade.upgrades.Array.size
