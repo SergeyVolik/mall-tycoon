@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using UnityEngine.Assertions;
 
 namespace Prototype
 {
@@ -28,8 +27,8 @@ namespace Prototype
 
         public void LevelUp()
         {
-            Assert.IsFalse(IsMaxLevel(), "error: level is max");
-                
+            if (currentLevel == maxLevel)
+                return;
 
             PlayerData.GetInstance().DecreaseMoney(GetCostValue());
             currentLevel++;          

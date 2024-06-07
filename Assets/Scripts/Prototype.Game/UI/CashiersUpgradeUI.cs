@@ -53,10 +53,13 @@ namespace Prototype
 
                 UpgradeBuyUI(cashier, buyUI, upgradeCashierUI);
 
-                buyUI.buyButton.onClick.AddListener(() =>
+                buyUI.buyButton.GetComponent<HoldedButton>().onClick += () =>
                 {
+                    if (cashier.buyUpgrade.IsMaxLevel())
+                        return;
+
                     cashier.buyUpgrade.LevelUp();
-                });
+                };
 
                 buyUI.cost.text = TextUtils.ValueToShortString(cashier.buyUpgrade.GetCostValue());
 
@@ -67,10 +70,10 @@ namespace Prototype
 
                 UpgateCashierUpgradeUI(cashier, upgradeCashierUI);
 
-                upgradeCashierUI.buyButton.onClick.AddListener(() =>
+                upgradeCashierUI.buyButton.GetComponent<HoldedButton>().onClick += () =>
                 {
                     cashier.workerSpeedUpgrade.LevelUp();
-                });
+                };
             }
         }
 

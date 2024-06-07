@@ -2439,18 +2439,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 7774208894082261246}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &637836300 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6074391694959258569, guid: 673eb3973f893b54c8d51f4d482a3087,
-    type: 3}
-  m_PrefabInstance: {fileID: 4461986278777760058}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &640583095
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8737,11 +8725,6 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 709611564717040101, guid: 673eb3973f893b54c8d51f4d482a3087,
-        type: 3}
-      propertyPath: closeButton
-      value: 
-      objectReference: {fileID: 637836300}
     - target: {fileID: 2392101162535280816, guid: 673eb3973f893b54c8d51f4d482a3087,
         type: 3}
       propertyPath: m_Pivot.x
@@ -8867,16 +8850,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: TraderUpgradeUI
       objectReference: {fileID: 0}
-    - target: {fileID: 5139361364598716220, guid: 673eb3973f893b54c8d51f4d482a3087,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5413200085992163583, guid: 673eb3973f893b54c8d51f4d482a3087,
-        type: 3}
-      propertyPath: m_TargetGraphic
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 7843306427674740660, guid: 673eb3973f893b54c8d51f4d482a3087,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -8902,6 +8875,26 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8063494299312235507, guid: 673eb3973f893b54c8d51f4d482a3087,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8063494299312235507, guid: 673eb3973f893b54c8d51f4d482a3087,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8063494299312235507, guid: 673eb3973f893b54c8d51f4d482a3087,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8063494299312235507, guid: 673eb3973f893b54c8d51f4d482a3087,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -8915,6 +8908,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1422287927}
     m_Modifications:
+    - target: {fileID: 3388492230037868431, guid: 2de948ffe1493ec44b978c4b291ecf05,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5366424498144725009, guid: 2de948ffe1493ec44b978c4b291ecf05,
         type: 3}
       propertyPath: closeButton
@@ -9283,6 +9281,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7657526223495570411, guid: 2bbd5a72ba0a44e43af213e13e0cac10,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8490517533561542711, guid: 2bbd5a72ba0a44e43af213e13e0cac10,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -9335,6 +9338,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Market
+      objectReference: {fileID: 0}
+    - target: {fileID: 4511169735555849465, guid: 289347544014f56438975c525641c700,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -1.09
       objectReference: {fileID: 0}
     - target: {fileID: 5572332778284443147, guid: 289347544014f56438975c525641c700,
         type: 3}

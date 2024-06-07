@@ -18,15 +18,15 @@ namespace Prototype
         {
             base.Awake();
 
-            customersMoveSpeedLevelUpUI.buyButton.onClick.AddListener(() =>
+            customersMoveSpeedLevelUpUI.buyButton.GetComponent<HoldedButton>().onClick += () =>
             {
                 m_PRAgency.m_Spanwer.customerMoveSpeed.LevelUp();
-            });
+            };
 
-            customerSpawnSpeedLevelUpUI.buyButton.onClick.AddListener(() =>
+            customerSpawnSpeedLevelUpUI.buyButton.GetComponent<HoldedButton>().onClick += () =>
             {
                 m_PRAgency.m_Spanwer.customerSpawnSpeed.LevelUp();
-            });
+            };
 
             Instance = this;
             closeButton.onClick.AddListener(() =>

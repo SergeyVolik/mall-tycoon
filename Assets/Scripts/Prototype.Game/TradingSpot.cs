@@ -4,37 +4,6 @@ using UnityEngine;
 namespace Prototype
 {
     [System.Serializable]
-    public class WorkerSpeedUpgrade
-    {
-        public int maxLevel = 10;
-        public float workerTime = 2;
-        public float workerDecreaseValue = 0.1f;
-        public int currentLevel = 1;
-        public float currentBuyCost = 10;
-        public float buyUpgradeIncreaseValue = 10;
-
-        public event Action onUpgraded = delegate { };
-
-        public bool IsFinished() => maxLevel == currentLevel;
-
-        public void LevelUp()
-        {
-            if (currentLevel == maxLevel)
-            {
-                return;   
-            }
-
-            currentLevel++;          
-            currentBuyCost += buyUpgradeIncreaseValue;
-            workerTime -= workerDecreaseValue;
-
-            onUpgraded.Invoke();
-        }
-        public bool IsMaxLevel() => currentLevel == maxLevel;
-        public float GetWorkerTime() => workerTime;
-    }
-
-    [System.Serializable]
     public class CostUpgradeData
     {
         public string upgradeUiTitleName;
@@ -55,10 +24,7 @@ namespace Prototype
 
             if (currentLevel >= currentUpgrade.maxLevel)
             {
-                foreach (var item in currentUpgrade.itemsToActivate)
-                {
-                    item.gameObject.SetActive(true);
-                }
+                currentUpgrade.ActivateVisual(true);
 
                 producCost *= currentUpgrade.maxLevelMult;
 
@@ -117,6 +83,14 @@ namespace Prototype
         public string name;
         public float maxLevelMult;
         public float buyUpgradeIncreaseValue;
+
+        public void ActivateVisual(bool activate)
+        {
+            foreach (var item in itemsToActivate)
+            {
+                item.gameObject.SetActive(activate);
+            }
+        }
     }
 
     public class TradingSpot : MonoBehaviour, IActivateableFromRaycast
@@ -126,13 +100,39 @@ namespace Prototype
         public QueueBehaviour queue;
         public CostUpgradeData costUpgrade;
         public UpgradeData workerSpeedUpgrade;
+        public UpgradeData addWorkerUpgrade;
+
         public TraderAI[] traders;
 
         private void Awake()
         {
            
             workerSpeedUpgrade.onChanged += UpdateCooldownSpeed;
+            addWorkerUpgrade.onChanged += UpdateNumberOfWorkers;
             UpdateCooldownSpeed();
+            UpdateVisual();
+            UpdateNumberOfWorkers();
+        }
+
+        private void UpdateNumberOfWorkers()
+        {
+            foreach (var item in traders)
+            {
+                item.gameObject.SetActive(false);
+            }
+
+            for (int i = 0; i < addWorkerUpgrade.GetValue(); i++)
+            {
+                traders[i].gameObject.SetActive(true);
+            }
+        }
+
+        private void UpdateVisual()
+        {
+            foreach (var item in costUpgrade.upgrades)
+            {              
+                 item.ActivateVisual(costUpgrade.currentLevel >= item.maxLevel);              
+            }
         }
 
         private void UpdateCooldownSpeed()

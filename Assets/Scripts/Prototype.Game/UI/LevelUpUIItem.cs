@@ -13,7 +13,7 @@ namespace Prototype
         public Image icon;
         public TextMeshProUGUI buttonText;
         public Button buyButton;
-
+        public GameObject finishState;
         internal void UpgradeItem(UpgradeData customerSpawnSpeed)
         {
             var playerdata = PlayerData.GetInstance().GetMoney();
@@ -22,6 +22,14 @@ namespace Prototype
                 && !customerSpawnSpeed.IsMaxLevel();
 
             cost.text = customerSpawnSpeed.IsMaxLevel() ? "Max" : TextUtils.ValueToShortString(customerSpawnSpeed.GetCostValue());
+
+            ActivateFinishState(customerSpawnSpeed.IsMaxLevel());   
+        }
+
+        public void ActivateFinishState(bool enable)
+        {
+            buyButton.gameObject.SetActive(!enable);
+            finishState.SetActive(enable);
         }
     }
 }

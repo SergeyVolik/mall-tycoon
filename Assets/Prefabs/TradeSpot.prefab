@@ -54,6 +54,7 @@ MonoBehaviour:
   resourceCost: {fileID: 11400000, guid: f844a05be14715d45a3a83d419fa6598, type: 2}
   queue: {fileID: 4119544210783912864}
   costUpgrade:
+    upgradeUiTitleName: 
     upgrades:
     - itemsToActivate: []
       maxLevel: 10
@@ -80,6 +81,15 @@ MonoBehaviour:
     upgradeDefaultCost: 100
     upgradeCostOp: 0
     upgradeCostChangeValue: 100
+  addWorkerUpgrade:
+    upgradeOp: 0
+    defaultValue: 1
+    changeValue: 1
+    maxLevel: 1
+    currentLevel: 0
+    upgradeDefaultCost: 10000
+    upgradeCostOp: 0
+    upgradeCostChangeValue: 10000
   traders:
   - {fileID: 458403391672685787}
   - {fileID: 6814381874820270365}

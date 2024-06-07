@@ -20,7 +20,7 @@ namespace Prototype
 
         public bool IsWorkFinished()
         {
-            return cooldown.IsFinished;
+            return cooldown.IsFinished && gameObject.activeSelf;
         }
 
         public void Clear()
@@ -39,8 +39,16 @@ namespace Prototype
             cooldown.Restart();
         }
 
+        public bool IsActive()
+        {
+            return gameObject.activeSelf;
+        }
+
         public void Tick()
-        {          
+        {
+            if (!IsActive())
+                return;
+
             cooldownView.cooldownRoot.transform.forward = m_Camera.transform.forward;
             cooldown.Tick(Time.deltaTime);
             cooldownView.Tick();
