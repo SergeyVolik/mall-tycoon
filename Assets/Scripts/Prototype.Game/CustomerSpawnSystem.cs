@@ -102,7 +102,7 @@ namespace Prototype
             var customerSkin = customer.GetComponent<SpawnRandomSkin>();
             customerSkin.SpawnSkin();
             var customerAI = customer.GetComponent<CustomerAI>();
-            customerAI.SetMoveSpeed(customerMoveSpeed.GetValue());
+            customerAI.SetMoveSpeed(customerMoveSpeed.GetValue() + UnityEngine.Random.Range(-0.1f, 0.1f));
         }
     }
 }

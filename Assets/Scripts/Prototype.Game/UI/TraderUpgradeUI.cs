@@ -46,25 +46,33 @@ namespace Prototype
             });
 
             m_Playerdata = PlayerData.GetInstance();
-            m_Playerdata.onMoneyChanged += TraderUpgradeUI_onMoneyChanged;
+            
             Instance = this;
         }
 
         protected override void OnDestroy()
         {
             base.OnDestroy();
-            if(m_Playerdata)
-                m_Playerdata.onMoneyChanged -= TraderUpgradeUI_onMoneyChanged;
         }
+
         public override void Show()
         {
             base.Show();
+            if (m_Playerdata)
+            {
+                m_Playerdata.onMoneyChanged += TraderUpgradeUI_onMoneyChanged;
+            }
+           
             RaycastInput.GetInstance().BlockRaycast = true;
         }
 
         public override void Hide(bool onlyDisableRaycast = false)
         {
             base.Hide(onlyDisableRaycast);
+            if (m_Playerdata)
+            {
+                m_Playerdata.onMoneyChanged -= TraderUpgradeUI_onMoneyChanged;
+            }
         }
 
         private void TraderUpgradeUI_onMoneyChanged(float obj)

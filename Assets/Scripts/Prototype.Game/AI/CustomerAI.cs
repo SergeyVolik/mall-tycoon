@@ -13,7 +13,7 @@ namespace Prototype
         private Market m_Market;
         private NavMeshAgent m_Agent;
         private Transform m_Transform;
-        private const float tickRate = 0.5f;
+        private const float tickRate = 0.4f;
         private float tickT;
         private TradingSpot m_SelectedTraider;
         private CashierBehaviour m_SelectedCashier = null;
