@@ -48,6 +48,12 @@ namespace Prototype
             return pool.GetItem();
         }
 
+        private static GameObjectPool GetPool(GameObject obj)
+        {
+            Pools.TryGetValue(obj, out var pool);
+            return pool;
+        }
+
         GameObject GetItem()
         {
             GameObject item = null;
@@ -91,12 +97,18 @@ namespace Prototype
             }         
         }
 
+        public static void ReleaseStatic(GameObject poolPrefab, GameObject item)
+        {
+            var ppol = GetPool(poolPrefab);
+            ppol.poolItems.Push(item);
+            item.GetComponent<PoolObject>().isReleased = true;
+            item.SetActive(false);
+        }
+
         public void Release(GameObject item)
         {
             poolItems.Push(item);
             item.GetComponent<PoolObject>().isReleased = true;
-            //item.SetActive(true);
-            //item.transform.SetParent(m_PoolRoot);
             item.SetActive(false);
         }
     }
