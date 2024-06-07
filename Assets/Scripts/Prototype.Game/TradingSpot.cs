@@ -101,17 +101,25 @@ namespace Prototype
         public CostUpgradeData costUpgrade;
         public UpgradeData workerSpeedUpgrade;
         public UpgradeData addWorkerUpgrade;
+        public UpgradeData buySpotUpgrade;
 
         public TraderAI[] traders;
 
         private void Awake()
-        {
-           
+        {         
             workerSpeedUpgrade.onChanged += UpdateCooldownSpeed;
             addWorkerUpgrade.onChanged += UpdateNumberOfWorkers;
+            buySpotUpgrade.onChanged += BuyStateUpdate;
+
+            BuyStateUpdate();
+            UpdateNumberOfWorkers();
             UpdateCooldownSpeed();
             UpdateVisual();
-            UpdateNumberOfWorkers();
+        }
+
+        private void BuyStateUpdate()
+        {
+            gameObject.SetActive(buySpotUpgrade.IsMaxLevel());
         }
 
         private void UpdateNumberOfWorkers()
@@ -169,6 +177,16 @@ namespace Prototype
         {
             TraderUpgradeUI.Instance.Bind(this);
             TraderUpgradeUI.Instance.Navigate();
+        }
+
+        internal bool IsWorking()
+        {
+            return gameObject.activeSelf;
+        }
+
+        internal void Activate(bool v)
+        {
+            gameObject.SetActive(false);
         }
     }
 }

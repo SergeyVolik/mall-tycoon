@@ -1,13 +1,16 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Prototype
 {
     public class Market : Singleton<Market>
     {
-        private TradingSpot[] Traders;
+        private TradingSpot[] m_TradingSpots;
         private CashierBehaviour[] m_Cashiers;
         public CashierBehaviour[] Cashiers => m_Cashiers;
+        public TradingSpot[] TradingSpots => m_TradingSpots;
         [SerializeField] private AudioSource source;
         [SerializeField] private PhysicsCallbacks roomTrigger;
 
@@ -16,6 +19,7 @@ namespace Prototype
 
         [SerializeField]
         private Transform[] m_CustomerEnterPositions;
+
 
         public Vector3 GetRadnomInMarketPosition()
         {
@@ -28,11 +32,13 @@ namespace Prototype
             roomTrigger.onTriggerExit += RoomTrigger_onTriggerExit;
 
             UpdateCrowdVolume();
-            Traders = GetComponentsInChildren<TradingSpot>(true);
             m_Cashiers = GetComponentsInChildren<CashierBehaviour>(true);
+            m_TradingSpots = GetComponentsInChildren<TradingSpot>(true);
 
             CashiersUpgradeUI.Instance.Bind(this);
+            MarketGrowUIPage.Instance.Bind(this);
         }
+
 
         private void RoomTrigger_onTriggerExit(Collider obj)
         {
@@ -40,9 +46,36 @@ namespace Prototype
             UpdateCrowdVolume();
         }
 
+        private IEnumerable<TradingSpot> WorkedSpots()
+        {
+            foreach (var item in m_TradingSpots)
+            {
+                if (item.IsWorking())
+                {
+                    yield return item;
+                }
+            }
+        }
+
         public TradingSpot GetRandomTraider()
         {
-            return Traders[UnityEngine.Random.Range(0, Traders.Length)];
+            var tratingSpots = WorkedSpots();
+
+            var len = tratingSpots.Count();
+            if (len == 0)
+                return null;
+
+            var rndIndex = UnityEngine.Random.Range(0, len);
+            int i = 0;
+
+            foreach (var item in tratingSpots)
+            {
+                if(i == rndIndex)
+                    return item;
+                i++;
+            }
+
+            return null;
         }
 
         public CashierBehaviour GetOptimalCashRegister()

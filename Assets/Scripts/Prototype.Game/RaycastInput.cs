@@ -22,7 +22,7 @@ namespace Prototype
             }
             set
             {
-                m_FrameSkiped = false;
+                m_FrameSkiped = false;             
                 m_BlockRaycast = value;
             }
         }
