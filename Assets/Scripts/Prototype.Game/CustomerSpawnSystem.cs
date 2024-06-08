@@ -82,7 +82,7 @@ namespace Prototype
         public SerializableGuid SaveId { get; set; }
     }
 
-    public class CustomerSpawnSystem : MonoBehaviour, ISceneSaveComponent<CustomerSpawnerSave>
+    public class CustomerSpawnSystem : Singleton<CustomerSpawnSystem>, ISceneSaveComponent<CustomerSpawnerSave>
     {
         [field: SerializeField]
         public SerializableGuid SaveId { get; set; }

@@ -32,7 +32,7 @@ namespace Prototype
             Instance = this;
             closeButton.onClick.AddListener(() =>
             {
-                RaycastInput.GetInstance().BlockRaycast = false;
+
             });
         }
 
@@ -52,7 +52,6 @@ namespace Prototype
 
         public override void Show()
         {
-            RaycastInput.GetInstance().BlockRaycast = true;
             base.Show();
         }
 

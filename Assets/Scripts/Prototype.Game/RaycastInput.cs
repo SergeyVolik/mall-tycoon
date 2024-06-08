@@ -1,3 +1,4 @@
+using Prototype.UI;
 using UnityEngine;
 
 namespace Prototype
@@ -35,11 +36,18 @@ namespace Prototype
 
         private void Update()
         {
+            if (UINavigationManager.GetInstance().Count > 1)
+            {
+                m_FrameSkiped = false;
+                return;
+            }
+
             if (!m_FrameSkiped)
             {
                 m_FrameSkiped = true;
                 return;
             }
+
 
             if (BlockRaycast)
             {

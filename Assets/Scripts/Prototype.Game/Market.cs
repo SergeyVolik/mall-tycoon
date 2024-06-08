@@ -33,7 +33,7 @@ namespace Prototype
 
             UpdateCrowdVolume();
             m_Cashiers = GetComponentsInChildren<CashierBehaviour>(true);
-            m_TradingSpots = GetComponentsInChildren<TradingSpot>(true);       
+            m_TradingSpots = GetComponentsInChildren<TradingSpot>(true);
         }
 
 
@@ -112,7 +112,8 @@ namespace Prototype
             UpdateCrowdVolume();
         }
 
-        internal float GetTotalIncome()
+
+        internal float GetTotalIncomePerCustomer()
         {
             float cost = 0;
 
@@ -120,6 +121,7 @@ namespace Prototype
             {
                 if (!item.IsWorking())
                     continue;
+
                 cost += item.costUpgrade.GetProducCost();
             }
 

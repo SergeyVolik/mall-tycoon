@@ -8,6 +8,7 @@ namespace Prototype.UI
         public Stack<INavigateable> Navigateables => _navigateables;
         private Stack<INavigateable> _navigateables = new Stack<INavigateable>();
 
+        public int Count => _navigateables.Count;
         public bool IsCurrentPage(INavigateable navigateable)
         {
             if (Navigateables.Count == 0)

@@ -123,7 +123,7 @@ namespace Prototype
 
                         if (m_SelectedCashier == null)
                         {
-                            Debug.LogWarning("cashier didn't found");
+                            Debug.LogWarning("cashier not found");
                             GoHome();
                             return;
                         }

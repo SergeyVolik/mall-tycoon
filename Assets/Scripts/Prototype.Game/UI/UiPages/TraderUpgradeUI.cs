@@ -34,7 +34,7 @@ namespace Prototype
 
             closeButton.onClick.AddListener(() =>
             {
-                RaycastInput.GetInstance().BlockRaycast = false;
+
             });
 
             costLevelUp.buyButton.GetComponent<HoldedButton>().onClick += () =>
@@ -71,9 +71,7 @@ namespace Prototype
             if (m_Playerdata)
             {
                 m_Playerdata.onMoneyChanged += TraderUpgradeUI_onMoneyChanged;
-            }
-           
-            RaycastInput.GetInstance().BlockRaycast = true;
+            }          
         }
 
         public override void Hide(bool onlyDisableRaycast = false)

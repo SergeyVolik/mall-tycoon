@@ -19,7 +19,7 @@ namespace Prototype
 
             closeButton.onClick.AddListener(() =>
             {
-                RaycastInput.GetInstance().BlockRaycast = false;
+
             });
         }
 
@@ -32,7 +32,6 @@ namespace Prototype
         {
             base.Show();
             Bind(Market.GetInstance());
-            RaycastInput.GetInstance().BlockRaycast = true;
         }
 
         public override void Hide(bool onlyDisableRaycast = false)

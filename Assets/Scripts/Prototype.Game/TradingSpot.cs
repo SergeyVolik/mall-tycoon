@@ -212,7 +212,7 @@ namespace Prototype
                 else if (traderAi.IsWorkFinished() && traderAi.IsHasCustomer())
                 {
                     var customerAI = traderAi.CurrentCustomer;
-                    customerAI.buyedProducCost = Market.GetInstance().GetTotalIncome();
+                    customerAI.buyedProducCost = Market.GetInstance().GetTotalIncomePerCustomer();
                     customerAI.holdedResource = resourceCost;
                     traderAi.Clear();
                 }
