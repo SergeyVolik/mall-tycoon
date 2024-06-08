@@ -1,3 +1,4 @@
+using Prototype.UI;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -35,7 +36,7 @@ namespace Prototype
         }
     }
 
-    public class HoldedButton : MonoBehaviour, IHoldButton
+    public class HoldedButton : MonoBehaviour, IHoldButton,IPageHidedListener
     {
         private float currentSpeed = 1f;
         private const float speedAcceleration = 1.5f;
@@ -90,6 +91,11 @@ namespace Prototype
         }
 
         public void OnPointerExit(PointerEventData eventData)
+        {
+            Finish();
+        }
+
+        public void OnHided()
         {
             Finish();
         }

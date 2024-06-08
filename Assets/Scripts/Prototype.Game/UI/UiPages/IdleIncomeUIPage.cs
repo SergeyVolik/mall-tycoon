@@ -1,5 +1,6 @@
 using Prototype.UI;
 using System;
+using System.Diagnostics;
 using TMPro;
 using UnityEngine.UI;
 
@@ -38,10 +39,13 @@ namespace Prototype
 
             GlobalDataSaveManager.Instance.OnLoaded -= Instance_OnLoaded;
 
-            var incomePerCustomer = Market.GetInstance().GetTotalIncomePerCustomer();
+            var incomePerCustomer = obj.marketCustomerIncome;
             var spawnPerMinute = CustomerSpawnSystem.GetInstance().SpawnsPerMinute();
             var diff = DateTime.Now - obj.exitTime;
-           
+            UnityEngine.Debug.Log(diff.TotalMinutes);
+            UnityEngine.Debug.Log(spawnPerMinute);
+            UnityEngine.Debug.Log(incomePerCustomer);
+
             idleIncome = (float)diff.TotalMinutes * spawnPerMinute * incomePerCustomer;
             PlayerData.GetInstance().IncreaseMoney(idleIncome);
             incomeText.text = TextUtils.ValueToShortString(idleIncome);

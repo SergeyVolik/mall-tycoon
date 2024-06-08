@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace Prototype
@@ -15,8 +16,9 @@ namespace Prototype
     public class SceneSaveManager : BaseSaveManager<SceneSaveData>
     {
         public string SaveKey;
-
+        public event Action onLoaded = delegate { };
         public override ISerializedProvider<SceneSaveData> SerializerProvider { get; set; }
+        public static SceneSaveManager Instance { get; private set; }
 
         public override void LoadPass(SceneSaveData sceneSaveData)
         {
@@ -25,6 +27,8 @@ namespace Prototype
             SaveHelper.LoadComponents<CustomerSpawnerSave, CustomerSpawnSystem>(sceneSaveData.Spawners);
             SaveHelper.LoadComponents<TradingSpotSaveData, TradingSpot>(sceneSaveData.TradingSpots);
             SaveHelper.LoadComponents<CashierBehaviourSave, CashierBehaviour>(sceneSaveData.Cashiers);
+
+            onLoaded.Invoke();
         }
 
         public override void SavePass(SceneSaveData sceneSaveData)
@@ -34,6 +38,11 @@ namespace Prototype
             sceneSaveData.Spawners = SaveHelper.SaveComponents<CustomerSpawnerSave, CustomerSpawnSystem>();
             sceneSaveData.TradingSpots = SaveHelper.SaveComponents<TradingSpotSaveData, TradingSpot>();
             sceneSaveData.Cashiers = SaveHelper.SaveComponents<CashierBehaviourSave, CashierBehaviour>();
+        }
+
+        private void Awake()
+        {
+            Instance = this;
         }
 
         private void Start()

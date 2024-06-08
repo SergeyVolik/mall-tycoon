@@ -10,6 +10,7 @@ namespace Prototype
     {
         public List<ResourceSaveItem> playerResources = new List<ResourceSaveItem>();
         public DateTime exitTime;
+        public float marketCustomerIncome;
     }
 
     [System.Serializable]
@@ -80,6 +81,7 @@ namespace Prototype
             }
 
             saveData.exitTime = DateTime.Now;
+            saveData.marketCustomerIncome = Market.GetInstance().GetTotalIncomePerCustomer();
         }
     }
 }
