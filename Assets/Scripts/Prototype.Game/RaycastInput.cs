@@ -81,14 +81,22 @@ namespace Prototype
 
                 var ray = m_Camera.ScreenPointToRay(Input.mousePosition);
 
-                if (!Physics.Raycast(ray, out RaycastHit hit))
+                int len = Physics.RaycastNonAlloc(ray, m_Hits);
+
+                if (len == 0)
                 {
+                    //Debug.Log("no raycast target");
                     return;
                 }
 
-                if (hit.collider.TryGetComponent<IActivateableFromRaycast>(out var toActivate))
+                for (int i = 0; i < len; i++)
                 {
-                    toActivate.ActivateFromRaycast();
+                    var item = m_Hits[i];
+                    if (item.collider.TryGetComponent<IActivateableFromRaycast>(out var toActivate))
+                    {
+                        toActivate.ActivateFromRaycast();
+                        break;
+                    }
                 }
             }
         }
