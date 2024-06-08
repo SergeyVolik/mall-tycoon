@@ -17,7 +17,16 @@ namespace Prototype
 
         public void Tick()
         {
-            cooldownRoot.gameObject.SetActive(!m_Coolodwn.IsFinished);
+            if (m_Coolodwn.IsFinished && cooldownRoot.gameObject.activeSelf)
+            {
+                cooldownRoot.gameObject.SetActive(false);
+            }
+
+            if (m_Coolodwn.IsFinished! && !cooldownRoot.gameObject.activeSelf)
+            {
+                cooldownRoot.gameObject.SetActive(true);
+            }
+
             progressImage.fillAmount = m_Coolodwn.Progress / m_Coolodwn.Duration;
         }
     }

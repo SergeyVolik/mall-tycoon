@@ -177,5 +177,10 @@ namespace Prototype
             m_Agent.speed = speed;
             AnimatorController.SetMoveSpeed(speed);
         }
+
+        internal void ForceDestination(Vector3 position)
+        {
+            m_Agent.destination = position;
+        }
     }
 }

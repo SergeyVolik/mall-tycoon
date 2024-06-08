@@ -110,9 +110,10 @@ namespace Prototype
                 return;
             }
 
+            m_SpawnT = 0;
+
             if (Market.GetInstance().GetReadyTraders().Count() > 0)
-            {
-                m_SpawnT = 0;
+            {              
                 var spawnPoint = customerSpawnPoints[UnityEngine.Random.Range(0, customerSpawnPoints.Length)];
                 var customer = GameObject.Instantiate(customerPrefab, spawnPoint.position, Quaternion.identity);
                 var customerSkin = customer.GetComponent<SpawnRandomSkin>();
