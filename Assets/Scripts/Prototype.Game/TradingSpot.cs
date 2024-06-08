@@ -197,6 +197,7 @@ namespace Prototype
             }
         }
 
+        public event Action onCheckoutFinished = delegate { };
         public void Update()
         {
             foreach (var traderAi in traders)
@@ -215,6 +216,7 @@ namespace Prototype
                     customerAI.buyedProducCost = Market.GetInstance().GetTotalIncomePerCustomer();
                     customerAI.holdedResource = resourceCost;
                     traderAi.Clear();
+                    onCheckoutFinished.Invoke();
                 }
             }
         }
@@ -236,7 +238,7 @@ namespace Prototype
             {
                 addWorkerUpgrade = addWorkerUpgrade,
                 buySpotUpgrade = buySpotUpgrade,
-                workerSpeedUpgrade = buySpotUpgrade,
+                workerSpeedUpgrade = workerSpeedUpgrade,
                 SaveId = SaveId,
                 costUpgrade = costUpgrade,
             };
@@ -247,7 +249,7 @@ namespace Prototype
            
             addWorkerUpgrade = data.addWorkerUpgrade;
             buySpotUpgrade = data.buySpotUpgrade;
-            workerSpeedUpgrade = data.buySpotUpgrade;
+            workerSpeedUpgrade = data.workerSpeedUpgrade;
 
             for (int i = 0; i < costUpgrade.upgrades.Length; i++)
             {

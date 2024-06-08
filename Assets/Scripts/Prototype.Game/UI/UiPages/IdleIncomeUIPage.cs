@@ -22,7 +22,6 @@ namespace Prototype
 
             getIncomeButton.onClick.AddListener(() =>
             {
-                PlayerData.GetInstance().IncreaseMoney(idleIncome);
                 UINavigationManager.GetInstance().Pop();
             });
 
@@ -44,6 +43,7 @@ namespace Prototype
             var diff = DateTime.Now - obj.exitTime;
            
             idleIncome = (float)diff.TotalMinutes * spawnPerMinute * incomePerCustomer;
+            PlayerData.GetInstance().IncreaseMoney(idleIncome);
             incomeText.text = TextUtils.ValueToShortString(idleIncome);
         }
     }

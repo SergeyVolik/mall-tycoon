@@ -31,14 +31,16 @@ namespace Prototype.UI
             m_Showed =  GetComponentsInChildren<IPageShowedListener>();
 
             Hide();
+
+            if (initPage)
+                UINavigationManager.GetInstance().Navigate(this);
         }
 
         protected virtual void OnDestroy() { }
 
         protected virtual void Start()
         {
-            if (initPage)
-                UINavigationManager.GetInstance().Navigate(this);
+           
         }
        
         public virtual void Hide(bool onlyDisableRaycast = false)

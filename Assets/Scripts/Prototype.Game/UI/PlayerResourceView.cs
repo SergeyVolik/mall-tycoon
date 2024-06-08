@@ -36,7 +36,16 @@ namespace Prototype
         private void UpdateUI()
         {
             var count = m_Resources.GetResource(resourceType);
-            uiItem.SetText(TextUtils.SplitBy3Number(count));
+
+            var needShortVersion = (count / 1000f / 1000f) >= 10f;
+            if (needShortVersion)
+            {
+                uiItem.SetText(TextUtils.ValueToShortString(count));
+            }
+            else
+            {
+                uiItem.SetText(TextUtils.SplitBy3Number(count));
+            }
             uiItem.SetSprite(resourceType.resourceIcon, resourceType.resourceColor);
         }
     }

@@ -34,8 +34,17 @@ namespace Prototype
             UpdateCrowdVolume();
             m_Cashiers = GetComponentsInChildren<CashierBehaviour>(true);
             m_TradingSpots = GetComponentsInChildren<TradingSpot>(true);
+
+            foreach (var item in m_TradingSpots)
+            {
+                item.onCheckoutFinished += Item_onCheckoutFinished;
+            }
         }
 
+        private void Item_onCheckoutFinished()
+        {
+            currentMinuteCustomes++;
+        }
 
         private void RoomTrigger_onTriggerExit(Collider obj)
         {
@@ -126,6 +135,80 @@ namespace Prototype
             }
 
             return cost;
+        }
+
+        internal float GetAverageCheckoutQueueTimeInSeconds()
+        {
+            float sum = 0;
+            int len = 0;
+            foreach (var item in Cashiers)
+            {
+                if (!item.IsWorking())
+                    continue;
+
+                var seconds = item.workerSpeedUpgrade.GetValue();
+                len++;
+                sum += seconds * item.queue.Count;
+            }
+
+            return sum / len;
+        }
+
+        internal float GetAverageTraderTimeInSeconds()
+        {
+            float sum = 0;
+            int len = 0;
+
+            foreach (var item in m_TradingSpots)
+            {
+                if (!item.IsWorking())
+                    continue;
+
+                var seconds = item.workerSpeedUpgrade.GetValue();
+                len++;
+
+                sum += seconds * item.queue.Count;
+            }
+
+            return sum / len;
+        }
+
+        internal float GetAverageCheckoutCustomersInQueue()
+        {
+            float sum = 0;
+            int len = 0;
+            foreach (var item in Cashiers)
+            {
+                if (!item.IsWorking())
+                    continue;
+
+                sum += item.queue.Count;
+                len++;
+            }
+
+            sum /= len;
+
+            return sum;
+        }
+
+        internal float GetCustomersPerMinute()
+        {          
+            return (prevMinuteCustomers/60f + (currentMinuteCustomes * currenMinTime/60f)) / 2f;
+        }
+
+        private int currentMinuteCustomes;
+        private float currenMinTime;
+        private int prevMinuteCustomers;
+        private void Update()
+        {
+            currenMinTime += Time.deltaTime;
+
+            if(currenMinTime > 60f)
+            {
+                currenMinTime = 0;
+                prevMinuteCustomers = currentMinuteCustomes;
+                currentMinuteCustomes = 0;
+            }
         }
     }
 }
