@@ -102,9 +102,16 @@ namespace Prototype
                     continue;
                 }
 
-                if (minQueueLen > item.queue.Count)
+                var curLen = item.queue.Count;
+
+                if (!item.traderAi.IsWorkFinished())
                 {
-                    minQueueLen = item.queue.Count;
+                    curLen++;
+                }
+
+                if (minQueueLen > curLen)
+                {
+                    minQueueLen = curLen;
                     result = item;
                 }
             }
@@ -116,6 +123,7 @@ namespace Prototype
             source.volume = Mathf.Clamp01(m_UnitsInside / (float)maxUnitsInMarket);
         }
 
+        public bool IsFull() => m_UnitsInside >= maxUnitsInMarket;
         private void RoomTrigger_onTriggerEnter(Collider obj)
         {
             m_UnitsInside++;

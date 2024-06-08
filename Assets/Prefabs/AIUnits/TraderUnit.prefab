@@ -97,6 +97,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ea6d02b342195644981e9c6829f69a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spawnOnAwake: 1
   skins:
   - {fileID: 1980210361356166, guid: 283849f16bfc77440b18d69ac0fc81d8, type: 3}
   - {fileID: 1489707384901722, guid: 8aa0af7ccd087c046b3395779b8624bd, type: 3}
@@ -294,6 +295,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: CooldownCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 9076588247267045616, guid: 200fba22861467f41844595676368535,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

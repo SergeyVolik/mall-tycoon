@@ -22,7 +22,7 @@ namespace Prototype
                 cooldownRoot.gameObject.SetActive(false);
             }
 
-            if (m_Coolodwn.IsFinished! && !cooldownRoot.gameObject.activeSelf)
+            if (!m_Coolodwn.IsFinished && !cooldownRoot.gameObject.activeSelf)
             {
                 cooldownRoot.gameObject.SetActive(true);
             }

@@ -92,7 +92,7 @@ namespace Prototype
 
         public UpgradeData customerSpawnSpeed;
         public UpgradeData customerMoveSpeed;
-
+        public int maxActiveCustomes = 50;
         public float SpawnsPerMinute()
         {
             return 60f / customerSpawnSpeed.GetValue();
@@ -112,7 +112,7 @@ namespace Prototype
 
             m_SpawnT = 0;
 
-            if (Market.GetInstance().GetReadyTraders().Count() > 0)
+            if (Market.GetInstance().GetReadyTraders().Count() > 0 && CustomerAIBehaviour.GetInstance().ActiveCustomers < maxActiveCustomes)
             {              
                 var spawnPoint = customerSpawnPoints[UnityEngine.Random.Range(0, customerSpawnPoints.Length)];
                 var customer = GameObject.Instantiate(customerPrefab, spawnPoint.position, Quaternion.identity);

@@ -11,7 +11,6 @@ namespace Prototype
         public Vector3 cameraOffset;
         [Header("Movement")]
         public float decelerationSpeed;
-        public float foolowSpeed;
 
         [Header("Zoom")]
         public float zoomSpeedMult = 1f;
@@ -143,23 +142,13 @@ namespace Prototype
             if (cameraTargetPosition == targetPos)
                 return;
 
-            var t = Mathf.Clamp01(GetFollowSpeed() * Time.deltaTime);
-
-            targetPos = Vector3.Lerp(cameraTargetPosition, targetPos, t);
-
             var bounds = cameraBounds.bounds;
             targetPos.x = Mathf.Clamp(targetPos.x, bounds.min.x, bounds.max.x);
             targetPos.z = Mathf.Clamp(targetPos.z, bounds.min.z, bounds.max.z);
 
-            cameraTarget.position = Vector3.Lerp(cameraTargetPosition, targetPos, t);
-            m_Camera.transform.position = cameraTargetPosition + cameraOffset;
+            cameraTarget.position = targetPos;
+            m_Camera.transform.position = targetPos + cameraOffset;
             m_MoveDelta /= decelerationSpeed;
-            //Debug.Log($"Move Delta: {m_MoveDelta}");
-        }
-
-        private float GetFollowSpeed()
-        {
-            return foolowSpeed;
         }
 
         private Vector3 GetWorldPosition(float z)
