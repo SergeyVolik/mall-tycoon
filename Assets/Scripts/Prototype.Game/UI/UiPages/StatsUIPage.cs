@@ -20,9 +20,9 @@ namespace Prototype
         private void UpdateUI()
         {
             customerIncome.valueText.text = TextUtils.ValueToShortString(Market.GetInstance().GetTotalIncomePerCustomer());
-            var inMarketAver = Market.GetInstance().GetCustomersPerMinute();
+            var customesPerMin = Market.GetInstance().GetCustomersPerMinute();
 
-            maxCustomers.valueText.text = $"{inMarketAver} / min";
+            maxCustomers.valueText.text = $"{customesPerMin.ToString("0")} / m";
             averageQueue.valueText.text = Market.GetInstance().GetAverageCheckoutCustomersInQueue().ToString("0.0");
             averageQueueTime.valueText.text = $"{Market.GetInstance().GetAverageCheckoutQueueTimeInSeconds().ToString("0.0")} sec";
         }

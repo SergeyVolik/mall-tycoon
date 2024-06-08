@@ -43,7 +43,7 @@ namespace Prototype
 
         private void Item_onCheckoutFinished()
         {
-            currentMinuteCustomes++;
+            m_CurrentCustomesTick++;
         }
 
         private void RoomTrigger_onTriggerExit(Collider obj)
@@ -191,23 +191,24 @@ namespace Prototype
             return sum;
         }
 
+
         internal float GetCustomersPerMinute()
         {          
-            return (prevMinuteCustomers/60f + (currentMinuteCustomes * currenMinTime/60f)) / 2f;
+            return (m_PrevCustomersTick / tickInteval + (m_CurrentCustomesTick * m_CurrenTickTime / tickInteval)) / 2f;
         }
-
-        private int currentMinuteCustomes;
-        private float currenMinTime;
-        private int prevMinuteCustomers;
+        private const float tickInteval = 60f;
+        private int m_CurrentCustomesTick;
+        private float m_CurrenTickTime;
+        private int m_PrevCustomersTick;
         private void Update()
         {
-            currenMinTime += Time.deltaTime;
+            m_CurrenTickTime += Time.deltaTime;
 
-            if(currenMinTime > 60f)
+            if(m_CurrenTickTime > tickInteval)
             {
-                currenMinTime = 0;
-                prevMinuteCustomers = currentMinuteCustomes;
-                currentMinuteCustomes = 0;
+                m_CurrenTickTime = 0;
+                m_PrevCustomersTick = m_CurrentCustomesTick;
+                m_CurrentCustomesTick = 0;
             }
         }
     }
