@@ -137,22 +137,22 @@ namespace Prototype
 
         private void UpdateCameraPosition()
         {
-            var taregetPos = cameraTarget.position;
-            var targetPos = taregetPos + m_MoveDelta;
+            var cameraTargetPosition = cameraTarget.position;
+            var targetPos = cameraTargetPosition + m_MoveDelta;
 
-            if (taregetPos == targetPos)
+            if (cameraTargetPosition == targetPos)
                 return;
 
             var t = Mathf.Clamp01(GetFollowSpeed() * Time.deltaTime);
 
-            targetPos = Vector3.Lerp(taregetPos, targetPos, t);
+            targetPos = Vector3.Lerp(cameraTargetPosition, targetPos, t);
 
             var bounds = cameraBounds.bounds;
             targetPos.x = Mathf.Clamp(targetPos.x, bounds.min.x, bounds.max.x);
             targetPos.z = Mathf.Clamp(targetPos.z, bounds.min.z, bounds.max.z);
 
-            cameraTarget.position = Vector3.Lerp(taregetPos, targetPos, t);
-            m_Camera.transform.position = taregetPos + cameraOffset;
+            cameraTarget.position = Vector3.Lerp(cameraTargetPosition, targetPos, t);
+            m_Camera.transform.position = cameraTargetPosition + cameraOffset;
             m_MoveDelta /= decelerationSpeed;
             //Debug.Log($"Move Delta: {m_MoveDelta}");
         }

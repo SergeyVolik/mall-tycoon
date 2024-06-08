@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using UnityEngine;
 
 namespace Prototype
@@ -109,13 +110,16 @@ namespace Prototype
                 return;
             }
 
-            m_SpawnT = 0;
-            var spawnPoint = customerSpawnPoints[UnityEngine.Random.Range(0, customerSpawnPoints.Length)];
-            var customer = GameObject.Instantiate(customerPrefab, spawnPoint.position, Quaternion.identity);
-            var customerSkin = customer.GetComponent<SpawnRandomSkin>();
-            customerSkin.SpawnSkin();
-            var customerAI = customer.GetComponent<CustomerAI>();
-            customerAI.SetMoveSpeed(customerMoveSpeed.GetValue() + UnityEngine.Random.Range(-0.1f, 0.1f));
+            if (Market.GetInstance().GetReadyTraders().Count() > 0)
+            {
+                m_SpawnT = 0;
+                var spawnPoint = customerSpawnPoints[UnityEngine.Random.Range(0, customerSpawnPoints.Length)];
+                var customer = GameObject.Instantiate(customerPrefab, spawnPoint.position, Quaternion.identity);
+                var customerSkin = customer.GetComponent<SpawnRandomSkin>();
+                customerSkin.SpawnSkin();
+                var customerAI = customer.GetComponent<CustomerAI>();
+                customerAI.SetMoveSpeed(customerMoveSpeed.GetValue() + UnityEngine.Random.Range(-0.1f, 0.1f));
+            }
         }
 
         public CustomerSpawnerSave SaveComponent()

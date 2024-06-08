@@ -52,11 +52,11 @@ namespace Prototype
             UpdateCrowdVolume();
         }
 
-        private IEnumerable<TradingSpot> WorkedSpots()
+        public IEnumerable<TradingSpot> GetReadyTraders()
         {
             foreach (var item in m_TradingSpots)
             {
-                if (item.IsWorking())
+                if (item.IsWorking() && item.queue.HasFreePlace())
                 {
                     yield return item;
                 }
@@ -65,7 +65,7 @@ namespace Prototype
 
         public TradingSpot GetRandomTraider()
         {
-            var tratingSpots = WorkedSpots();
+            var tratingSpots = GetReadyTraders();
 
             var len = tratingSpots.Count();
             if (len == 0)
@@ -83,6 +83,7 @@ namespace Prototype
 
             return null;
         }
+
 
         public CashierBehaviour GetOptimalCashRegister()
         {

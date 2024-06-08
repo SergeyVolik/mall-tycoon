@@ -85,7 +85,7 @@ namespace Prototype
             Application.targetFrameRate = targetFps;
 
             var physicsFrameRate = 1.0f / targetFixedRate;
-            Time.fixedDeltaTime = physicsFrameRate;
+            //Time.fixedDeltaTime = physicsFrameRate;
         }
     }
 }

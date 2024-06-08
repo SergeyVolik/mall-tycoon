@@ -12,12 +12,16 @@ namespace Prototype
         public void TakeQueue(CustomerAI customer)
         {
             m_Customers.Enqueue(customer);
+            UpdateQueue();
         }
 
         public bool HasFreePlace() => m_Customers.Count < queuePoints.Length-1 && gameObject.activeSelf;
         public CustomerAI Dequeue()
         { 
-            return m_Customers.Dequeue();
+            var item = m_Customers.Dequeue();
+            UpdateQueue();
+
+            return item;
         }
 
         public CustomerAI Peek()
@@ -25,6 +29,15 @@ namespace Prototype
             return m_Customers.Peek();
         }
 
+        void UpdateQueue()
+        {
+            int i = 0;
+            foreach (var item in m_Customers)
+            {
+                item.ForceDestination(queuePoints[i].position);
+                i++;
+            }
+        }
         public int Count => m_Customers.Count;
 
         public bool TryPeek(out CustomerAI peek)
