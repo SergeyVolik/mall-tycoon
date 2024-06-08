@@ -169,6 +169,7 @@ Transform:
   - {fileID: 1862595728}
   - {fileID: 469406201}
   - {fileID: 312178230}
+  - {fileID: 1564933048}
   m_Father: {fileID: 714888678}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &34238033
@@ -1624,10 +1625,19 @@ MonoBehaviour:
   - {fileID: 343306827615061214, guid: 22c983fa265bc244e99f64efb13ead4d, type: 3}
   rightSpawnPoint: {fileID: 1974480301}
   rightSpawnPointEnd: {fileID: 310325477}
-  carSpeedMPH: 30
-  spawnIntervalMin: 5
-  spawnIntervalMax: 10
+  crosswalk: {fileID: 1564933050}
+  carSpeedMPH: 20
+  acceleration: 8
+  spawnIntervalMin: 2
+  spawnIntervalMax: 5
   distanceToDestoryCar: 1
+  obstacleRaycastMask:
+    serializedVersion: 2
+    m_Bits: 192
+  maxCarsOnRoad: 3
+  obstacleRaycastDistance: 2
+  castHalfSize: {x: 0.7, y: 0.5, z: 1}
+  offsetForward: -1
 --- !u!4 &312178230
 Transform:
   m_ObjectHideFlags: 0
@@ -3201,10 +3211,19 @@ MonoBehaviour:
   - {fileID: 343306827615061214, guid: 22c983fa265bc244e99f64efb13ead4d, type: 3}
   rightSpawnPoint: {fileID: 642488801}
   rightSpawnPointEnd: {fileID: 789435545}
-  carSpeedMPH: 30
-  spawnIntervalMin: 5
-  spawnIntervalMax: 10
+  crosswalk: {fileID: 1564933050}
+  carSpeedMPH: 20
+  acceleration: 8
+  spawnIntervalMin: 2
+  spawnIntervalMax: 5
   distanceToDestoryCar: 1
+  obstacleRaycastMask:
+    serializedVersion: 2
+    m_Bits: 192
+  maxCarsOnRoad: 3
+  obstacleRaycastDistance: 2
+  castHalfSize: {x: 0.7, y: 0.5, z: 1}
+  offsetForward: -1
 --- !u!1001 &494824069
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9674,6 +9693,73 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1557214355}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1564933047
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1564933048}
+  - component: {fileID: 1564933049}
+  - component: {fileID: 1564933050}
+  m_Layer: 8
+  m_Name: RoadCrosswalk
+  m_TagString: Untagged
+  m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1564933048
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1564933047}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.15, y: 0.57, z: -3.27}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 20752545}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1564933049
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1564933047}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 4.5481863, y: 2.2234945, z: 1}
+  m_Center: {x: 0.07212221, y: 0.61174715, z: 0.00000006099164}
+--- !u!114 &1564933050
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1564933047}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4eb176cd1eabac4d8b22fb2c71fee4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  count: 0
 --- !u!1001 &1572175885
 PrefabInstance:
   m_ObjectHideFlags: 0
