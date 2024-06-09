@@ -12,6 +12,8 @@ namespace Prototype
         private CashierBehaviour[] m_Cashiers;
 
         private SelfServiceCashier m_SelfServiceCashier;
+        public SelfServiceCashier CashierSelfService => m_SelfServiceCashier;
+
         public CashierBehaviour[] Cashiers => m_Cashiers;
         public TradingSpot[] TradingSpots => m_TradingSpots;
 
@@ -37,7 +39,7 @@ namespace Prototype
             UpdateCrowdVolume();
             m_Cashiers = GetComponentsInChildren<CashierBehaviour>(true);
             m_TradingSpots = GetComponentsInChildren<TradingSpot>(true);
-            m_SelfServiceCashier = GetComponentInChildren<SelfServiceCashier>();
+            m_SelfServiceCashier = GetComponentInChildren<SelfServiceCashier>(true);
             foreach (var item in m_TradingSpots)
             {
                 item.onCheckoutFinished += Item_onCheckoutFinished;

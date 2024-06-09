@@ -20,6 +20,7 @@ namespace Prototype
     {
         public LevelUpUIItem[] buyCashiers;
         public LevelUpUIItem[] upgradeCashiers;
+        public LevelUpUIItem selfServiceUpgrade;
         public Button closeButton;
 
         public UpgradeUiData[] instancesUI;
@@ -57,6 +58,9 @@ namespace Prototype
             Unbind();
 
             instancesUI = new UpgradeUiData[market.Cashiers.Length];
+
+            selfServiceUpgrade.UpgradeItem(market.CashierSelfService.buyData);
+            selfServiceUpgrade.buyButton.onClick.AddListener(SelfServiceCashierBuy);
 
             for (int i = 0; i < market.Cashiers.Length; i++)
             {
@@ -112,8 +116,16 @@ namespace Prototype
             }
         }
 
+        private void SelfServiceCashierBuy()
+        {
+            Market.GetInstance().CashierSelfService.buyData.LevelUp();
+            selfServiceUpgrade.UpgradeItem(Market.GetInstance().CashierSelfService.buyData);
+        }
+
         private void Unbind()
         {
+            selfServiceUpgrade.buyButton.onClick.RemoveListener(SelfServiceCashierBuy);
+
             if (instancesUI != null)
             {
                 foreach (var item in instancesUI)
