@@ -36,6 +36,7 @@ namespace Prototype.UI
                 UINavigationManager.GetInstance().Navigate(this);
         }
 
+        public bool IsShowed => m_Canvas.enabled;
         protected virtual void OnDestroy() { }
 
         protected virtual void Start()

@@ -51,8 +51,16 @@ namespace Prototype
                     case CustomerAIStates.MoveToMarket:
                         if (customer.IsDestinationReached())
                         {
-                            customer.currentState = CustomerAIStates.MoveToTraderQueue;
                             customer.selectedTraider = m_Market.GetRandomTraider();
+
+                            if (customer.selectedTraider == null)
+                            {
+                                customer.GoHome();
+                            }
+                            else
+                            {
+                                customer.currentState = CustomerAIStates.MoveToTraderQueue;
+                            }
                         }
                         break;
 
@@ -80,15 +88,15 @@ namespace Prototype
                         if (customer.buyedProducCost != 0)
                         {
                             customer.currentState = CustomerAIStates.MoveToCashRegisterQueue;
-                            customer.m_SelectedCashier = Market.GetInstance().GetOptimalCashRegister();
+                            customer.selectedCashier = Market.GetInstance().GetOptimalCashRegister();
 
-                            if (customer.m_SelectedCashier == null)
+                            if (customer.selectedCashier == null)
                             {
                                 Debug.LogWarning("cashier not found");
                                 customer.GoHome();
                                 return;
                             }
-                            customer.ForceDestination(customer.m_SelectedCashier.queue.GetNextPosition());
+                            customer.ForceDestination(customer.selectedCashier.queue.GetNextPosition());
                         }
                         break;
                     case CustomerAIStates.WaitCashRegister:
@@ -99,23 +107,23 @@ namespace Prototype
                         break;
                     case CustomerAIStates.MoveToCashRegisterQueue:
 
-                        if (!customer.m_SelectedCashier.queue.HasFreePlace())
+                        if (!customer.selectedCashier.queue.HasFreePlace())
                         {
                             customer.GoHome();
                             return;
                         }
 
-                        customer.ForceDestination(customer.m_SelectedCashier.queue.GetNextPosition());
+                        customer.ForceDestination(customer.selectedCashier.queue.GetNextPosition());
 
                         if (customer.IsDestinationReached())
                         {
                             customer.currentState = CustomerAIStates.IdleInCashRegisterQueue;
-                            customer.m_SelectedCashier.queue.TakeQueue(customer);
+                            customer.selectedCashier.queue.TakeQueue(customer);
                         }
                         break;
                     case CustomerAIStates.IdleInCashRegisterQueue:
 
-                        customer.ForceDestination(customer.m_SelectedCashier.queue.GetPositionInQueue(customer));
+                        customer.ForceDestination(customer.selectedCashier.queue.GetPositionInQueue(customer));
                         break;
                     case CustomerAIStates.MoveToHome:
                         if (customer.IsDestinationReached())

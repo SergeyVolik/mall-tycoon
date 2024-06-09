@@ -13,6 +13,7 @@ namespace Prototype
             base.Awake();    
         }
 
+        private const int minsToApplyIdleIncome = 1;
         public TextMeshProUGUI incomeText;
         public Button getIncomeButton;
         private float idleIncome;
@@ -35,13 +36,19 @@ namespace Prototype
             if (obj == null)
                 return;
 
-            Navigate();
+            var diff = DateTime.Now - obj.exitTime;
 
-            GlobalDataSaveManager.Instance.OnLoaded -= Instance_OnLoaded;
+            if (diff.TotalMinutes < minsToApplyIdleIncome)
+            {
+                return;
+            }
+
+            if (!IsShowed)
+                Navigate();
 
             var incomePerCustomer = obj.marketCustomerIncome;
             var spawnPerMinute = CustomerSpawnSystem.GetInstance().SpawnsPerMinute();
-            var diff = DateTime.Now - obj.exitTime;
+       
             UnityEngine.Debug.Log(diff.TotalMinutes);
             UnityEngine.Debug.Log(spawnPerMinute);
             UnityEngine.Debug.Log(incomePerCustomer);

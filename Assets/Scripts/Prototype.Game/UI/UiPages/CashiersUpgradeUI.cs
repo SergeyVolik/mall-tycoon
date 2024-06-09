@@ -1,15 +1,28 @@
 using Prototype.UI;
+using System;
 using UnityEngine.UI;
 
 namespace Prototype
 {
+    public class UpgradeUiData
+    {
+        public LevelUpUIItem buyUI;
+        public LevelUpUIItem upgradeCashierUI;
+        public UpgradeData workerSpeedUpgrade;
+        public UpgradeData buyUpgrade;
+        public Action buyAction;
+        internal Action upgateBuyUI;
+        internal Action updateUpgradeUI;
+        internal Action upgradeAction;
+    }
+
     public class CashiersUpgradeUI : UIPage
     {
         public LevelUpUIItem[] buyCashiers;
         public LevelUpUIItem[] upgradeCashiers;
         public Button closeButton;
-        private bool m_Binded;
 
+        public UpgradeUiData[] instancesUI;
         public static CashiersUpgradeUI Instance { get; private set; }
 
         protected override void Awake()
@@ -41,24 +54,22 @@ namespace Prototype
 
         public void Bind(Market market)
         {
-            if (m_Binded)
-                return;
+            Unbind();
 
-            m_Binded = true;
+            instancesUI = new UpgradeUiData[market.Cashiers.Length];
+
             for (int i = 0; i < market.Cashiers.Length; i++)
             {
                 var cashier = market.Cashiers[i];
                 var buyUI = buyCashiers[i];
                 var upgradeCashierUI = upgradeCashiers[i];
 
-                cashier.buyUpgrade.onChanged += () =>
+                Action upgateBuyUI = () =>
                 {
                     UpgradeBuyUI(cashier, buyUI, upgradeCashierUI);
                 };
 
-                UpgradeBuyUI(cashier, buyUI, upgradeCashierUI);
-
-                buyUI.buyButton.GetComponent<HoldedButton>().onClick += () =>
+                Action buyAction = () =>
                 {
                     if (cashier.buyUpgrade.IsMaxLevel())
                         return;
@@ -66,25 +77,59 @@ namespace Prototype
                     cashier.buyUpgrade.LevelUp();
                 };
 
-                buyUI.cost.text = TextUtils.ValueToShortString(cashier.buyUpgrade.GetCostValue());
+                Action upgradeAction = () =>
+                {
+                    cashier.workerSpeedUpgrade.LevelUp();
+                };
 
-                cashier.workerSpeedUpgrade.onChanged += () =>
+                Action updateUpgradeUI = () =>
                 {
                     UpgateCashierUpgradeUI(cashier, upgradeCashierUI);
                 };
 
+                cashier.buyUpgrade.onChanged += upgateBuyUI;
+                buyUI.buyButton.GetComponent<HoldedButton>().onClick += buyAction;
+                cashier.workerSpeedUpgrade.onChanged += updateUpgradeUI;
+                upgradeCashierUI.buyButton.GetComponent<HoldedButton>().onClick += upgradeAction;
+
+                UpgradeBuyUI(cashier, buyUI, upgradeCashierUI);
+                buyUI.cost.text = TextUtils.ValueToShortString(cashier.buyUpgrade.GetCostValue());
                 UpgateCashierUpgradeUI(cashier, upgradeCashierUI);
 
-                upgradeCashierUI.buyButton.GetComponent<HoldedButton>().onClick += () =>
+                UpgradeUiData upgradeData = new UpgradeUiData
                 {
-                    cashier.workerSpeedUpgrade.LevelUp();
+                    buyUpgrade = cashier.buyUpgrade,
+                    workerSpeedUpgrade = cashier.workerSpeedUpgrade,
+                    buyUI = buyUI,
+                    upgradeCashierUI = upgradeCashierUI,
+                    buyAction = buyAction,
+                    upgateBuyUI = upgateBuyUI,
+                    upgradeAction = upgradeAction,
+                    updateUpgradeUI = updateUpgradeUI,
                 };
+
+                instancesUI[i] = upgradeData;
             }
+        }
+
+        private void Unbind()
+        {
+            if (instancesUI != null)
+            {
+                foreach (var item in instancesUI)
+                {
+                    item.buyUpgrade.onChanged -= item.upgateBuyUI;
+                    item.buyUI.buyButton.GetComponent<HoldedButton>().onClick -= item.buyAction;
+                    item.workerSpeedUpgrade.onChanged -= item.updateUpgradeUI;
+                    item.upgradeCashierUI.buyButton.GetComponent<HoldedButton>().onClick -= item.upgradeAction;
+                }
+            }
+            instancesUI = null;
         }
 
         void UpgateCashierUpgradeUI(CashierBehaviour cashier, LevelUpUIItem ui)
         {
-            ui.UpgradeItem(cashier.workerSpeedUpgrade);          
+            ui.UpgradeItem(cashier.workerSpeedUpgrade);
             ui.description.text = $"customers: {(60f / cashier.workerSpeedUpgrade.GetValue()).ToString("0.0")} p/m";
         }
 

@@ -1,6 +1,7 @@
 using Newtonsoft.Json;
 using System;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 namespace Prototype
 {
@@ -87,6 +88,8 @@ namespace Prototype
         public float maxLevelMult;
         public float buyUpgradeIncreaseValue;
 
+        [JsonIgnore]
+        public GameObject customerItemPrefab;
         public void ActivateVisual(bool activate)
         {
             foreach (var item in itemsToActivate)
@@ -121,7 +124,7 @@ namespace Prototype
         public UpgradeData buySpotUpgrade;
 
         public TraderAI[] traders;
-
+        public GameObject defaultCustomerItemPrefab;
         private void Awake()
         {
             if (m_Loaded)
@@ -214,11 +217,33 @@ namespace Prototype
                 {
                     var customerAI = traderAi.CurrentCustomer;
                     customerAI.buyedProducCost = Market.GetInstance().GetTotalIncomePerCustomer();
+                    customerAI.SpawnCustomerItem(GetRandomItemPrefab());
                     customerAI.holdedResource = resourceCost;
                     traderAi.Clear();
                     onCheckoutFinished.Invoke();
                 }
             }
+        }
+        public GameObject GetRandomItemPrefab()
+        {
+            GameObject prefab = defaultCustomerItemPrefab;
+
+            int rndIndex = UnityEngine.Random.Range(0, costUpgrade.upgrades.Length);
+            int i = 0;
+            foreach (var item in costUpgrade.upgrades)
+            {
+                if (item.maxLevel <= costUpgrade.currentLevel && item.customerItemPrefab != null)
+                {
+                    prefab = item.customerItemPrefab;
+                }
+
+                if (rndIndex == i)
+                    break;
+
+                i++;
+            }
+
+            return prefab;
         }
 
         public void ActivateFromRaycast()
@@ -246,7 +271,6 @@ namespace Prototype
 
         public void LoadComponent(TradingSpotSaveData data)
         {
-           
             addWorkerUpgrade = data.addWorkerUpgrade;
             buySpotUpgrade = data.buySpotUpgrade;
             workerSpeedUpgrade = data.workerSpeedUpgrade;
@@ -254,8 +278,9 @@ namespace Prototype
             for (int i = 0; i < costUpgrade.upgrades.Length; i++)
             {
                 data.costUpgrade.upgrades[i].itemsToActivate = costUpgrade.upgrades[i].itemsToActivate;
+                data.costUpgrade.upgrades[i].customerItemPrefab = costUpgrade.upgrades[i].customerItemPrefab;
             }
-          
+
             costUpgrade = data.costUpgrade;
 
             Setup();

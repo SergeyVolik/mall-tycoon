@@ -3488,7 +3488,7 @@ GameObject:
   - component: {fileID: 546880852}
   - component: {fileID: 546880851}
   m_Layer: 0
-  m_Name: CustomerBehaciour
+  m_Name: CustomerBehaviour
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12109,6 +12109,7 @@ MonoBehaviour:
   minZoom: 4
   maxZoom: 8
   cameraBounds: {fileID: 419098041}
+  cameraFollowSpeed: 10
 --- !u!1001 &1930315853
 PrefabInstance:
   m_ObjectHideFlags: 0

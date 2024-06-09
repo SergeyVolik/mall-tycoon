@@ -6,17 +6,28 @@ namespace Prototype
 {
     public class CustomerAI : MonoBehaviour
     {
-        public float buyedProducCost;
-        public ResourceTypeSO holdedResource;
+        public const float tickRate = 0.4f;
+
         public CustomerAIStates currentState = CustomerAIStates.SelectMarketPosition;
         private Vector3 m_StartPos;
         private NavMeshAgent m_Agent;
         private Transform m_Transform;
-        public const float tickRate = 0.4f;
+     
+        [System.NonSerialized]
         public float tickT;
+        [System.NonSerialized]
+        public float buyedProducCost;
+        [System.NonSerialized]
+        public ResourceTypeSO holdedResource;
+        [System.NonSerialized]
         public TradingSpot selectedTraider;
-        public CashierBehaviour m_SelectedCashier = null;
+        [System.NonSerialized]
+        public CashierBehaviour selectedCashier = null;
+
         private NavAgentAnimationController m_AnimatorController;
+        [SerializeField]
+        private GameObject m_ItemSpawnPoint;
+
         private NavAgentAnimationController AnimatorController
         {
             get
@@ -80,6 +91,15 @@ namespace Prototype
         {
             currentState = CustomerAIStates.MoveToHome;
             m_Agent.destination = m_StartPos;
+        }
+
+        public void SpawnCustomerItem(GameObject itemPrefab)
+        {
+            if (itemPrefab == null)
+                return;
+
+            GameObject.Instantiate(itemPrefab, m_ItemSpawnPoint.transform);
+            AnimatorController.EnableHasItemState(true);
         }
 
         public bool IsDestinationReached()

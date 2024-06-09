@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -10,6 +7,8 @@ namespace Prototype
     {
         private static int s_WalkAnimParam = Animator.StringToHash("Walk");
         private static int s_MoveSpeedParam = Animator.StringToHash("MoveSpeed");
+        private static int s_HasItemBoolParam = Animator.StringToHash("HasItem");
+
         private NavMeshAgent m_Agent;
         private Animator m_Animator;
 
@@ -30,6 +29,11 @@ namespace Prototype
                 return;
 
             m_Animator.SetFloat(s_WalkAnimParam, m_Agent.velocity.magnitude);
+        }
+
+        public void EnableHasItemState(bool enable)
+        {
+            m_Animator.SetBool(s_HasItemBoolParam, enable);
         }
     }
 }

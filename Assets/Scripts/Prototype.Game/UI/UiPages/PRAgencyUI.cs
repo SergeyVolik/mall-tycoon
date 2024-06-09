@@ -37,11 +37,8 @@ namespace Prototype
         }
 
         public void Bind(PRAgency prAgency)
-        {         
-            if (m_Binded)
-                return;
-
-            m_Binded = true;
+        {
+            Unbind();
 
             m_PRAgency = prAgency;
             m_PRAgency.m_Spanwer.customerMoveSpeed.onChanged += UpdateUI;
@@ -49,7 +46,16 @@ namespace Prototype
 
             UpdateUI();
         }
+        private void Unbind()
+        {
+            if (m_PRAgency)
+            {
+                m_PRAgency.m_Spanwer.customerMoveSpeed.onChanged -= UpdateUI;
+                m_PRAgency.m_Spanwer.customerSpawnSpeed.onChanged -= UpdateUI;
+            }
 
+            m_PRAgency = null;
+        }
         public override void Show()
         {
             base.Show();
@@ -58,6 +64,7 @@ namespace Prototype
         public override void Hide(bool onlyDisableRaycast = false)
         {
             base.Hide(onlyDisableRaycast);
+            Unbind();
         }
 
         void UpdateUI()

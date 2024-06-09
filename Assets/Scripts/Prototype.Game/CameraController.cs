@@ -19,6 +19,7 @@ namespace Prototype
 
         public Collider cameraBounds;
 
+        public float cameraFollowSpeed = 10f;
         private void Awake()
         {
             m_Camera = Camera.main;
@@ -146,6 +147,7 @@ namespace Prototype
             targetPos.x = Mathf.Clamp(targetPos.x, bounds.min.x, bounds.max.x);
             targetPos.z = Mathf.Clamp(targetPos.z, bounds.min.z, bounds.max.z);
 
+            targetPos = Vector3.Lerp(cameraTarget.position, targetPos, Mathf.Clamp01(Time.deltaTime * cameraFollowSpeed)); ;
             cameraTarget.position = targetPos;
             m_Camera.transform.position = targetPos + cameraOffset;
             m_MoveDelta /= decelerationSpeed;

@@ -90,13 +90,7 @@ namespace Prototype
 
         public void Bind(TradingSpot tarder)
         {
-            if (m_CostUpgrade != null)
-            {
-                m_CostUpgrade.onUpgraded -= UpdateUI;
-                m_WorkerUpgrade.onChanged -= UpdateUI;
-                m_AddWorkerUpgrade.onChanged -= UpdateUI;
-                m_Tarder = null;
-            }
+            Unbind();
 
             m_CostUpgrade = tarder.costUpgrade;
             m_WorkerUpgrade = tarder.workerSpeedUpgrade;
@@ -110,6 +104,20 @@ namespace Prototype
             costLevelUp.title.text = m_CostUpgrade.upgradeUiTitleName;
 
             UpdateUI();
+        }
+
+        private void Unbind()
+        {
+            if (m_CostUpgrade != null)
+            {
+                m_CostUpgrade.onUpgraded -= UpdateUI;
+                m_WorkerUpgrade.onChanged -= UpdateUI;
+                m_AddWorkerUpgrade.onChanged -= UpdateUI;
+                m_Tarder = null;
+                m_CostUpgrade = null;
+                m_WorkerUpgrade = null;
+                m_AddWorkerUpgrade = null;
+            }
         }
 
         void UpdateUI()

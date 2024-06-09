@@ -11,8 +11,9 @@ GameObject:
   - component: {fileID: 4293905260507518}
   - component: {fileID: 95985151538649412}
   - component: {fileID: -787218935983013839}
+  - component: {fileID: 417042643354244094}
   m_Layer: 0
-  m_Name: Ch_0CP00F00
+  m_Name: TestCharacter
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -70,6 +71,49 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fea65ae35c529649a1348d7871bfbd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &417042643354244094
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1012469922647074}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2d8418b0b9634b1892b0268dd9c2743, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boneShape: 1
+  drawBones: 1
+  drawTripods: 0
+  boneSize: 1
+  tripodSize: 1
+  boneColor: {r: 0, g: 0, b: 1, a: 0.5}
+  m_Transforms:
+  - {fileID: 4851374561004224}
+  - {fileID: 4382370035133882}
+  - {fileID: 4123487462568154}
+  - {fileID: 4210021043291336}
+  - {fileID: 4745931422034380}
+  - {fileID: 4964471470043674}
+  - {fileID: 4304006197264476}
+  - {fileID: 4617465131296006}
+  - {fileID: 4116681090998930}
+  - {fileID: 4174160574789314}
+  - {fileID: 4123819273660972}
+  - {fileID: 4275588093162032}
+  - {fileID: 4632208877949430}
+  - {fileID: 4672548961301262}
+  - {fileID: 4578252037684498}
+  - {fileID: 4425022782380906}
+  - {fileID: 4261238901370246}
+  - {fileID: 4537060284523068}
+  - {fileID: 4806314326875346}
+  - {fileID: 4012617282831510}
+  - {fileID: 4783844851532092}
+  - {fileID: 4835709288490284}
+  - {fileID: 4807376183445036}
+  - {fileID: 4649452304974648}
 --- !u!1 &1052195510637276
 GameObject:
   m_ObjectHideFlags: 0

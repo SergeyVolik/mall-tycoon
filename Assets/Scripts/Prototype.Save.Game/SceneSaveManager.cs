@@ -43,11 +43,12 @@ namespace Prototype
         private void Awake()
         {
             Instance = this;
+            SerializerProvider = new PlayerPrefsSerializer<SceneSaveData>();
         }
 
         private void Start()
         {
-            SerializerProvider = new PlayerPrefsSerializer<SceneSaveData>();
+        
             Load(SaveKey);
         }
 
@@ -56,6 +57,9 @@ namespace Prototype
             if (pause == true)
             {
                 Save(SaveKey);
+            }
+            else {
+                Load(SaveKey);
             }
         }
 

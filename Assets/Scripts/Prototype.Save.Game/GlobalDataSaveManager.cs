@@ -48,6 +48,9 @@ namespace Prototype
                 Save(PLAYER_SAVE_KEY);
                 Debug.Log("OnApplicationPause Global Save");
             }
+            else {
+                Load(PLAYER_SAVE_KEY);
+            }
         }
 
         private void OnApplicationQuit()
@@ -58,6 +61,7 @@ namespace Prototype
 
         public override void LoadPass(GlobalSave loadData)
         {
+            LastLoad = null;
             PlayerData.GetInstance().Resources.resources.Clear();
 
             foreach (var item in loadData.playerResources)
@@ -65,6 +69,7 @@ namespace Prototype
                 var resType = m_PlayerData.ResourceYypes.Types.FirstOrDefault(e => e.GetId() == item.resourceTypeHash);
                 m_PlayerData.Resources.resources.SetResource(resType, item.count);
             }
+
             LastLoad = loadData;
             OnLoaded.Invoke(LastLoad);
         }
