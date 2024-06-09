@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using static UnityEditor.Progress;
 
 namespace Prototype
 {
@@ -17,6 +16,8 @@ namespace Prototype
         public CashierBehaviour[] Cashiers => m_Cashiers;
         public TradingSpot[] TradingSpots => m_TradingSpots;
 
+        public int MarketPatrol { get; internal set; }
+
         [SerializeField] private AudioSource source;
         [SerializeField] private PhysicsCallbacks roomTrigger;
 
@@ -26,9 +27,24 @@ namespace Prototype
         [SerializeField]
         private Transform[] m_CustomerEnterPositions;
 
+        [SerializeField]
+        private Transform[] m_MarketPatrolPoints;
+
+        [SerializeField]
+        private Transform m_PatrolEnter;
+
         public Vector3 GetRadnomInMarketPosition()
         {
             return m_CustomerEnterPositions[UnityEngine.Random.Range(0, m_CustomerEnterPositions.Length)].position;
+        }
+        public Vector3 GetPatrolEnter()
+        {
+            return m_PatrolEnter.position;
+        }
+
+        public Vector3 GetRadnomPatrolPoint()
+        {
+            return m_MarketPatrolPoints[UnityEngine.Random.Range(0, m_MarketPatrolPoints.Length)].position;
         }
 
         private void Awake()
@@ -66,6 +82,19 @@ namespace Prototype
                     yield return item;
                 }
             }
+        }
+
+        public bool HasReadyTraders()
+        {
+            foreach (var item in m_TradingSpots)
+            {
+                if (item.IsWorking() && item.queue.HasFreePlace())
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         public TradingSpot GetRandomTraider()
@@ -247,6 +276,11 @@ namespace Prototype
                 m_PrevCustomersTick = m_CurrentCustomesTick;
                 m_CurrentCustomesTick = 0;
             }
+        }
+
+        internal bool HasPatrolFreePlace()
+        {
+            throw new NotImplementedException();
         }
     }
 }

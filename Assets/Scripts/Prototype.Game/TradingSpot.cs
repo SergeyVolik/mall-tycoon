@@ -1,7 +1,6 @@
 using Newtonsoft.Json;
 using System;
 using UnityEngine;
-using static UnityEditor.Progress;
 
 namespace Prototype
 {

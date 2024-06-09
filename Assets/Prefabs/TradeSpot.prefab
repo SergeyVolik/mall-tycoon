@@ -50,6 +50,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a219f39b18a1cd479c40b25aa18e7cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <SaveId>k__BackingField:
+    Part1: 0
+    Part2: 0
+    Part3: 0
+    Part4: 0
   traderName: TRADER
   resourceCost: {fileID: 11400000, guid: f844a05be14715d45a3a83d419fa6598, type: 2}
   queue: {fileID: 4119544210783912864}
@@ -62,12 +67,14 @@ MonoBehaviour:
       name: POTATO
       maxLevelMult: 2
       buyUpgradeIncreaseValue: 0.2
+      customerItemPrefab: {fileID: 0}
     - itemsToActivate: []
       maxLevel: 20
       producCostIncrease: 1
       name: TOMATO
       maxLevelMult: 2
       buyUpgradeIncreaseValue: 0.6
+      customerItemPrefab: {fileID: 0}
     currentUpgradeIndex: 0
     producCost: 10
     currentLevel: 1
@@ -90,9 +97,19 @@ MonoBehaviour:
     upgradeDefaultCost: 10000
     upgradeCostOp: 0
     upgradeCostChangeValue: 10000
+  buySpotUpgrade:
+    upgradeOp: 0
+    defaultValue: 0
+    changeValue: 0
+    maxLevel: 0
+    currentLevel: 0
+    upgradeDefaultCost: 0
+    upgradeCostOp: 0
+    upgradeCostChangeValue: 0
   traders:
   - {fileID: 458403391672685787}
   - {fileID: 6814381874820270365}
+  defaultCustomerItemPrefab: {fileID: 0}
 --- !u!65 &3267242273727669575
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -240,6 +257,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1097725378601115576, guid: 7a1720bee22170b44a0d59dd5e9aa260,
+        type: 3}
+      propertyPath: stopIfNotInTraderSpot
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3940348720579388624, guid: 7a1720bee22170b44a0d59dd5e9aa260,
         type: 3}
@@ -587,6 +609,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1097725378601115576, guid: 7a1720bee22170b44a0d59dd5e9aa260,
+        type: 3}
+      propertyPath: stopIfNotInTraderSpot
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3940348720579388624, guid: 7a1720bee22170b44a0d59dd5e9aa260,
         type: 3}

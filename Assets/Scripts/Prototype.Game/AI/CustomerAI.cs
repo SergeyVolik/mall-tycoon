@@ -1,7 +1,5 @@
-using System;
 using UnityEngine;
 using UnityEngine.AI;
-using static UnityEditor.Progress;
 
 namespace Prototype
 {
@@ -71,7 +69,7 @@ namespace Prototype
             Idle,
             SelectMarketPosition,
             MoveToMarket,
-            MoveToTraderQueue,
+            PatroleInMarket,
             WaitInTraderQueue,
             WaitTraderWork,
             WaitCashRegister,

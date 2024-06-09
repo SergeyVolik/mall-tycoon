@@ -17,12 +17,12 @@ namespace Prototype
 
         public void Tick()
         {
-            if (m_Coolodwn.IsFinished && cooldownRoot.gameObject.activeSelf)
+            if (m_Coolodwn.IsFinished || m_Coolodwn.IsPaused  && cooldownRoot.gameObject.activeSelf)
             {
                 cooldownRoot.gameObject.SetActive(false);
             }
 
-            if (!m_Coolodwn.IsFinished && !cooldownRoot.gameObject.activeSelf)
+            if (!m_Coolodwn.IsFinished || m_Coolodwn.IsPaused && !cooldownRoot.gameObject.activeSelf)
             {
                 cooldownRoot.gameObject.SetActive(true);
             }

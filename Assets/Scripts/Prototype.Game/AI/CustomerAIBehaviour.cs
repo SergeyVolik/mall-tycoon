@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static Prototype.CustomerAI;
@@ -7,6 +6,7 @@ namespace Prototype
 {
     public class CustomerAIBehaviour : Singleton<CustomerAIBehaviour>
     {
+        private const int MaxPatrolInMarket = 10;
         private List<CustomerAI> m_Customers = new List<CustomerAI>();
         private List<CustomerAI> m_RemoveList = new List<CustomerAI>();
         public int ActiveCustomers => m_Customers.Count;
@@ -55,30 +55,36 @@ namespace Prototype
 
                             if (customer.selectedTraider == null)
                             {
-                                customer.GoHome();
+                                if (m_Market.MarketPatrol < MaxPatrolInMarket)
+                                {
+                                    m_Market.MarketPatrol++;
+                                    customer.ForceDestination(m_Market.GetPatrolEnter());
+                                    customer.currentState = CustomerAIStates.PatroleInMarket;
+                                }
                             }
                             else
                             {
-                                customer.currentState = CustomerAIStates.MoveToTraderQueue;
+                                customer.currentState = CustomerAIStates.WaitInTraderQueue;
+                                customer.selectedTraider.queue.TakeQueue(customer);
                             }
                         }
                         break;
 
-                    case CustomerAIStates.MoveToTraderQueue:
+                    case CustomerAIStates.PatroleInMarket:
 
-                        if (!customer.selectedTraider.queue.HasFreePlace())
+                        if (m_Market.HasReadyTraders())
                         {
-                            customer.GoHome();
-                            return;
-                        }
-
-                        customer.ForceDestination(customer.selectedTraider.queue.GetNextPosition());
-
-                        if (customer.IsDestinationReached())
-                        {
+                            m_Market.MarketPatrol--;
+                            customer.selectedTraider = m_Market.GetRandomTraider();
                             customer.currentState = CustomerAIStates.WaitInTraderQueue;
                             customer.selectedTraider.queue.TakeQueue(customer);
                         }
+
+                        if (customer.IsDestinationReached())
+                        {
+                            customer.ForceDestination(m_Market.GetRadnomPatrolPoint());
+                        }
+
                         break;
                     case CustomerAIStates.WaitInTraderQueue:
 
@@ -144,5 +150,6 @@ namespace Prototype
 
             m_RemoveList.Clear();
         }
+
     }
 }

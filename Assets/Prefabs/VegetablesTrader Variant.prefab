@@ -996,10 +996,20 @@ PrefabInstance:
       objectReference: {fileID: 5056587298625862932}
     - target: {fileID: 4961510302380108601, guid: de18d80c77cf4a647ab24ad31fabf63f,
         type: 3}
+      propertyPath: costUpgrade.producCost
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4961510302380108601, guid: de18d80c77cf4a647ab24ad31fabf63f,
+        type: 3}
       propertyPath: defaultCustomerItemPrefab
       value: 
       objectReference: {fileID: 6469919734660526737, guid: bd723550cc79be84db522d046f2c1251,
         type: 3}
+    - target: {fileID: 4961510302380108601, guid: de18d80c77cf4a647ab24ad31fabf63f,
+        type: 3}
+      propertyPath: costUpgrade.currentBuyCost
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 4961510302380108601, guid: de18d80c77cf4a647ab24ad31fabf63f,
         type: 3}
       propertyPath: costUpgrade.upgradeUiTitleName
@@ -1048,32 +1058,32 @@ PrefabInstance:
     - target: {fileID: 4961510302380108601, guid: de18d80c77cf4a647ab24ad31fabf63f,
         type: 3}
       propertyPath: costUpgrade.upgrades.Array.data[0].maxLevel
-      value: 10
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 4961510302380108601, guid: de18d80c77cf4a647ab24ad31fabf63f,
         type: 3}
       propertyPath: costUpgrade.upgrades.Array.data[1].maxLevel
-      value: 20
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 4961510302380108601, guid: de18d80c77cf4a647ab24ad31fabf63f,
         type: 3}
       propertyPath: costUpgrade.upgrades.Array.data[2].maxLevel
-      value: 30
+      value: 300
       objectReference: {fileID: 0}
     - target: {fileID: 4961510302380108601, guid: de18d80c77cf4a647ab24ad31fabf63f,
         type: 3}
       propertyPath: costUpgrade.upgrades.Array.data[3].maxLevel
-      value: 40
+      value: 400
       objectReference: {fileID: 0}
     - target: {fileID: 4961510302380108601, guid: de18d80c77cf4a647ab24ad31fabf63f,
         type: 3}
       propertyPath: costUpgrade.upgrades.Array.data[4].maxLevel
-      value: 50
+      value: 500
       objectReference: {fileID: 0}
     - target: {fileID: 4961510302380108601, guid: de18d80c77cf4a647ab24ad31fabf63f,
         type: 3}
       propertyPath: costUpgrade.upgrades.Array.data[5].maxLevel
-      value: 60
+      value: 600
       objectReference: {fileID: 0}
     - target: {fileID: 4961510302380108601, guid: de18d80c77cf4a647ab24ad31fabf63f,
         type: 3}
@@ -1122,6 +1132,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 5309375057395083633, guid: ffd73e7a6dd27aa41b998cbc315c66b6,
         type: 3}
+    - target: {fileID: 4961510302380108601, guid: de18d80c77cf4a647ab24ad31fabf63f,
+        type: 3}
+      propertyPath: costUpgrade.upgrades.Array.data[1].producCostIncrease
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4961510302380108601, guid: de18d80c77cf4a647ab24ad31fabf63f,
         type: 3}
       propertyPath: costUpgrade.upgrades.Array.data[2].customerItemPrefab
@@ -1174,27 +1189,32 @@ PrefabInstance:
     - target: {fileID: 4961510302380108601, guid: de18d80c77cf4a647ab24ad31fabf63f,
         type: 3}
       propertyPath: costUpgrade.upgrades.Array.data[0].buyUpgradeIncreaseValue
-      value: 0.6
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4961510302380108601, guid: de18d80c77cf4a647ab24ad31fabf63f,
+        type: 3}
+      propertyPath: costUpgrade.upgrades.Array.data[1].buyUpgradeIncreaseValue
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4961510302380108601, guid: de18d80c77cf4a647ab24ad31fabf63f,
         type: 3}
       propertyPath: costUpgrade.upgrades.Array.data[2].buyUpgradeIncreaseValue
-      value: 0.6
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 4961510302380108601, guid: de18d80c77cf4a647ab24ad31fabf63f,
         type: 3}
       propertyPath: costUpgrade.upgrades.Array.data[3].buyUpgradeIncreaseValue
-      value: 0.6
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 4961510302380108601, guid: de18d80c77cf4a647ab24ad31fabf63f,
         type: 3}
       propertyPath: costUpgrade.upgrades.Array.data[4].buyUpgradeIncreaseValue
-      value: 0.6
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 4961510302380108601, guid: de18d80c77cf4a647ab24ad31fabf63f,
         type: 3}
       propertyPath: costUpgrade.upgrades.Array.data[5].buyUpgradeIncreaseValue
-      value: 0.6
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 4961510302380108601, guid: de18d80c77cf4a647ab24ad31fabf63f,
         type: 3}

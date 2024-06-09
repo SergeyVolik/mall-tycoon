@@ -11,7 +11,7 @@ namespace Prototype
         private Transform m_Transform;
         public Transform customerMovePoint;
         public CustomerAI CurrentCustomer { get; private set; }
-
+        public bool stopIfNotInTraderSpot;
         private void Awake()
         {
             cooldownView.Bind(cooldown);
@@ -54,11 +54,25 @@ namespace Prototype
             cooldown.Tick(Time.deltaTime);
             cooldownView.Tick();
 
+
+           
             if (CurrentCustomer)
-            {             
+            {
+                
                 bool customerInBuySpot = Vector3.Distance(CurrentCustomer.transform.position, customerMovePoint.position) < 0.25f;
 
-                if(customerInBuySpot)
+                if (stopIfNotInTraderSpot)
+                {
+                    if (customerInBuySpot)
+                    {
+                        cooldown.Play();
+                    }
+                    else {
+                        cooldown.Stop();
+                    }
+                }
+
+                if (customerInBuySpot)
                 {
                     var customerTrans = CurrentCustomer.transform;
                     var vec = (m_Transform.position - customerTrans.position);
