@@ -329,7 +329,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   queue: {fileID: 2808061711849522558}
   buyFeedback: {fileID: 1387918357313191313}
+  <SaveId>k__BackingField:
+    Part1: 0
+    Part2: 0
+    Part3: 0
+    Part4: 0
   cashierMovePoint: {fileID: 994480031955537439}
+  buyData:
+    upgradeOp: 0
+    defaultValue: 0
+    changeValue: 0
+    maxLevel: 0
+    currentLevel: 0
+    upgradeDefaultCost: 0
+    upgradeCostOp: 0
+    upgradeCostChangeValue: 0
 --- !u!65 &3548694517618655220
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -15859,6 +15859,26 @@ PrefabInstance:
       propertyPath: buyData.upgradeDefaultCost
       value: 25000
       objectReference: {fileID: 0}
+    - target: {fileID: 3779307774006133212, guid: 4740eef0f1e2f234085dae758cd771c6,
+        type: 3}
+      propertyPath: <SaveId>k__BackingField.Part1
+      value: 3954234007
+      objectReference: {fileID: 0}
+    - target: {fileID: 3779307774006133212, guid: 4740eef0f1e2f234085dae758cd771c6,
+        type: 3}
+      propertyPath: <SaveId>k__BackingField.Part2
+      value: 1104812085
+      objectReference: {fileID: 0}
+    - target: {fileID: 3779307774006133212, guid: 4740eef0f1e2f234085dae758cd771c6,
+        type: 3}
+      propertyPath: <SaveId>k__BackingField.Part3
+      value: 2655959219
+      objectReference: {fileID: 0}
+    - target: {fileID: 3779307774006133212, guid: 4740eef0f1e2f234085dae758cd771c6,
+        type: 3}
+      propertyPath: <SaveId>k__BackingField.Part4
+      value: 1684848768
+      objectReference: {fileID: 0}
     - target: {fileID: 6713380126876404056, guid: 4740eef0f1e2f234085dae758cd771c6,
         type: 3}
       propertyPath: m_Name

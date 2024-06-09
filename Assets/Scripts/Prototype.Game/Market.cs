@@ -127,7 +127,7 @@ namespace Prototype
                 }
             }
 
-            if (m_SelfServiceCashier)
+            if (m_SelfServiceCashier && m_SelfServiceCashier.IsWorking())
             {
                 if (minQueueLen == m_SelfServiceCashier.CustomerQueue.Count)
                 {

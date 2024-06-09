@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.AI;
+using static UnityEditor.Progress;
 
 namespace Prototype
 {
@@ -29,6 +30,8 @@ namespace Prototype
         private GameObject m_ItemSpawnPoint;
         [SerializeField]
         private ParticleSystem m_SpawnItemParticle;
+        private Transform m_CustomerItem;
+
         private NavAgentAnimationController AnimatorController
         {
             get
@@ -104,7 +107,7 @@ namespace Prototype
                 m_SpawnItemParticle.Play();
             }
          
-            GameObject.Instantiate(itemPrefab, m_ItemSpawnPoint.transform);
+            m_CustomerItem = GameObject.Instantiate(itemPrefab, m_ItemSpawnPoint.transform).transform;
             AnimatorController.EnableHasItemState(true);
         }
 
@@ -122,6 +125,29 @@ namespace Prototype
         internal void ForceDestination(Vector3 position)
         {
             m_Agent.destination = position;
+        }
+
+        internal Transform UnbindCustomerItem()
+        {
+            AnimatorController.EnableHasItemState(false);
+            m_CustomerItem.parent = null;
+            var item = m_CustomerItem;
+            m_CustomerItem = null;
+            return item;
+        }
+
+        internal void BindCustomerItem(Transform item)
+        {
+            AnimatorController.EnableHasItemState(true);
+            m_CustomerItem = item;
+            m_CustomerItem.transform.parent = m_ItemSpawnPoint.transform;
+            m_CustomerItem.transform.localPosition = Vector3.zero;
+            m_CustomerItem.transform.localRotation = Quaternion.identity;
+        }
+
+        internal Transform GetHandPoint()
+        {
+            return m_ItemSpawnPoint.transform;
         }
     }
 }

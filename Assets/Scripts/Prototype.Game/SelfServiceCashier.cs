@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Prototype
@@ -80,6 +81,11 @@ namespace Prototype
             buyData = data.buyData;
 
             Setup();
+        }
+
+        internal bool IsWorking()
+        {
+            return buyData.IsMaxLevel();
         }
     }
 }
