@@ -39,8 +39,7 @@ namespace Prototype
             });
 
             costLevelUp.buyButton.GetComponent<HoldedButton>().onClick += () =>
-            {
-                PlayerData.GetInstance().DecreaseMoney(m_CostUpgrade.currentBuyCost);
+            {              
                 m_CostUpgrade.LevelUp();
             };
 
