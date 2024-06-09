@@ -12,6 +12,7 @@ namespace Prototype
         public int currentUpgradeIndex;
         public float producCost = 10;
         public int currentLevel = 1;
+
         public float currentBuyCost = 10;
 
         public event Action onUpgraded = delegate { };
@@ -81,10 +82,11 @@ namespace Prototype
     {
         [JsonIgnore]
         public GameObject[] itemsToActivate;
-        public int maxLevel;
-        public float producCostIncrease;
-        public string name;
-        public float maxLevelMult;
+    
+        public int maxLevel;       
+        public float producCostIncrease;      
+        public string name;      
+        public float maxLevelMult;       
         public float buyUpgradeIncreaseValue;
 
         [JsonIgnore]

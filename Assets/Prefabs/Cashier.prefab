@@ -96,7 +96,7 @@ MonoBehaviour:
     changeValue: 0.1
     maxLevel: 30
     currentLevel: 1
-    upgradeDefaultCost: 100
+    upgradeDefaultCost: 20
     upgradeCostOp: 2
     upgradeCostChangeValue: 2
   buyUpgrade:

@@ -50,15 +50,8 @@ namespace Prototype
             if (!IsActive())
                 return;
 
-            cooldownView.cooldownRoot.transform.forward = m_Camera.transform.forward;
-            cooldown.Tick(Time.deltaTime);
-            cooldownView.Tick();
-
-
-           
             if (CurrentCustomer)
             {
-                
                 bool customerInBuySpot = Vector3.Distance(CurrentCustomer.transform.position, customerMovePoint.position) < 0.25f;
 
                 if (stopIfNotInTraderSpot)
@@ -67,7 +60,8 @@ namespace Prototype
                     {
                         cooldown.Play();
                     }
-                    else {
+                    else
+                    {
                         cooldown.Stop();
                     }
                 }
@@ -79,6 +73,12 @@ namespace Prototype
                     customerTrans.rotation = Quaternion.Slerp(customerTrans.rotation, Quaternion.LookRotation(vec, Vector3.up), Time.deltaTime * 2);
                 }
             }
+
+            cooldownView.cooldownRoot.transform.forward = m_Camera.transform.forward;
+            cooldown.Tick(Time.deltaTime);
+            cooldownView.Tick();
+
+
         }
     }
 }
