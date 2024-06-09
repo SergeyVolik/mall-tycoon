@@ -19,15 +19,16 @@ namespace Prototype
 
         public void LevelUp()
         {
+            PlayerData.GetInstance().DecreaseMoney(currentBuyCost);
             currentLevel++;
             var currentUpgrade = upgrades[currentUpgradeIndex];
             producCost += currentUpgrade.producCostIncrease;
             currentBuyCost += currentUpgrade.buyUpgradeIncreaseValue;
-
+         
             if (currentLevel >= currentUpgrade.maxLevel)
             {
                 currentUpgrade.ActivateVisual(true);
-
+             
                 producCost *= currentUpgrade.maxLevelMult;
 
                 if (upgrades.Length - 1 > currentUpgradeIndex)

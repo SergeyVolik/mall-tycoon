@@ -64,10 +64,12 @@ namespace Prototype
 
             return 0;
         }
+
         public float GetValue()
         {
             return GetValue(upgradeOp, defaultValue, changeValue, currentLevel);
         }
+
         public float GetCostValue()
         {
             return GetValue(upgradeCostOp, upgradeDefaultCost, upgradeCostChangeValue, currentLevel);

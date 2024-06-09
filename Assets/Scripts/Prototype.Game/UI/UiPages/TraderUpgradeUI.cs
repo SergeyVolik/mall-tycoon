@@ -1,5 +1,6 @@
 using Prototype.UI;
 using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace Prototype
@@ -45,13 +46,13 @@ namespace Prototype
 
             workerLevelUp.buyButton.GetComponent<HoldedButton>().onClick += () =>
             {
-                PlayerData.GetInstance().DecreaseMoney(m_WorkerUpgrade.GetCostValue());
+                Debug.Log($"Buy {m_WorkerUpgrade.GetCostValue()}");
                 m_WorkerUpgrade.LevelUp();
             };
 
             newWorkerLevelUp.buyButton.GetComponent<HoldedButton>().onClick += () =>
             {
-                PlayerData.GetInstance().DecreaseMoney(m_AddWorkerUpgrade.GetCostValue());
+                Debug.Log("Buy");
                 m_AddWorkerUpgrade.LevelUp();
             };
 
@@ -114,7 +115,6 @@ namespace Prototype
                 m_CostUpgrade.onUpgraded -= UpdateUI;
                 m_WorkerUpgrade.onChanged -= UpdateUI;
                 m_AddWorkerUpgrade.onChanged -= UpdateUI;
-
                 PlayerData.GetInstance().onMoneyChanged -= TraderUpgradeUI_onMoneyChanged1;
                 m_Tarder = null;
                 m_CostUpgrade = null;

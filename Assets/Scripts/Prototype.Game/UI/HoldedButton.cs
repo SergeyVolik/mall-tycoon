@@ -43,6 +43,7 @@ namespace Prototype
         {
             m_Button = GetComponent<Button>();
         }
+
         private float currentSpeed = 1f;
         private const float speedAcceleration = 1.5f;
         private const float duration = 1f;
