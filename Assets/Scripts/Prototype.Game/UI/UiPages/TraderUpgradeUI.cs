@@ -39,7 +39,8 @@ namespace Prototype
             });
 
             costLevelUp.buyButton.GetComponent<HoldedButton>().onClick += () =>
-            {              
+            {
+                Debug.Log($"Buy {m_CostUpgrade.currentBuyCost}");
                 m_CostUpgrade.LevelUp();
             };
 
@@ -137,17 +138,14 @@ namespace Prototype
             infoTitle.text = m_CostUpgrade.GetUpgradeName();
             currentLevel.text = nextMax == currentCostLevel ? "MAX" : currentCostLevel.ToString();
             maxLevel.text = nextMax == currentCostLevel ? "MAX" : nextMax.ToString();
-            levelupMult.text = m_CostUpgrade.GetNextUpgradeMult();
-          
-         
+            levelupMult.text = $"x{m_CostUpgrade.GetNextUpgradeMult()}";
+               
             timeText.text = m_WorkerUpgrade.GetValue().ToString("0.0");
 
             costLevelUp.ActivateFinishState(m_CostUpgrade.IsFinished());
             costLevelUp.cost.text = TextUtils.ValueToShortString(m_CostUpgrade.currentBuyCost);
             costLevelUp.buyButton.interactable = PlayerData.GetInstance().GetMoney() >= m_CostUpgrade.currentBuyCost && !m_CostUpgrade.IsFinished();
             costLevelUp.buyButton.gameObject.SetActive(!m_CostUpgrade.IsFinished());
-
-
             workerLevelUp.UpgradeItem(m_WorkerUpgrade);
             newWorkerLevelUp.UpgradeItem(m_AddWorkerUpgrade);
         }
