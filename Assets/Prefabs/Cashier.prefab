@@ -49,6 +49,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd73f1507bf7a6b429e5ab6ffbf04ce7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <SaveId>k__BackingField:
+    Part1: 0
+    Part2: 0
+    Part3: 0
+    Part4: 0
   queue: {fileID: 666503169408189746}
   workerSpeedUpgrade:
     upgradeOp: 1
@@ -189,6 +194,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: TraderUnit
+      objectReference: {fileID: 0}
+    - target: {fileID: 7341323961422416109, guid: 7a1720bee22170b44a0d59dd5e9aa260,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.19
+      objectReference: {fileID: 0}
+    - target: {fileID: 7341323961422416109, guid: 7a1720bee22170b44a0d59dd5e9aa260,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1.38
       objectReference: {fileID: 0}
     - target: {fileID: 8463210844531176521, guid: 7a1720bee22170b44a0d59dd5e9aa260,
         type: 3}

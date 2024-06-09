@@ -88,7 +88,7 @@ namespace Prototype
                         if (customer.buyedProducCost != 0)
                         {
                             customer.currentState = CustomerAIStates.MoveToCashRegisterQueue;
-                            customer.selectedCashier = Market.GetInstance().GetOptimalCashRegister();
+                            customer.selectedCashier = Market.GetInstance().GetOptimalCashier();
 
                             if (customer.selectedCashier == null)
                             {
@@ -96,7 +96,7 @@ namespace Prototype
                                 customer.GoHome();
                                 return;
                             }
-                            customer.ForceDestination(customer.selectedCashier.queue.GetNextPosition());
+                            customer.ForceDestination(customer.selectedCashier.CustomerQueue.GetNextPosition());
                         }
                         break;
                     case CustomerAIStates.WaitCashRegister:
@@ -107,23 +107,23 @@ namespace Prototype
                         break;
                     case CustomerAIStates.MoveToCashRegisterQueue:
 
-                        if (!customer.selectedCashier.queue.HasFreePlace())
+                        if (!customer.selectedCashier.CustomerQueue.HasFreePlace())
                         {
                             customer.GoHome();
                             return;
                         }
 
-                        customer.ForceDestination(customer.selectedCashier.queue.GetNextPosition());
+                        customer.ForceDestination(customer.selectedCashier.CustomerQueue.GetNextPosition());
 
                         if (customer.IsDestinationReached())
                         {
                             customer.currentState = CustomerAIStates.IdleInCashRegisterQueue;
-                            customer.selectedCashier.queue.TakeQueue(customer);
+                            customer.selectedCashier.CustomerQueue.TakeQueue(customer);
                         }
                         break;
                     case CustomerAIStates.IdleInCashRegisterQueue:
 
-                        customer.ForceDestination(customer.selectedCashier.queue.GetPositionInQueue(customer));
+                        customer.ForceDestination(customer.selectedCashier.CustomerQueue.GetPositionInQueue(customer));
                         break;
                     case CustomerAIStates.MoveToHome:
                         if (customer.IsDestinationReached())

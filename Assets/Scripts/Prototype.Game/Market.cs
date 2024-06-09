@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 namespace Prototype
 {
@@ -9,6 +10,8 @@ namespace Prototype
     {
         private TradingSpot[] m_TradingSpots;
         private CashierBehaviour[] m_Cashiers;
+
+        private SelfServiceCashier m_SelfServiceCashier;
         public CashierBehaviour[] Cashiers => m_Cashiers;
         public TradingSpot[] TradingSpots => m_TradingSpots;
 
@@ -34,7 +37,7 @@ namespace Prototype
             UpdateCrowdVolume();
             m_Cashiers = GetComponentsInChildren<CashierBehaviour>(true);
             m_TradingSpots = GetComponentsInChildren<TradingSpot>(true);
-
+            m_SelfServiceCashier = GetComponentInChildren<SelfServiceCashier>();
             foreach (var item in m_TradingSpots)
             {
                 item.onCheckoutFinished += Item_onCheckoutFinished;
@@ -84,11 +87,12 @@ namespace Prototype
             return null;
         }
 
-
-        public CashierBehaviour GetOptimalCashRegister()
+        List<ICashier> m_SameQueueLenCashier = new List<ICashier>();
+        public ICashier GetOptimalCashier()
         {
+            m_SameQueueLenCashier.Clear();
+
             int minQueueLen = int.MaxValue;
-            CashierBehaviour result = null;
 
             foreach (var item in m_Cashiers)
             {
@@ -108,14 +112,36 @@ namespace Prototype
                 {
                     curLen++;
                 }
+                if (minQueueLen == curLen)
+                {
+                    m_SameQueueLenCashier.Add(item);
 
+                }
                 if (minQueueLen > curLen)
                 {
                     minQueueLen = curLen;
-                    result = item;
+                    m_SameQueueLenCashier.Clear();
+                    m_SameQueueLenCashier.Add(item);
                 }
             }
-            return result;
+
+            if (m_SelfServiceCashier)
+            {
+                if (minQueueLen == m_SelfServiceCashier.CustomerQueue.Count)
+                {
+                    m_SameQueueLenCashier.Add(m_SelfServiceCashier);
+                }
+                else if (minQueueLen > m_SelfServiceCashier.CustomerQueue.Count)
+                {
+                    m_SameQueueLenCashier.Clear();
+                    m_SameQueueLenCashier.Add(m_SelfServiceCashier);
+                }
+            }
+
+            if (m_SameQueueLenCashier.Count == 0)
+                return null;
+
+            return m_SameQueueLenCashier[UnityEngine.Random.Range(0, m_SameQueueLenCashier.Count)];
         }
 
         private void UpdateCrowdVolume()

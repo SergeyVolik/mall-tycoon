@@ -22,12 +22,13 @@ namespace Prototype
         [System.NonSerialized]
         public TradingSpot selectedTraider;
         [System.NonSerialized]
-        public CashierBehaviour selectedCashier = null;
+        public ICashier selectedCashier = null;
 
         private NavAgentAnimationController m_AnimatorController;
         [SerializeField]
         private GameObject m_ItemSpawnPoint;
-
+        [SerializeField]
+        private ParticleSystem m_SpawnItemParticle;
         private NavAgentAnimationController AnimatorController
         {
             get
@@ -98,6 +99,11 @@ namespace Prototype
             if (itemPrefab == null)
                 return;
 
+            if (m_SpawnItemParticle)
+            {
+                m_SpawnItemParticle.Play();
+            }
+         
             GameObject.Instantiate(itemPrefab, m_ItemSpawnPoint.transform);
             AnimatorController.EnableHasItemState(true);
         }

@@ -13,10 +13,17 @@ namespace Prototype
         public SerializableGuid SaveId { get; set; }
     }
 
-    public class CashierBehaviour : MonoBehaviour, IActivateableFromRaycast, ISceneSaveComponent<CashierBehaviourSave>
+    public interface ICashier
+    {
+        public QueueBehaviour CustomerQueue { get; }
+    }
+
+    public class CashierBehaviour : MonoBehaviour, IActivateableFromRaycast, ISceneSaveComponent<CashierBehaviourSave>, ICashier
     {
         [field: SerializeField]
         public SerializableGuid SaveId { get; set; }
+
+        public QueueBehaviour CustomerQueue => queue;
 
         public QueueBehaviour queue;
         public UpgradeData workerSpeedUpgrade;
