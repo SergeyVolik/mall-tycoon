@@ -9,7 +9,7 @@ namespace Prototype
         private AudioSource m_Source;
 
         private void Awake()
-        {
+        {       
             var button = GetComponentInParent<HoldedButton>();
             button.onClick += HoldButtonFeedback_onClick;
             button.onStarted += Button_onStarted;

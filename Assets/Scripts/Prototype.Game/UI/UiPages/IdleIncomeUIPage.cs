@@ -49,9 +49,9 @@ namespace Prototype
             var incomePerCustomer = obj.marketCustomerIncome;
             var spawnPerMinute = CustomerSpawnSystem.GetInstance().SpawnsPerMinute();
        
-            UnityEngine.Debug.Log(diff.TotalMinutes);
-            UnityEngine.Debug.Log(spawnPerMinute);
-            UnityEngine.Debug.Log(incomePerCustomer);
+            //UnityEngine.Debug.Log(diff.TotalMinutes);
+            //UnityEngine.Debug.Log(spawnPerMinute);
+            //UnityEngine.Debug.Log(incomePerCustomer);
 
             idleIncome = (float)diff.TotalMinutes * spawnPerMinute * incomePerCustomer;
             PlayerData.GetInstance().IncreaseMoney(idleIncome);

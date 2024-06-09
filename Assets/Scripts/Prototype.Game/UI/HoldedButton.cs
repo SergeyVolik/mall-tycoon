@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace Prototype
 {
@@ -38,6 +39,10 @@ namespace Prototype
 
     public class HoldedButton : MonoBehaviour, IHoldButton,IPageHidedListener
     {
+        private void Awake()
+        {
+            m_Button = GetComponent<Button>();
+        }
         private float currentSpeed = 1f;
         private const float speedAcceleration = 1.5f;
         private const float duration = 1f;
@@ -49,9 +54,13 @@ namespace Prototype
         public event Action onStarted = delegate { };
 
         public UnityEvent onClickUE;
+        private Button m_Button;
 
         public void OnPointerDown(PointerEventData eventData)
         {
+            if (!m_Button.interactable)
+                return;
+
             currentSpeed = 1f;
             t = 0;
 
@@ -79,6 +88,11 @@ namespace Prototype
 
         public void Tick()
         {
+            if (!m_Button.interactable)
+            {
+                Finish();
+            }
+
             t += Time.deltaTime * currentSpeed;
 
             if (t > duration)

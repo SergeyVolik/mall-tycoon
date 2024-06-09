@@ -138,6 +138,7 @@ namespace Prototype
             if (time > duration2)
             {
                 time = 0;
+                BuyItem();
                 m_AnimState = CustomerItemMoveState.FromCashierToCustomer;
             }
         }
@@ -176,9 +177,6 @@ namespace Prototype
             else if (traderAi.IsWorkFinished() && traderAi.IsHasCustomer() && m_AnimState == CustomerItemMoveState.Finished)
             {
                 var customerAI = traderAi.CurrentCustomer;
-                PlayerData.GetInstance().Resources.resources.AddResource(customerAI.holdedResource, customerAI.buyedProducCost);
-
-                buyFeedback.Play(customerAI.buyedProducCost.ToString("0"));
                 customerAI.buyedProducCost = 0;
                 customerAI.holdedResource = null;
                 traderAi.Clear();
@@ -186,6 +184,14 @@ namespace Prototype
             }
 
             UpdateCustomerItemMoveAnimation();
+        }
+
+        private CustomerAI BuyItem()
+        {
+            var customerAI = traderAi.CurrentCustomer;
+            PlayerData.GetInstance().Resources.resources.AddResource(customerAI.holdedResource, customerAI.buyedProducCost);
+            buyFeedback.Play(customerAI.buyedProducCost.ToString("0"));
+            return customerAI;
         }
 
         private void StartAnimation(CustomerAI customer)

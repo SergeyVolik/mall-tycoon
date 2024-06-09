@@ -100,6 +100,7 @@ namespace Prototype
             m_CostUpgrade.onUpgraded += UpdateUI;
             m_WorkerUpgrade.onChanged += UpdateUI;
             m_AddWorkerUpgrade.onChanged += UpdateUI;
+            PlayerData.GetInstance().onMoneyChanged += TraderUpgradeUI_onMoneyChanged1;
 
             costLevelUp.title.text = m_CostUpgrade.upgradeUiTitleName;
 
@@ -113,6 +114,8 @@ namespace Prototype
                 m_CostUpgrade.onUpgraded -= UpdateUI;
                 m_WorkerUpgrade.onChanged -= UpdateUI;
                 m_AddWorkerUpgrade.onChanged -= UpdateUI;
+
+                PlayerData.GetInstance().onMoneyChanged -= TraderUpgradeUI_onMoneyChanged1;
                 m_Tarder = null;
                 m_CostUpgrade = null;
                 m_WorkerUpgrade = null;
@@ -140,6 +143,7 @@ namespace Prototype
          
             timeText.text = m_WorkerUpgrade.GetValue().ToString("0.0");
 
+            costLevelUp.ActivateFinishState(m_CostUpgrade.IsFinished());
             costLevelUp.cost.text = TextUtils.ValueToShortString(m_CostUpgrade.currentBuyCost);
             costLevelUp.buyButton.interactable = PlayerData.GetInstance().GetMoney() >= m_CostUpgrade.currentBuyCost && !m_CostUpgrade.IsFinished();
             costLevelUp.buyButton.gameObject.SetActive(!m_CostUpgrade.IsFinished());
@@ -147,6 +151,11 @@ namespace Prototype
 
             workerLevelUp.UpgradeItem(m_WorkerUpgrade);
             newWorkerLevelUp.UpgradeItem(m_AddWorkerUpgrade);
+        }
+
+        private void TraderUpgradeUI_onMoneyChanged1(float obj)
+        {
+            UpdateUI();
         }
     }
 }

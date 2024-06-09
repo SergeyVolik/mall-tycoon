@@ -41,21 +41,30 @@ namespace Prototype
             Unbind();
 
             m_PRAgency = prAgency;
+            PlayerData.GetInstance().onMoneyChanged += PRAgencyUI_onMoneyChanged;
             m_PRAgency.m_Spanwer.customerMoveSpeed.onChanged += UpdateUI;
             m_PRAgency.m_Spanwer.customerSpawnSpeed.onChanged += UpdateUI;
 
             UpdateUI();
         }
+
         private void Unbind()
         {
             if (m_PRAgency)
             {
                 m_PRAgency.m_Spanwer.customerMoveSpeed.onChanged -= UpdateUI;
                 m_PRAgency.m_Spanwer.customerSpawnSpeed.onChanged -= UpdateUI;
+                PlayerData.GetInstance().onMoneyChanged -= PRAgencyUI_onMoneyChanged;
             }
 
             m_PRAgency = null;
         }
+
+        private void PRAgencyUI_onMoneyChanged(float obj)
+        {
+            UpdateUI();
+        }
+
         public override void Show()
         {
             base.Show();

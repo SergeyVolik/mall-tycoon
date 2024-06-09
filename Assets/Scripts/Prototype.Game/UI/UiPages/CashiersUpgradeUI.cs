@@ -7,7 +7,7 @@ namespace Prototype
     public class UpgradeUiData
     {
         public LevelUpUIItem buyUI;
-        public LevelUpUIItem upgradeCashierUI;
+        public LevelUpUIItem workerSpeeedUI;
         public UpgradeData workerSpeedUpgrade;
         public UpgradeData buyUpgrade;
         public Action buyAction;
@@ -59,7 +59,8 @@ namespace Prototype
 
             instancesUI = new UpgradeUiData[market.Cashiers.Length];
 
-            selfServiceUpgrade.UpgradeItem(market.CashierSelfService.buyData);
+            PlayerData.GetInstance().onMoneyChanged += CashiersUpgradeUI_onMoneyChanged;
+  
             selfServiceUpgrade.buyButton.onClick.AddListener(SelfServiceCashierBuy);
 
             for (int i = 0; i < market.Cashiers.Length; i++)
@@ -70,7 +71,7 @@ namespace Prototype
 
                 Action upgateBuyUI = () =>
                 {
-                    UpgradeBuyUI(cashier, buyUI, upgradeCashierUI);
+                    UpgradeBuyUI(cashier.buyUpgrade, buyUI, upgradeCashierUI);
                 };
 
                 Action buyAction = () =>
@@ -88,7 +89,7 @@ namespace Prototype
 
                 Action updateUpgradeUI = () =>
                 {
-                    UpgateCashierUpgradeUI(cashier, upgradeCashierUI);
+                    UpgateCashierUpgradeUI(cashier.workerSpeedUpgrade, upgradeCashierUI);
                 };
 
                 cashier.buyUpgrade.onChanged += upgateBuyUI;
@@ -96,16 +97,12 @@ namespace Prototype
                 cashier.workerSpeedUpgrade.onChanged += updateUpgradeUI;
                 upgradeCashierUI.buyButton.GetComponent<HoldedButton>().onClick += upgradeAction;
 
-                UpgradeBuyUI(cashier, buyUI, upgradeCashierUI);
-                buyUI.cost.text = TextUtils.ValueToShortString(cashier.buyUpgrade.GetCostValue());
-                UpgateCashierUpgradeUI(cashier, upgradeCashierUI);
-
                 UpgradeUiData upgradeData = new UpgradeUiData
                 {
                     buyUpgrade = cashier.buyUpgrade,
                     workerSpeedUpgrade = cashier.workerSpeedUpgrade,
                     buyUI = buyUI,
-                    upgradeCashierUI = upgradeCashierUI,
+                    workerSpeeedUI = upgradeCashierUI,
                     buyAction = buyAction,
                     upgateBuyUI = upgateBuyUI,
                     upgradeAction = upgradeAction,
@@ -113,6 +110,22 @@ namespace Prototype
                 };
 
                 instancesUI[i] = upgradeData;
+            }
+
+            UpdateUI();
+        }
+
+        void UpdateUI()
+        {
+            selfServiceUpgrade.UpgradeItem(Market.GetInstance().CashierSelfService.buyData);
+
+            foreach (var item in instancesUI)
+            {
+                item.buyUI.cost.text = TextUtils.ValueToShortString(item.buyUpgrade.GetCostValue());
+                UpgradeBuyUI(item.buyUpgrade, item.buyUI, item.workerSpeeedUI);
+                UpgateCashierUpgradeUI(item.workerSpeedUpgrade, item.workerSpeeedUI);
+                UpgateCashierUpgradeUI(item.workerSpeedUpgrade, item.workerSpeeedUI);
+
             }
         }
 
@@ -133,23 +146,31 @@ namespace Prototype
                     item.buyUpgrade.onChanged -= item.upgateBuyUI;
                     item.buyUI.buyButton.GetComponent<HoldedButton>().onClick -= item.buyAction;
                     item.workerSpeedUpgrade.onChanged -= item.updateUpgradeUI;
-                    item.upgradeCashierUI.buyButton.GetComponent<HoldedButton>().onClick -= item.upgradeAction;
+                    item.workerSpeeedUI.buyButton.GetComponent<HoldedButton>().onClick -= item.upgradeAction;
                 }
             }
+            PlayerData.GetInstance().onMoneyChanged -= CashiersUpgradeUI_onMoneyChanged;
             instancesUI = null;
         }
 
-        void UpgateCashierUpgradeUI(CashierBehaviour cashier, LevelUpUIItem ui)
+        private void CashiersUpgradeUI_onMoneyChanged(float obj)
         {
-            ui.UpgradeItem(cashier.workerSpeedUpgrade);
-            ui.description.text = $"customers: {(60f / cashier.workerSpeedUpgrade.GetValue()).ToString("0.0")} p/m";
+            UpdateUI();
         }
 
-        void UpgradeBuyUI(CashierBehaviour cashier, LevelUpUIItem buyUI, LevelUpUIItem upgradeCashier)
+        void UpgateCashierUpgradeUI(UpgradeData workerSpeedUpgrade, LevelUpUIItem ui)
         {
-            bool isMAx = cashier.buyUpgrade.IsMaxLevel();
+            ui.UpgradeItem(workerSpeedUpgrade);
+            ui.description.text = $"customers: {(60f / workerSpeedUpgrade.GetValue()).ToString("0.0")} p/m";
+        }
+
+        void UpgradeBuyUI(UpgradeData buyUpgrade, LevelUpUIItem buyUI, LevelUpUIItem upgradeCashier)
+        {
+            bool isMAx = buyUpgrade.IsMaxLevel();
             buyUI.gameObject.SetActive(!isMAx);
             upgradeCashier.gameObject.SetActive(isMAx);
+            buyUI.UpgradeItem(buyUpgrade);
+
         }
     }
 }

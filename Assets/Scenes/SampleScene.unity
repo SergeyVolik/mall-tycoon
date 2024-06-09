@@ -219,7 +219,7 @@ MonoBehaviour:
   Resources:
     resources:
       m_InitResources:
-      - count: 1000000
+      - count: 100
         resourceType: {fileID: 11400000, guid: f844a05be14715d45a3a83d419fa6598, type: 2}
   moneyResource: {fileID: 11400000, guid: f844a05be14715d45a3a83d419fa6598, type: 2}
   ResourceYypes: {fileID: 11400000, guid: f2bd7ba2345ec5c41aa81beaa063359f, type: 2}
@@ -15601,23 +15601,11 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 0}
-    - targetCorrespondingSourceObject: {fileID: 8084404424777143231, guid: 289347544014f56438975c525641c700,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
     - targetCorrespondingSourceObject: {fileID: 8629032836233072901, guid: 289347544014f56438975c525641c700,
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 0}
-    - targetCorrespondingSourceObject: {fileID: 5524295552411738213, guid: 289347544014f56438975c525641c700,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
     - targetCorrespondingSourceObject: {fileID: 2958146155114745919, guid: 289347544014f56438975c525641c700,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
-    - targetCorrespondingSourceObject: {fileID: 1326086259052011871, guid: 289347544014f56438975c525641c700,
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 0}
