@@ -9291,7 +9291,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a847bf0867c5f9845a340d9817ff1c94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initPage: 0
+  initPage: 1
   lastFocusedElement: {fileID: 0}
   ActivateIfShowed: []
   DeactivateIfHided: []
