@@ -16,6 +16,8 @@ namespace Prototype
         public CashierBehaviour[] Cashiers => m_Cashiers;
         public TradingSpot[] TradingSpots => m_TradingSpots;
 
+        public bool IsOpened = false;
+
         public int MarketPatrol { get; internal set; }
 
         [SerializeField] private AudioSource source;
@@ -32,6 +34,19 @@ namespace Prototype
 
         [SerializeField]
         private Transform m_PatrolEnter;
+
+        public QueueBehaviour marketEnterQueue;
+
+        public void OpenMarket()
+        {
+            foreach (var customer in marketEnterQueue.Customers)
+            {
+                customer.EnterMarket();
+            }
+
+            marketEnterQueue.Clear();
+            IsOpened = true;
+        }
 
         public Vector3 GetRadnomInMarketPosition()
         {
@@ -58,7 +73,7 @@ namespace Prototype
             m_SelfServiceCashier = GetComponentInChildren<SelfServiceCashier>(true);
             foreach (var item in m_TradingSpots)
             {
-                item.onCheckoutFinished += Item_onCheckoutFinished;
+                item.onCustomerFinished += Item_onCheckoutFinished;
             }
         }
 

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -67,6 +68,8 @@ namespace Prototype
         public enum CustomerAIStates
         {
             Idle,
+            MoveToMarketQueue,
+            WaitMarketQueue,
             SelectMarketPosition,
             MoveToMarket,
             PatroleInMarket,
@@ -146,6 +149,12 @@ namespace Prototype
         internal Transform GetHandPoint()
         {
             return m_ItemSpawnPoint.transform;
+        }
+
+        internal void EnterMarket()
+        {
+            currentState = CustomerAIStates.SelectMarketPosition;
+            ForceDestination(Market.GetInstance().GetRadnomInMarketPosition());
         }
     }
 }

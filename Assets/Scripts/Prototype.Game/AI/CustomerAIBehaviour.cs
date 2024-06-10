@@ -42,6 +42,28 @@ namespace Prototype
 
                 switch (customer.currentState)
                 {
+                    case CustomerAIStates.MoveToMarketQueue:
+                        if (Market.GetInstance().IsOpened)
+                        {
+                            customer.currentState = CustomerAIStates.SelectMarketPosition;
+                        }
+                        else 
+                        {
+                            if (!Market.GetInstance().marketEnterQueue.HasFreePlace())
+                            {
+                                customer.GoHome();
+                                return;
+                            }
+
+                            Market.GetInstance().marketEnterQueue.TakeQueue(customer);
+                            customer.currentState = CustomerAIStates.WaitMarketQueue;
+                        }
+
+                        break;
+
+                    case CustomerAIStates.WaitMarketQueue:
+
+                        break;
                     case CustomerAIStates.SelectMarketPosition:
                         customer.currentState = CustomerAIStates.MoveToMarket;
                         customer.ForceDestination(Market.GetInstance().GetRadnomInMarketPosition());

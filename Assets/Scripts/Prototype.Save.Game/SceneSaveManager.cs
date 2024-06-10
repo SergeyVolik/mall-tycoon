@@ -12,6 +12,8 @@ namespace Prototype
         public List<TradingSpotSaveData> TradingSpots = new List<TradingSpotSaveData>();
         public List<CustomerSpawnerSave> Spawners = new List<CustomerSpawnerSave>();
         public List<SelfServiceCashierSave> SelfServiceCashier = new List<SelfServiceCashierSave>();
+        public List<TitorialSave> tutorialSave = new List<TitorialSave>();
+
 
     }
 
@@ -30,6 +32,7 @@ namespace Prototype
             SaveHelper.LoadComponents<TradingSpotSaveData, TradingSpot>(sceneSaveData.TradingSpots);
             SaveHelper.LoadComponents<CashierBehaviourSave, CashierBehaviour>(sceneSaveData.Cashiers);
             SaveHelper.LoadComponents<SelfServiceCashierSave, SelfServiceCashier>(sceneSaveData.SelfServiceCashier);
+            SaveHelper.LoadComponents<TitorialSave, StartTutorial>(sceneSaveData.tutorialSave);
 
 
             onLoaded.Invoke();
@@ -43,6 +46,8 @@ namespace Prototype
             sceneSaveData.TradingSpots = SaveHelper.SaveComponents<TradingSpotSaveData, TradingSpot>();
             sceneSaveData.Cashiers = SaveHelper.SaveComponents<CashierBehaviourSave, CashierBehaviour>();
             sceneSaveData.SelfServiceCashier = SaveHelper.SaveComponents<SelfServiceCashierSave, SelfServiceCashier>();
+            sceneSaveData.tutorialSave = SaveHelper.SaveComponents<TitorialSave, StartTutorial>();
+
         }
 
         private void Awake()

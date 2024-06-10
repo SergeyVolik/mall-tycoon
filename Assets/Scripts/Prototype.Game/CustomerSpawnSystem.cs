@@ -114,15 +114,25 @@ namespace Prototype
 
             m_SpawnT = 0;
 
+            if (!Market.GetInstance().IsOpened)
+                return;
+
             if (Market.GetInstance().GetReadyTraders().Count() > 0 && CustomerAIBehaviour.GetInstance().ActiveCustomers < maxActiveCustomes)
-            {              
+            {
                 var spawnPoint = customerSpawnPoints[UnityEngine.Random.Range(0, customerSpawnPoints.Length)];
-                var customer = GameObject.Instantiate(customerPrefab, spawnPoint.position, Quaternion.identity);
-                var customerSkin = customer.GetComponent<SpawnRandomSkin>();
-                customerSkin.SpawnSkin();
-                var customerAI = customer.GetComponent<CustomerAI>();
-                customerAI.SetMoveSpeed(customerMoveSpeed.GetValue() + UnityEngine.Random.Range(-0.1f, 0.1f));
+                SpawnCustomerAtPosition(spawnPoint.position);
             }
+        }
+
+        public CustomerAI SpawnCustomerAtPosition(Vector3 spawnPoint)
+        {          
+            var customer = GameObject.Instantiate(customerPrefab, spawnPoint, Quaternion.identity);
+            var customerSkin = customer.GetComponent<SpawnRandomSkin>();
+            customerSkin.SpawnSkin();
+            var customerAI = customer.GetComponent<CustomerAI>();
+            customerAI.SetMoveSpeed(customerMoveSpeed.GetValue());
+
+            return customerAI;
         }
 
         public CustomerSpawnerSave SaveComponent()

@@ -40,19 +40,19 @@ namespace Prototype
 
             costLevelUp.buyButton.GetComponent<HoldedButton>().onClick += () =>
             {
-                Debug.Log($"Buy {m_CostUpgrade.currentBuyCost}");
+                //Debug.Log($"Buy {m_CostUpgrade.currentBuyCost}");
                 m_CostUpgrade.LevelUp();
             };
 
             workerLevelUp.buyButton.GetComponent<HoldedButton>().onClick += () =>
             {
-                Debug.Log($"Buy {m_WorkerUpgrade.GetCostValue()}");
+                //Debug.Log($"Buy {m_WorkerUpgrade.GetCostValue()}");
                 m_WorkerUpgrade.LevelUp();
             };
 
             newWorkerLevelUp.buyButton.GetComponent<HoldedButton>().onClick += () =>
             {
-                Debug.Log("Buy");
+                //Debug.Log("Buy");
                 m_AddWorkerUpgrade.LevelUp();
             };
 

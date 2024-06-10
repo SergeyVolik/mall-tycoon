@@ -202,7 +202,7 @@ namespace Prototype
             }
         }
 
-        public event Action onCheckoutFinished = delegate { };
+        public event Action onCustomerFinished = delegate { };
         public void Update()
         {
             foreach (var traderAi in traders)
@@ -222,7 +222,7 @@ namespace Prototype
                     customerAI.SpawnCustomerItem(GetRandomItemPrefab());
                     customerAI.holdedResource = resourceCost;
                     traderAi.Clear();
-                    onCheckoutFinished.Invoke();
+                    onCustomerFinished.Invoke();
                 }
             }
         }

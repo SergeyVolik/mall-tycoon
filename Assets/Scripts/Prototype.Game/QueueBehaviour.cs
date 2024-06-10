@@ -9,19 +9,27 @@ namespace Prototype
         public Transform[] queuePoints;
         public float offsetBetweenCustomers;
 
+        public IEnumerable<CustomerAI> Customers => m_Customers;
         public void TakeQueue(CustomerAI customer)
         {
             m_Customers.Enqueue(customer);
             UpdateQueue();
         }
 
-        public bool HasFreePlace() => m_Customers.Count < queuePoints.Length-1 && gameObject.activeSelf;
+        public int MaxSize => queuePoints.Length;
+        public bool HasFreePlace() => m_Customers.Count < queuePoints.Length && gameObject.activeSelf;
         public CustomerAI Dequeue()
         { 
             var item = m_Customers.Dequeue();
             UpdateQueue();
 
             return item;
+        }
+
+        public void Clear()
+        {
+            m_Customers.Clear();
+            UpdateQueue();
         }
 
         public CustomerAI Peek()

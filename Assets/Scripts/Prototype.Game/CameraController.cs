@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Prototype
@@ -20,6 +21,8 @@ namespace Prototype
         public Collider cameraBounds;
 
         public float cameraFollowSpeed = 10f;
+        public float cameraForseTargetFollowSpeed = 10f;
+
         private void Awake()
         {
             m_Camera = Camera.main;
@@ -72,15 +75,23 @@ namespace Prototype
 
         private void CameraMovement()
         {
+
+            if (!BlockInput)
+            {
 #if UNITY_EDITOR
-            PCInput();
+                PCInput();
 #else
         MobileInput();
 #endif
+            }
             UpdateCameraPosition();
         }
 
         bool m_MoveInputStarted = false;
+        private Transform m_ForceTarget;
+
+        public bool BlockInput { get; internal set; }
+
         private void MobileInput()
         {
             if (Input.touchCount > 1)
@@ -138,16 +149,23 @@ namespace Prototype
         private void UpdateCameraPosition()
         {
             var cameraTargetPosition = cameraTarget.position;
-            var targetPos = cameraTargetPosition + m_MoveDelta;
 
-            if (cameraTargetPosition == targetPos)
-                return;
+            float speed = cameraFollowSpeed;
+
+            if (m_ForceTarget)
+            {
+                speed = cameraForseTargetFollowSpeed;
+                cameraTargetPosition = m_ForceTarget.position;
+                cameraTargetPosition.y = cameraTarget.position.y;
+            }
+        
+            var targetPos = cameraTargetPosition + m_MoveDelta;
 
             var bounds = cameraBounds.bounds;
             targetPos.x = Mathf.Clamp(targetPos.x, bounds.min.x, bounds.max.x);
             targetPos.z = Mathf.Clamp(targetPos.z, bounds.min.z, bounds.max.z);
 
-            targetPos = Vector3.Lerp(cameraTarget.position, targetPos, Mathf.Clamp01(Time.deltaTime * cameraFollowSpeed)); ;
+            targetPos = Vector3.Lerp(cameraTarget.position, targetPos, Mathf.Clamp01(Time.deltaTime * speed));
             cameraTarget.position = targetPos;
             m_Camera.transform.position = targetPos + cameraOffset;
             m_MoveDelta /= decelerationSpeed;
@@ -160,6 +178,11 @@ namespace Prototype
             float distance;
             ground.Raycast(mousePos, out distance);
             return mousePos.GetPoint(distance);
+        }
+
+        internal void ForceTarget(Transform traget)
+        {
+            m_ForceTarget = traget;
         }
     }
 }
