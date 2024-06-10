@@ -85,6 +85,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 799321736458426227, guid: 3235eb70c9fc0d24e88169b16f90e72a,
         type: 3}
+      propertyPath: m_Size.x
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 799321736458426227, guid: 3235eb70c9fc0d24e88169b16f90e72a,
+        type: 3}
       propertyPath: m_Size.y
       value: 0.8676826
       objectReference: {fileID: 0}

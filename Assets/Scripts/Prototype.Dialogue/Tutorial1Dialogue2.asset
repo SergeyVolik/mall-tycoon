@@ -15,10 +15,10 @@ MonoBehaviour:
   dialogueItems:
   - dialogueCharacter: {fileID: 11400000, guid: f6d6699036981ad4998682dc8d3fdcfa,
       type: 2}
-    text: Boss. We have a problem! there is a lot of customes
+    text: Boss. We have a problem! there is a lot of customes.
   - dialogueCharacter: {fileID: 11400000, guid: f6d6699036981ad4998682dc8d3fdcfa,
       type: 2}
-    text: We have to employ new workers and motivate them
+    text: We have to employ new workers and motivate them.
   - dialogueCharacter: {fileID: 11400000, guid: f6d6699036981ad4998682dc8d3fdcfa,
       type: 2}
-    text: Touch the traider to upgrade it
+    text: Touch the traider to upgrade it.

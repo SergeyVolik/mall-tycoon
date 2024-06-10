@@ -19,8 +19,10 @@ namespace Prototype
         private int m_DialogueItemIndex = 0;
         private DialogueSequenceSO m_CurrentDialogue;
         public float timeBetweenCharacters = 0.1f;
+
+        public GameObject endAnimationIndicator;
         private void Awake()
-        {
+        {          
             nextDialogueButton.onClick.AddListener(() =>
             {
                 if (!m_AnimationIsPlaying)
@@ -73,14 +75,14 @@ namespace Prototype
 
         private DialogueItem GetCurrentDialogueItem() => m_CurrentDialogue.dialogueItems[m_DialogueItemIndex];
         public void FinishDialogue()
-        {
-            gameObject.SetActive(false);
+        {           
             if (m_CurrentDialogue)
             {
                 m_CurrentDialogue.OnFinish();
                 m_CurrentDialogue = null;
             }
 
+            gameObject.SetActive(false);
             onDialogueFinished.Invoke();
         }
 
@@ -89,7 +91,9 @@ namespace Prototype
 
         private void SkipAnimation()
         {
-            m_AnimationIsPlaying = false;
+            ShowAnimFinish(true);
+
+             m_AnimationIsPlaying = false;
             text.text = GetCurrentDialogueItem().text;
             if (m_Coroutine != null)
             {
@@ -105,6 +109,7 @@ namespace Prototype
         }
         private IEnumerator WriteTextAnimation()
         {
+            ShowAnimFinish(false);
             m_AnimationIsPlaying = true;
             text.text = "";
             foreach (var item in GetCurrentDialogueItem().text.ToCharArray())
@@ -112,8 +117,13 @@ namespace Prototype
                 text.text += item;
                 yield return new WaitForSeconds(timeBetweenCharacters);
             }
-
+            ShowAnimFinish(true);
             m_AnimationIsPlaying = false;
+        }
+
+        private void ShowAnimFinish(bool enable)
+        {
+            endAnimationIndicator.SetActive(enable);
         }
     }
 }

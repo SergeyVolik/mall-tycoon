@@ -18,4 +18,4 @@ MonoBehaviour:
     text: Nice job Boss!
   - dialogueCharacter: {fileID: 11400000, guid: f6d6699036981ad4998682dc8d3fdcfa,
       type: 2}
-    text: If you want to increase number of customes visit the PR Agency
+    text: If you want to increase number of customes visit the PR Agency.

@@ -15,5 +15,5 @@ MonoBehaviour:
   dialogueItems:
   - dialogueCharacter: {fileID: 11400000, guid: f6d6699036981ad4998682dc8d3fdcfa,
       type: 2}
-    text: Perfect! Now you are ready to create you own tycoon! Upgrade your market
-      and build your business
+    text: Perfect! Now you are ready to create your own tycoon! Upgrade your market
+      and build your business.
