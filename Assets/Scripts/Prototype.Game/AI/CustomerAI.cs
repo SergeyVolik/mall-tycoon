@@ -9,7 +9,7 @@ namespace Prototype
         public const float tickRate = 0.4f;
 
         public CustomerAIStates currentState = CustomerAIStates.SelectMarketPosition;
-        private Vector3 m_StartPos;
+        private Vector3 m_HomePos;
         private NavMeshAgent m_Agent;
         private Transform m_Transform;
      
@@ -45,7 +45,7 @@ namespace Prototype
 
         private void Awake()
         {
-            m_StartPos = transform.position;
+            m_HomePos = transform.position;
             m_Agent = GetComponent<NavMeshAgent>();
             m_Transform = transform;
         }
@@ -92,10 +92,15 @@ namespace Prototype
             m_Agent.destination = traderPosition;
         }
 
+        public void ForceHomePos(Vector3 homePos)
+        {
+            m_HomePos = homePos;
+        }
+
         public void GoHome()
         {
             currentState = CustomerAIStates.MoveToHome;
-            m_Agent.destination = m_StartPos;
+            m_Agent.destination = m_HomePos;
         }
 
         public void SpawnCustomerItem(GameObject itemPrefab)

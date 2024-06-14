@@ -50,7 +50,7 @@ namespace Prototype
                         else 
                         {
                             if (!Market.GetInstance().marketEnterQueue.HasFreePlace())
-                            {
+                            {                               
                                 customer.GoHome();
                                 return;
                             }

@@ -116,6 +116,8 @@ namespace Prototype
                     var spawnpos = marketQueue.queuePoints[i].position;
                     var customer = CustomerSpawnSystem.GetInstance().SpawnCustomerAtPosition(spawnpos);
                     customer.transform.rotation = Quaternion.Euler(0, Random.Range(0, 360), 0);
+
+                    customer.ForceHomePos(CustomerSpawnSystem.GetInstance().GetRandomSpawnpoint());
                 }
             }
         }

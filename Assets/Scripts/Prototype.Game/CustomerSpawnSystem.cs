@@ -103,6 +103,10 @@ namespace Prototype
         private float m_SpawnT;
         public Transform[] customerSpawnPoints;
 
+        public Vector3 GetRandomSpawnpoint()
+        {
+            return customerSpawnPoints[UnityEngine.Random.Range(0, customerSpawnPoints.Length)].position;
+        }
         private void Update()
         {
             m_SpawnT += Time.deltaTime;
