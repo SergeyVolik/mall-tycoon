@@ -90,7 +90,7 @@ namespace Prototype
         bool m_MoveInputStarted = false;
         private Transform m_ForceTarget;
 
-        public bool BlockInput { get; internal set; }
+        public bool BlockInput { get; set; }
 
         private void MobileInput()
         {
@@ -180,7 +180,7 @@ namespace Prototype
             return mousePos.GetPoint(distance);
         }
 
-        internal void ForceTarget(Transform traget)
+        public void ForceTarget(Transform traget)
         {
             m_ForceTarget = traget;
         }
